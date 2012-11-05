@@ -6,8 +6,8 @@
 
 Name:             openstack-swift
 Version:          1.7.4
-Release:          1%{?dist}
-Summary:          OpenStack Object Storage (swift)
+Release:          2%{?dist}
+Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
@@ -17,12 +17,32 @@ Source0:          http://launchpad.net/swift/folsom/%{version}/+download/swift-%
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
 Source22:         account-server.conf
+Source23:         %{name}-account-replicator.service
+Source24:         %{name}-account-replicator@.service
+Source25:         %{name}-account-auditor.service
+Source26:         %{name}-account-auditor@.service
+Source27:         %{name}-account-reaper.service
+Source28:         %{name}-account-reaper@.service
 Source4:          %{name}-container.service
 Source41:         %{name}-container@.service
 Source42:         container-server.conf
+Source43:         %{name}-container-replicator.service
+Source44:         %{name}-container-replicator@.service
+Source45:         %{name}-container-auditor.service
+Source46:         %{name}-container-auditor@.service
+Source47:         %{name}-container-updater.service
+Source48:         %{name}-container-updater@.service
 Source5:          %{name}-object.service
 Source51:         %{name}-object@.service
 Source52:         object-server.conf
+Source53:         %{name}-object-replicator.service
+Source54:         %{name}-object-replicator@.service
+Source55:         %{name}-object-auditor.service
+Source56:         %{name}-object-auditor@.service
+Source57:         %{name}-object-updater.service
+Source58:         %{name}-object-updater@.service
+Source59:         %{name}-object-expirer.service
+Source60:         %{name}-object-expirer@.service
 Source6:          %{name}-proxy.service
 Source61:         proxy-server.conf
 Source20:         %{name}.tmpfs
@@ -58,7 +78,7 @@ Requires:         openstack-swift-plugin-swift3
 Requires:         python-swiftclient
 
 %description
-OpenStack Object Storage (swift) aggregates commodity servers to work together
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
 Objects are written to multiple hardware devices in the data center, with the
 OpenStack software responsible for ensuring data replication and integrity
@@ -70,50 +90,50 @@ inexpensive commodity hard drives and servers can be used in lieu of more
 expensive equipment.
 
 %package          account
-Summary:          A swift account server
+Summary:          Account services for Swift
 Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
 %description      account
-OpenStack Object Storage (swift) aggregates commodity servers to work together
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains the %{name} account server.
 
 %package          container
-Summary:          A swift container server
+Summary:          Container services for Swift
 Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
 %description      container
-OpenStack Object Storage (swift) aggregates commodity servers to work together
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains the %{name} container server.
 
 %package          object
-Summary:          A swift object server
+Summary:          Object services for Swift
 Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      object
-OpenStack Object Storage (swift) aggregates commodity servers to work together
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains the %{name} object server.
 
 %package          proxy
-Summary:          A swift proxy server
+Summary:          A proxy server for Swift
 Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
 %description      proxy
-OpenStack Object Storage (swift) aggregates commodity servers to work together
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains the %{name} proxy server.
@@ -134,7 +154,7 @@ BuildRequires:    python-webob
 BuildRequires:    pyxattr
 
 %description      doc
-OpenStack Object Storage (swift) aggregates commodity servers to work together
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains documentation files for %{name}.
@@ -165,10 +185,30 @@ rm -rf %{buildroot}
 # systemd units
 install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 755 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
+install -p -D -m 755 %{SOURCE23} %{buildroot}%{_unitdir}/%{name}-account-replicator.service
+install -p -D -m 755 %{SOURCE24} %{buildroot}%{_unitdir}/%{name}-account-replicator@.service
+install -p -D -m 755 %{SOURCE25} %{buildroot}%{_unitdir}/%{name}-account-auditor.service
+install -p -D -m 755 %{SOURCE26} %{buildroot}%{_unitdir}/%{name}-account-auditor@.service
+install -p -D -m 755 %{SOURCE27} %{buildroot}%{_unitdir}/%{name}-account-reaper.service
+install -p -D -m 755 %{SOURCE28} %{buildroot}%{_unitdir}/%{name}-account-reaper@.service
 install -p -D -m 755 %{SOURCE4} %{buildroot}%{_unitdir}/%{name}-container.service
 install -p -D -m 755 %{SOURCE41} %{buildroot}%{_unitdir}/%{name}-container@.service
+install -p -D -m 755 %{SOURCE43} %{buildroot}%{_unitdir}/%{name}-container-replicator.service
+install -p -D -m 755 %{SOURCE44} %{buildroot}%{_unitdir}/%{name}-container-replicator@.service
+install -p -D -m 755 %{SOURCE45} %{buildroot}%{_unitdir}/%{name}-container-auditor.service
+install -p -D -m 755 %{SOURCE46} %{buildroot}%{_unitdir}/%{name}-container-auditor@.service
+install -p -D -m 755 %{SOURCE47} %{buildroot}%{_unitdir}/%{name}-container-updater.service
+install -p -D -m 755 %{SOURCE48} %{buildroot}%{_unitdir}/%{name}-container-updater@.service
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
 install -p -D -m 755 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
+install -p -D -m 755 %{SOURCE53} %{buildroot}%{_unitdir}/%{name}-object-replicator.service
+install -p -D -m 755 %{SOURCE54} %{buildroot}%{_unitdir}/%{name}-object-replicator@.service
+install -p -D -m 755 %{SOURCE55} %{buildroot}%{_unitdir}/%{name}-object-auditor.service
+install -p -D -m 755 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@.service
+install -p -D -m 755 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
+install -p -D -m 755 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
+install -p -D -m 755 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
+install -p -D -m 755 %{SOURCE60} %{buildroot}%{_unitdir}/%{name}-object-expirer@.service
 install -p -D -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
 rm -fr %{buildroot}/%{python_sitelib}/test
@@ -375,8 +415,7 @@ fi
 %{_mandir}/man1/swift-account-reaper.1*
 %{_mandir}/man1/swift-account-replicator.1*
 %{_mandir}/man1/swift-account-server.1*
-%dir %{_unitdir}/%{name}-account.service
-%dir %{_unitdir}/%{name}-account@.service
+%{_unitdir}/%{name}-account*.service
 %dir %{_sysconfdir}/swift/account-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/account-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/account-server
@@ -395,8 +434,7 @@ fi
 %{_mandir}/man1/swift-container-server.1*
 %{_mandir}/man1/swift-container-sync.1*
 %{_mandir}/man1/swift-container-updater.1*
-%dir %{_unitdir}/%{name}-container.service
-%dir %{_unitdir}/%{name}-container@.service
+%{_unitdir}/%{name}-container*.service
 %dir %{_sysconfdir}/swift/container-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/container-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
@@ -418,8 +456,7 @@ fi
 %{_mandir}/man1/swift-object-replicator.1*
 %{_mandir}/man1/swift-object-server.1*
 %{_mandir}/man1/swift-object-updater.1*
-%dir %{_unitdir}/%{name}-object.service
-%dir %{_unitdir}/%{name}-object@.service
+%{_unitdir}/%{name}-object*.service
 %dir %{_sysconfdir}/swift/object-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
@@ -447,6 +484,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Nov 5 2012 Pete Zaitcev <zaitcev@redhat.com> - 1.7.4-2
+- Add missing unit files bz#807170
+
 * Thu Sep 27 2012 Derek Higgins <derekh@redhat.com> - 1.7.4-1
 - Update to 1.7.4
 
