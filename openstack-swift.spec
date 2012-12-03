@@ -2,17 +2,17 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %endif
 
-%global snaptag 20120925.r2036
+%global snaptag 20121113.r2194
 
 Name:             openstack-swift
-Version:          1.7.4
-Release:          2%{?dist}
+Version:          1.7.5
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://launchpad.net/swift/folsom/%{version}/+download/swift-%{version}.tar.gz
+Source0:          http://launchpad.net/swift/grizzly/%{version}/+download/swift-%{version}.tar.gz
 #Source0:          http://tarballs.openstack.org/swift/swift-%{version}~%{snaptag}.tar.gz
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -63,7 +63,6 @@ Requires:         python-simplejson
 Requires:         python-webob >= 0.9.8
 Requires:         pyxattr
 Requires:         python-setuptools
-Requires:         python-netifaces
 Requires:         python-netifaces
 
 Requires(post):   systemd-units
@@ -372,7 +371,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README
+%doc AUTHORS LICENSE README.md
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
 %{_mandir}/man5/dispersion.conf.5*
@@ -391,6 +390,7 @@ fi
 %dir %{python_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-bench
+%{_bindir}/swift-bench-client
 %{_bindir}/swift-drive-audit
 %{_bindir}/swift-get-nodes
 %{_bindir}/swift-init
@@ -484,6 +484,12 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Dec 03 2012 Derek Higgins <derekh@redhat.com> - 1.7.5-1
+- Update to 1.7.5
+- adding swift-bench-client
+- removing dup dependency on python-netifaces
+- changing README -> README.md
+
 * Mon Nov 5 2012 Pete Zaitcev <zaitcev@redhat.com> - 1.7.4-2
 - Add missing unit files bz#807170
 
