@@ -6,7 +6,7 @@
 
 Name:             openstack-swift
 Version:          1.7.5
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -42,9 +42,10 @@ Source56:         %{name}-object-auditor@.service
 Source57:         %{name}-object-updater.service
 Source58:         %{name}-object-updater@.service
 Source59:         %{name}-object-expirer.service
-Source60:         %{name}-object-expirer@.service
+# Is it possible to supply an instance-style expirer unit for single-node?
 Source6:          %{name}-proxy.service
 Source61:         proxy-server.conf
+Source62:         object-expirer.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
 BuildRoot:        %{_tmppath}/swift-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -60,15 +61,13 @@ Requires:         python-eventlet >= 0.9.8
 Requires:         python-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 Requires:         python-simplejson
-Requires:         python-webob >= 0.9.8
 Requires:         pyxattr
 Requires:         python-setuptools
 Requires:         python-netifaces
 
-Requires(post):   systemd-units
-Requires(preun):  systemd-units
-Requires(postun): systemd-units
-Requires(post):   systemd-sysv
+Requires(post):   systemd
+Requires(preun):  systemd
+Requires(postun): systemd
 Requires(pre):    shadow-utils
 Obsoletes:        openstack-swift-auth  <= 1.4.0
 # swift3 was split off in 1.5.0
@@ -149,7 +148,6 @@ BuildRequires:    python-sphinx >= 1.0
 # Required for generating docs
 BuildRequires:    python-eventlet
 BuildRequires:    python-simplejson
-BuildRequires:    python-webob
 BuildRequires:    pyxattr
 
 %description      doc
@@ -207,7 +205,6 @@ install -p -D -m 755 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@
 install -p -D -m 755 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
 install -p -D -m 755 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
 install -p -D -m 755 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
-install -p -D -m 755 %{SOURCE60} %{buildroot}%{_unitdir}/%{name}-object-expirer@.service
 install -p -D -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
 rm -fr %{buildroot}/%{python_sitelib}/test
@@ -222,6 +219,7 @@ install -p -D -m 660 %{SOURCE22} %{buildroot}%{_sysconfdir}/swift/account-server
 install -p -D -m 660 %{SOURCE42} %{buildroot}%{_sysconfdir}/swift/container-server.conf
 install -p -D -m 660 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.conf
 install -p -D -m 660 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
+install -p -D -m 660 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
 install -p -D -m 660 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
@@ -253,121 +251,70 @@ useradd -r -g swift -u 160 -d %{_sharedstatedir}/swift -s /sbin/nologin \
 exit 0
 
 %post account
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post %{name}-account.service
+%systemd_post %{name}-account-replicator.service
+%systemd_post %{name}-account-auditor.service
+%systemd_post %{name}-account-reaper.service
 
 %preun account
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable openstack-swift-account.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-swift-account.service > /dev/null 2>&1 || :
-fi
+%systemd_preun %{name}-account.service
+%systemd_preun %{name}-account-replicator.service
+%systemd_preun %{name}-account-auditor.service
+%systemd_preun %{name}-account-reaper.service
 
 %postun account
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart openstack-swift-account.service >/dev/null 2>&1 || :
-fi
-
-%triggerun -- openstack-swift-account < 1.4.5-1
-# Save the current service runlevel info
-# User must manually run systemd-sysv-convert --apply openstack-swift-account
-# to migrate them to systemd targets
-/usr/bin/systemd-sysv-convert --save openstack-swift-account >/dev/null 2>&1 ||:
-# Run these because the SysV package being removed won't do them
-/sbin/chkconfig --del openstack-swift-account >/dev/null 2>&1 || :
-/bin/systemctl try-restart openstack-swift-account.service >/dev/null 2>&1 || :
+%systemd_postun %{name}-account.service
+%systemd_postun %{name}-account-replicator.service
+%systemd_postun %{name}-account-auditor.service
+%systemd_postun %{name}-account-reaper.service
 
 %post container
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post %{name}-container.service
+%systemd_post %{name}-container-replicator.service
+%systemd_post %{name}-container-auditor.service
+%systemd_post %{name}-container-updater.service
 
 %preun container
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable openstack-swift-container.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-swift-container.service > /dev/null 2>&1 || :
-fi
+%systemd_preun %{name}-container.service
+%systemd_preun %{name}-container-replicator.service
+%systemd_preun %{name}-container-auditor.service
+%systemd_preun %{name}-container-updater.service
 
 %postun container
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart openstack-swift-container.service >/dev/null 2>&1 || :
-fi
-
-%triggerun -- openstack-swift-container < 1.4.5-1
-# Save the current service runlevel info
-# User must manually run systemd-sysv-convert --apply openstack-swift-container
-# to migrate them to systemd targets
-/usr/bin/systemd-sysv-convert --save openstack-swift-container >/dev/null 2>&1 ||:
-# Run these because the SysV package being removed won't do them
-/sbin/chkconfig --del openstack-swift-container >/dev/null 2>&1 || :
-/bin/systemctl try-restart openstack-swift-container.service >/dev/null 2>&1 || :
+%systemd_postun %{name}-container.service
+%systemd_postun %{name}-container-replicator.service
+%systemd_postun %{name}-container-auditor.service
+%systemd_postun %{name}-container-updater.service
 
 %post object
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post %{name}-object.service
+%systemd_post %{name}-object-replicator.service
+%systemd_post %{name}-object-auditor.service
+%systemd_post %{name}-object-updater.service
 
 %preun object
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable openstack-swift-object.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-swift-object.service > /dev/null 2>&1 || :
-fi
+%systemd_preun %{name}-object.service
+%systemd_preun %{name}-object-replicator.service
+%systemd_preun %{name}-object-auditor.service
+%systemd_preun %{name}-object-updater.service
 
 %postun object
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart openstack-swift-object.service >/dev/null 2>&1 || :
-fi
-
-%triggerun -- openstack-swift-object < 1.4.5-1
-# Save the current service runlevel info
-# User must manually run systemd-sysv-convert --apply openstack-swift-object
-# to migrate them to systemd targets
-/usr/bin/systemd-sysv-convert --save openstack-swift-object >/dev/null 2>&1 ||:
-# Run these because the SysV package being removed won't do them
-/sbin/chkconfig --del openstack-swift-object >/dev/null 2>&1 || :
-/bin/systemctl try-restart openstack-swift-object.service >/dev/null 2>&1 || :
-
+%systemd_postun %{name}-object.service
+%systemd_postun %{name}-object-replicator.service
+%systemd_postun %{name}-object-auditor.service
+%systemd_postun %{name}-object-updater.service
 
 %post proxy
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post %{name}-proxy.service
+%systemd_post %{name}-object-expirer.service
 
 %preun proxy
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable openstack-swift-proxy.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-swift-proxy.service > /dev/null 2>&1 || :
-fi
+%systemd_preun %{name}-proxy.service
+%systemd_preun %{name}-object-expirer.service
 
 %postun proxy
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart openstack-swift-proxy.service >/dev/null 2>&1 || :
-fi
-
-%triggerun -- openstack-swift-proxy < 1.4.5-1
-# Save the current service runlevel info
-# User must manually run systemd-sysv-convert --apply openstack-swift-proxy
-# to migrate them to systemd targets
-/usr/bin/systemd-sysv-convert --save openstack-swift-proxy >/dev/null 2>&1 ||:
-# Run these because the SysV package being removed won't do them
-/sbin/chkconfig --del openstack-swift-proxy >/dev/null 2>&1 || :
-/bin/systemctl try-restart openstack-swift-proxy.service >/dev/null 2>&1 || :
+%systemd_postun %{name}-proxy.service
+%systemd_postun %{name}-object-expirer.service
 
 %files
 %defattr(-,root,root,-)
@@ -398,7 +345,6 @@ fi
 %{_bindir}/swift-dispersion-populate
 %{_bindir}/swift-dispersion-report
 %{_bindir}/swift-recon*
-%{_bindir}/swift-object-expirer
 %{_bindir}/swift-oldies
 %{_bindir}/swift-orphans
 %{_bindir}/swift-form-signature
@@ -449,14 +395,19 @@ fi
 %defattr(-,root,root,-)
 %doc etc/object-server.conf-sample etc/rsyncd.conf-sample
 %{_mandir}/man5/object-server.conf.5*
-%{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man1/swift-object-auditor.1*
-%{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-object-info.1*
 %{_mandir}/man1/swift-object-replicator.1*
 %{_mandir}/man1/swift-object-server.1*
 %{_mandir}/man1/swift-object-updater.1*
-%{_unitdir}/%{name}-object*.service
+%{_unitdir}/%{name}-object.service
+%{_unitdir}/%{name}-object@.service
+%{_unitdir}/%{name}-object-auditor.service
+%{_unitdir}/%{name}-object-auditor@.service
+%{_unitdir}/%{name}-object-replicator.service
+%{_unitdir}/%{name}-object-replicator@.service
+%{_unitdir}/%{name}-object-updater.service
+%{_unitdir}/%{name}-object-updater@.service
 %dir %{_sysconfdir}/swift/object-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
@@ -470,12 +421,17 @@ fi
 %files proxy
 %defattr(-,root,root,-)
 %doc etc/proxy-server.conf-sample
+%{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man5/proxy-server.conf.5*
+%{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-proxy-server.1*
-%dir %{_unitdir}/%{name}-proxy.service
+%{_unitdir}/%{name}-object-expirer.service
+%{_unitdir}/%{name}-proxy.service
 %dir %{_sysconfdir}/swift/proxy-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/proxy-server.conf
+%config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-expirer.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
+%{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
 %{python_sitelib}/swift/proxy
 
@@ -484,6 +440,13 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Jan 28 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-2
+- Drop dependency on python-webob, because Swift uses an in-tree swob now
+- Update scriptlets to use macro systemd_postun and friends (bz#850016)
+- Drop systemd-sysv-convert
+- Relocate object-expirer into the proxy bundle
+- Add the expirer configuration, multi-node only
+
 * Mon Dec 03 2012 Derek Higgins <derekh@redhat.com> - 1.7.5-1
 - Update to 1.7.5
 - adding swift-bench-client
