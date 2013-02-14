@@ -6,7 +6,7 @@
 
 Name:             openstack-swift
 Version:          1.7.5
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -230,6 +230,8 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/proxy-server
 # Swift run directories
 mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
 install -p -m 0644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+# Install recon directory
+install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
 # man pages
 install -d -m 755 %{buildroot}%{_mandir}/man5
 for m in doc/manpages/*.5; do
@@ -365,6 +367,7 @@ exit 0
 %dir %{_sysconfdir}/swift/account-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/account-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/account-server
+%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-account-auditor
 %{_bindir}/swift-account-reaper
 %{_bindir}/swift-account-replicator
@@ -384,6 +387,7 @@ exit 0
 %dir %{_sysconfdir}/swift/container-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/container-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
+%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-container-auditor
 %{_bindir}/swift-container-server
 %{_bindir}/swift-container-replicator
@@ -411,6 +415,7 @@ exit 0
 %dir %{_sysconfdir}/swift/object-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
+%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-object-auditor
 %{_bindir}/swift-object-info
 %{_bindir}/swift-object-replicator
@@ -431,6 +436,7 @@ exit 0
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/proxy-server.conf
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-expirer.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
+%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
 %{python_sitelib}/swift/proxy
@@ -440,6 +446,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-3
+- Add /var/cache/recon, by bz#870409, equally affects all Fedora versions
+
 * Mon Jan 28 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-2
 - Drop dependency on python-webob, because Swift uses an in-tree swob now
 - Update scriptlets to use macro systemd_postun and friends (bz#850016)
