@@ -6,7 +6,7 @@
 
 Name:             openstack-swift
 Version:          1.7.5
-Release:          3%{?dist}
+Release:          4%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -353,6 +353,7 @@ exit 0
 %{_bindir}/swift-temp-url
 %{python_sitelib}/swift/*.py*
 %{python_sitelib}/swift/common
+%{python_sitelib}/swift/obj
 %{python_sitelib}/swift-%{version}-*.egg-info
 
 %files account
@@ -421,11 +422,10 @@ exit 0
 %{_bindir}/swift-object-replicator
 %{_bindir}/swift-object-server
 %{_bindir}/swift-object-updater
-%{python_sitelib}/swift/obj
 
 %files proxy
 %defattr(-,root,root,-)
-%doc etc/proxy-server.conf-sample
+%doc etc/proxy-server.conf-sample etc/object-expirer.conf-sample
 %{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man5/proxy-server.conf.5*
 %{_mandir}/man1/swift-object-expirer.1*
@@ -446,6 +446,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-4
+- Fix the moved object-expirer so it runs with object is not installed
+
 * Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-3
 - Add /var/cache/recon, by bz#870409, equally affects all Fedora versions
 
