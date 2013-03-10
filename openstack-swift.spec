@@ -2,18 +2,15 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %endif
 
-%global snaptag 20121113.r2194
-
 Name:             openstack-swift
-Version:          1.7.5
-Release:          4%{?dist}
+Version:          1.7.6
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
 Source0:          http://launchpad.net/swift/grizzly/%{version}/+download/swift-%{version}.tar.gz
-#Source0:          http://tarballs.openstack.org/swift/swift-%{version}~%{snaptag}.tar.gz
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
 Source22:         account-server.conf
@@ -51,7 +48,6 @@ Source7:          swift.conf
 BuildRoot:        %{_tmppath}/swift-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:        noarch
-BuildRequires:    dos2unix
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-netifaces
@@ -158,8 +154,6 @@ This package contains documentation files for %{name}.
 
 %prep
 %setup -q -n swift-%{version}
-# Fix wrong-file-end-of-line-encoding warning
-dos2unix LICENSE
 
 %build
 %{__python} setup.py build
@@ -446,6 +440,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Sun Mar 10 2013 Alan Pevec <apevec@redhat.com> 1.7.6-1
+- Update to 1.7.6
+
 * Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-4
 - Fix the moved object-expirer so it runs with object is not installed
 
