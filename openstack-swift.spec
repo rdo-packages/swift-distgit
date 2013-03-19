@@ -4,7 +4,7 @@
 
 Name:             openstack-swift
 Version:          1.7.6
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -68,7 +68,7 @@ Requires(pre):    shadow-utils
 Obsoletes:        openstack-swift-auth  <= 1.4.0
 # swift3 was split off in 1.5.0
 Requires:         openstack-swift-plugin-swift3
-# swiftclient was split offf in 1.6.0
+# swiftclient was split off in 1.6.0
 Requires:         python-swiftclient
 
 %description
@@ -330,6 +330,7 @@ exit 0
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/swift.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift
+%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %dir %{python_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-bench
@@ -362,7 +363,6 @@ exit 0
 %dir %{_sysconfdir}/swift/account-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/account-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/account-server
-%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-account-auditor
 %{_bindir}/swift-account-reaper
 %{_bindir}/swift-account-replicator
@@ -382,7 +382,6 @@ exit 0
 %dir %{_sysconfdir}/swift/container-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/container-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
-%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-container-auditor
 %{_bindir}/swift-container-server
 %{_bindir}/swift-container-replicator
@@ -410,7 +409,6 @@ exit 0
 %dir %{_sysconfdir}/swift/object-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
-%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-object-auditor
 %{_bindir}/swift-object-info
 %{_bindir}/swift-object-replicator
@@ -430,7 +428,6 @@ exit 0
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/proxy-server.conf
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-expirer.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
-%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
 %{python_sitelib}/swift/proxy
@@ -440,6 +437,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Mar 18 2013 Pete Zaitcev <zaitcev@redhat.com> 1.7.6-2
+- Move ownership of /var/cache/swift to main package per Zane's comments
+
 * Sun Mar 10 2013 Alan Pevec <apevec@redhat.com> 1.7.6-1
 - Update to 1.7.6
 
@@ -447,7 +447,7 @@ exit 0
 - Fix the moved object-expirer so it runs with object is not installed
 
 * Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-3
-- Add /var/cache/recon, by bz#870409, equally affects all Fedora versions
+- Add /var/cache/swift, by bz#870409, equally affects all Fedora versions
 
 * Mon Jan 28 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-2
 - Drop dependency on python-webob, because Swift uses an in-tree swob now
