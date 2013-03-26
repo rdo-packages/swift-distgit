@@ -61,6 +61,7 @@ Requires:         pyxattr
 Requires:         python-setuptools
 Requires:         python-netifaces
 
+BuildRequires:    systemd
 Requires(post):   systemd
 Requires(preun):  systemd
 Requires(postun): systemd
