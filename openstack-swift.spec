@@ -3,8 +3,8 @@
 %endif
 
 Name:             openstack-swift
-Version:          1.7.6
-Release:          2%{?dist}
+Version:          1.8.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -53,7 +53,7 @@ BuildRequires:    python-setuptools
 BuildRequires:    python-netifaces
 BuildRequires:    python-paste-deploy
 Requires:         python-configobj
-Requires:         python-eventlet >= 0.9.8
+Requires:         python-eventlet >= 0.9.15
 Requires:         python-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 Requires:         python-simplejson
@@ -155,6 +155,11 @@ This package contains documentation files for %{name}.
 
 %prep
 %setup -q -n swift-%{version}
+
+# Remove bundled egg-info
+rm -rf swift.egg-info
+# let RPM handle deps
+sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 %build
 %{__python} setup.py build
@@ -321,7 +326,6 @@ exit 0
 %{_mandir}/man5/dispersion.conf.5*
 %{_mandir}/man1/swift-dispersion-populate.1*
 %{_mandir}/man1/swift-dispersion-report.1*
-%{_mandir}/man1/swift.1*
 %{_mandir}/man1/swift-get-nodes.1*
 %{_mandir}/man1/swift-init.1*
 %{_mandir}/man1/swift-orphans.1*
@@ -438,6 +442,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Apr 4 2013 Pete Zaitcev <zaitcev@redhat.com> 1.8.0-1
+- Update to 1.8.0; this is the "Grizzly" release of OpenStack
+
 * Mon Mar 18 2013 Pete Zaitcev <zaitcev@redhat.com> 1.7.6-2
 - Move ownership of /var/cache/swift to main package per Zane's comments
 
