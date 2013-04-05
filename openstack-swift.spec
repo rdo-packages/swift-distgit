@@ -4,7 +4,7 @@
 
 Name:             openstack-swift
 Version:          1.8.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -126,6 +126,7 @@ Summary:          A proxy server for Swift
 Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
+Requires:         python-keystoneclient
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -442,6 +443,10 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Apr 05 2013 Derek Higgins <derekh@redhat.com> - 1.8.0-2
+- change path to middleware in proxy conf file
+- add dependency for python-keystoneclient for proxy
+
 * Thu Apr 4 2013 Pete Zaitcev <zaitcev@redhat.com> 1.8.0-1
 - Update to 1.8.0; this is the "Grizzly" release of OpenStack
 
