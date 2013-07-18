@@ -3,14 +3,14 @@
 %endif
 
 Name:             openstack-swift
-Version:          1.8.0
-Release:          2%{?dist}
+Version:          1.9.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://launchpad.net/swift/grizzly/%{version}/+download/swift-%{version}.tar.gz
+Source0:          http://launchpad.net/swift/havana/%{version}/+download/swift-%{version}.tar.gz
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
 Source22:         account-server.conf
@@ -341,6 +341,7 @@ exit 0
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-bench
 %{_bindir}/swift-bench-client
+%{_bindir}/swift-config
 %{_bindir}/swift-drive-audit
 %{_bindir}/swift-get-nodes
 %{_bindir}/swift-init
@@ -443,6 +444,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Jul 17 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.0-1
+- Update to 1.9.0
+
 * Fri Apr 05 2013 Derek Higgins <derekh@redhat.com> - 1.8.0-2
 - change path to middleware in proxy conf file
 - add dependency for python-keystoneclient for proxy
