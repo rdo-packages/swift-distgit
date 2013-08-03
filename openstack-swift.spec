@@ -4,7 +4,7 @@
 
 Name:             openstack-swift
 Version:          1.9.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -444,6 +444,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Jul 17 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.0-1
 - Update to 1.9.0
 
