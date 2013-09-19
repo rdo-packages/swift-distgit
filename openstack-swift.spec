@@ -3,8 +3,8 @@
 %endif
 
 Name:             openstack-swift
-Version:          1.9.0
-Release:          2%{?dist}
+Version:          1.9.1
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -67,8 +67,6 @@ Requires(preun):  systemd
 Requires(postun): systemd
 Requires(pre):    shadow-utils
 Obsoletes:        openstack-swift-auth  <= 1.4.0
-# swift3 was split off in 1.5.0
-Requires:         openstack-swift-plugin-swift3
 # swiftclient was split off in 1.6.0
 Requires:         python-swiftclient
 
@@ -127,6 +125,7 @@ Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         python-keystoneclient
+Requires:         openstack-swift-plugin-swift3
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -444,6 +443,12 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Sep 19 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-1
+- Update to 1.9.1, includes CVE-2013-4155
+- Includes unfortunately standards-compliant XML listings, to be fixed
+- Reseller prefix in Keystone must end with an underscore
+- Make only proxy depend on openstack-swift-plugin-swift3
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
