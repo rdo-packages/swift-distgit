@@ -4,7 +4,7 @@
 
 Name:             openstack-swift
 Version:          1.9.1
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -354,6 +354,7 @@ exit 0
 %{_bindir}/swift-temp-url
 %{python_sitelib}/swift/*.py*
 %{python_sitelib}/swift/common
+%{python_sitelib}/swift/account
 %{python_sitelib}/swift/obj
 %{python_sitelib}/swift-%{version}-*.egg-info
 
@@ -373,7 +374,6 @@ exit 0
 %{_bindir}/swift-account-reaper
 %{_bindir}/swift-account-replicator
 %{_bindir}/swift-account-server
-%{python_sitelib}/swift/account
 
 %files container
 %defattr(-,root,root,-)
@@ -443,6 +443,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-2
+- Move account/ to base package like we did for obj/ in 1.7.5-4
+
 * Thu Sep 19 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-1
 - Update to 1.9.1, includes CVE-2013-4155
 - Includes unfortunately standards-compliant XML listings, to be fixed
