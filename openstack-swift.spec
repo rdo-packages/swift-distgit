@@ -4,7 +4,7 @@
 
 Name:             openstack-swift
 Version:          1.10.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -247,6 +247,8 @@ mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
 install -p -m 0644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 # Install recon directory
 install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
+# Install home directory
+install -d -m 755 %{buildroot}%{_sharedstatedir}/swift
 # man pages
 install -d -m 755 %{buildroot}%{_mandir}/man5
 for m in doc/manpages/*.5; do
@@ -351,6 +353,7 @@ exit 0
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/swift.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
+%dir %attr(0755, swift, root) %{_sharedstatedir}/swift
 %dir %{python_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-bench
@@ -458,9 +461,10 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
-* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-1
+* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-2
 - Update to Havana GA
 - Fix service startup issue due to bad depencency checking (#1020449)
+- add swift home directory for signing_dir (#967631)
 
 * Wed Oct 09 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-0.1.rc1
 - Update to 1.10.0 RC1
