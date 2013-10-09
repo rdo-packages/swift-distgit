@@ -45,7 +45,6 @@ Source61:         proxy-server.conf
 Source62:         object-expirer.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
-BuildRoot:        %{_tmppath}/swift-%{version}-%{release}-root-%(%{__id_u} -n)
 
 #
 # patches_base=1.10.0.rc1
@@ -187,7 +186,6 @@ SPHINX_DEBUG=1 sphinx-1.0-build -b html doc/source doc/build/html
 #rm doc/build/html/.buildinfo
 
 %install
-rm -rf %{buildroot}
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 # systemd units
 install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
