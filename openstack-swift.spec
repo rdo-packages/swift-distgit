@@ -3,14 +3,14 @@
 %endif
 
 Name:             openstack-swift
-Version:          1.9.1
-Release:          2%{?dist}
+Version:          1.10.0
+Release:          0.1.rc1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://launchpad.net/swift/havana/%{version}/+download/swift-%{version}.tar.gz
+Source0:          http://launchpad.net/swift/havana/%{version}/+download/swift-%{version}.rc1.tar.gz
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
 Source22:         account-server.conf
@@ -154,7 +154,7 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}
+%setup -q -n swift-%{version}.rc1
 
 # Remove bundled egg-info
 rm -rf swift.egg-info
@@ -443,6 +443,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.10.0-0.1.rc1
+- Update to 1.10.0 RC1
+
 * Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-2
 - Move account/ to base package like we did for obj/ in 1.7.5-4
 
