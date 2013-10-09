@@ -366,7 +366,7 @@ exit 0
 %{python_sitelib}/swift/common
 %{python_sitelib}/swift/account
 %{python_sitelib}/swift/obj
-%{python_sitelib}/swift-%{version}-*.egg-info
+%{python_sitelib}/swift-%{version}*.egg-info
 
 %files account
 %defattr(-,root,root,-)
