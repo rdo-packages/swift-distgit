@@ -49,11 +49,13 @@ Source7:          swift.conf
 #
 # patches_base=1.10.0.rc1
 #
-Patch0001: 0001-remove-requirement-on-pbr.patch
+Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
+Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
+BuildRequires:    python-pbr
 BuildRequires:    python-netifaces
 BuildRequires:    python-paste-deploy
 Requires:         python-configobj
@@ -162,6 +164,7 @@ This package contains documentation files for %{name}.
 %setup -q -n swift-%{version}.rc1
 
 %patch0001 -p1
+%patch0002 -p1
 # Remove bundled egg-info
 rm -rf swift.egg-info
 # let RPM handle deps
@@ -451,7 +454,7 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
-* Wed Oct 09 2013 Pete Zaitcev <pbrady@redhat.com> 1.10.0-0.1.rc1
+* Wed Oct 09 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-0.1.rc1
 - Update to 1.10.0 RC1
 
 * Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-2

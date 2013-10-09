@@ -1,7 +1,7 @@
-From 0e7a3899e182eae8248743e9a11f6413c4733704 Mon Sep 17 00:00:00 2001
+From 8b38949d8b118f10fe94ca83130d18fab7799a57 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
 Date: Wed, 9 Oct 2013 12:38:40 +0100
-Subject: [PATCH] remove requirement on pbr
+Subject: [PATCH] remove runtime requirement on pbr
 
 ---
  swift/__init__.py |    9 ++-------
