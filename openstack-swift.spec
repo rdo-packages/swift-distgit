@@ -151,6 +151,7 @@ BuildRequires:    python-sphinx >= 1.0
 BuildRequires:    python-eventlet
 BuildRequires:    python-simplejson
 BuildRequires:    pyxattr
+BuildRequires:    python-swiftclient
 
 %description      doc
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
