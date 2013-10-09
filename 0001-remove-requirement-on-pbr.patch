@@ -1,0 +1,29 @@
+From 0e7a3899e182eae8248743e9a11f6413c4733704 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?P=C3=A1draig=20Brady?= <P@draigBrady.com>
+Date: Wed, 9 Oct 2013 12:38:40 +0100
+Subject: [PATCH] remove requirement on pbr
+
+---
+ swift/__init__.py |    9 ++-------
+ 1 files changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/swift/__init__.py b/swift/__init__.py
+index 7e8fb7b..d7a4012 100644
+--- a/swift/__init__.py
++++ b/swift/__init__.py
+@@ -16,13 +16,8 @@
+ import os
+ import gettext
+ 
+-import pbr.version
+-
+-
+-_version_info = pbr.version.VersionInfo('swift')
+-__version__ = _version_info.release_string()
+-__canonical_version__ = _version_info.version_string()
+-
++__version__ = "%RPMVERSION%-%RPMRELEASE%"
++__canonical_version__ = "%RPMVERSION%"
+ 
+ _localedir = os.environ.get('SWIFT_LOCALEDIR')
+ _t = gettext.translation('swift', localedir=_localedir, fallback=True)

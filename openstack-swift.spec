@@ -47,6 +47,11 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 BuildRoot:        %{_tmppath}/swift-%{version}-%{release}-root-%(%{__id_u} -n)
 
+#
+# patches_base=1.10.0.rc1
+#
+Patch0001: 0001-remove-requirement-on-pbr.patch
+
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
@@ -156,10 +161,14 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n swift-%{version}.rc1
 
+%patch0001 -p1
 # Remove bundled egg-info
 rm -rf swift.egg-info
 # let RPM handle deps
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
+
+# Remove dependency on pbr and set version as per rpm
+sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.py
 
 %build
 %{__python} setup.py build
@@ -443,7 +452,7 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
-* Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.10.0-0.1.rc1
+* Wed Oct 09 2013 Pete Zaitcev <pbrady@redhat.com> 1.10.0-0.1.rc1
 - Update to 1.10.0 RC1
 
 * Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-2
