@@ -4,13 +4,13 @@
 
 Name:             openstack-swift
 Version:          1.10.0
-Release:          0.1.rc1%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://launchpad.net/swift/havana/%{version}/+download/swift-%{version}.rc1.tar.gz
+Source0:          http://launchpad.net/swift/havana/%{version}/+download/swift-%{version}.tar.gz
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
 Source22:         account-server.conf
@@ -47,7 +47,7 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 
 #
-# patches_base=1.10.0.rc1
+# patches_base=1.10.0
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
@@ -161,7 +161,7 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}.rc1
+%setup -q -n swift-%{version}
 
 %patch0001 -p1
 %patch0002 -p1
@@ -458,6 +458,10 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-1
+- Update to Havana GA
+- Fix service startup issue due to bad depencency checking (#1020449)
+
 * Wed Oct 09 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-0.1.rc1
 - Update to 1.10.0 RC1
 
