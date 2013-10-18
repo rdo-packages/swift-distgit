@@ -170,6 +170,10 @@ rm -rf swift.egg-info
 # let RPM handle deps
 sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
+# Remove the requirements file so that pbr hooks don't add it
+# to distutils requires_dist config
+rm -rf {test-,}requirements.txt
+
 # Remove dependency on pbr and set version as per rpm
 sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.py
 
