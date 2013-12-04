@@ -4,7 +4,7 @@
 
 Name:             openstack-swift
 Version:          1.10.0
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -461,6 +461,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Dec 04 2013 Pete Zaitcev <zaitcev@redhat.com> 1.10.0-3
+- Change config modes to 640, like in every other OpenStack project
+
 * Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-2
 - Update to Havana GA
 - Fix service startup issue due to bad depencency checking (#1020449)
