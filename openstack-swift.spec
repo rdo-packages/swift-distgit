@@ -3,8 +3,8 @@
 %endif
 
 Name:             openstack-swift
-Version:          1.10.0
-Release:          3%{?dist}
+Version:          1.11.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -47,7 +47,7 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 
 #
-# patches_base=1.10.0
+# patches_base=1.11.0
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
@@ -356,8 +356,6 @@ exit 0
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
 %dir %{python_sitelib}/swift
 %{_bindir}/swift-account-audit
-%{_bindir}/swift-bench
-%{_bindir}/swift-bench-client
 %{_bindir}/swift-config
 %{_bindir}/swift-drive-audit
 %{_bindir}/swift-get-nodes
@@ -461,6 +459,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Jan 03 2014 Pádraig Brady <pbrady@redhat.com> 1.11.0-1
+- Update to first icehouse release 1.11.0
+
 * Wed Dec 04 2013 Pete Zaitcev <zaitcev@redhat.com> 1.10.0-3
 - Change config modes to 640, like in every other OpenStack project
 
