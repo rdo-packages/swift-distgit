@@ -3,7 +3,7 @@
 %endif
 
 Name:             openstack-swift
-Version:          1.11.0
+Version:          1.12.0
 Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
@@ -47,7 +47,7 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 
 #
-# patches_base=1.11.0
+# patches_base=1.12.0
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
@@ -459,6 +459,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Jan 31 2014 Alan Pevec <apevec@redhat.com> 1.12.0-1
+- Update to Icehouse milestone 1.12.0
+
 * Fri Jan 03 2014 Pádraig Brady <pbrady@redhat.com> 1.11.0-1
 - Update to first icehouse release 1.11.0
 
