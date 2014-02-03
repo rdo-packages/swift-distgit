@@ -56,8 +56,6 @@ BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
-BuildRequires:    python-netifaces
-BuildRequires:    python-paste-deploy
 Requires:         python-configobj
 Requires:         python-eventlet >= 0.9.15
 Requires:         python-greenlet >= 0.3.1
@@ -142,17 +140,15 @@ This package contains the %{name} proxy server.
 %package doc
 Summary:          Documentation for %{name}
 Group:            Documentation
-%if 0%{?rhel} >= 6
+%if 0%{?rhel} == 6
 BuildRequires:    python-sphinx10 >= 1.0
 %endif
-%if 0%{?fedora} >= 14
+%if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 BuildRequires:    python-sphinx >= 1.0
 %endif
-# Required for generating docs
+# Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
-BuildRequires:    python-simplejson
 BuildRequires:    pyxattr
-BuildRequires:    python-swiftclient
 
 %description      doc
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -182,10 +178,10 @@ sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.p
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%if 0%{?fedora} >= 14
+%if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 %{__python} setup.py build_sphinx
 %endif
-%if 0%{?rhel} >= 6
+%if 0%{?rhel} == 6
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 SPHINX_DEBUG=1 sphinx-1.0-build -b html doc/source doc/build/html
 %endif
