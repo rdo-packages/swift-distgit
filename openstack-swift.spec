@@ -2,15 +2,20 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %endif
 
+%global release_name icehouse
+%global milestone rc2
+
 Name:             openstack-swift
-Version:          1.12.0
-Release:          1%{?dist}
+Version:          1.13.1
+Release:          0.1.%{milestone}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://launchpad.net/swift/havana/%{version}/+download/swift-%{version}.tar.gz
+#Source0:          http://launchpad.net/swift/%{release_name}/%{version}/+download/swift-%{version}.tar.gz
+Source0:          https://launchpad.net/swift/%{release_name}/%{version}-%{milestone}/+download/swift-%{version}.%{milestone}.tar.gz
+
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
 Source22:         account-server.conf
@@ -47,7 +52,7 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 
 #
-# patches_base=1.12.0
+# patches_base=1.13.1.rc2
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
@@ -157,10 +162,13 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}
+%setup -q -n swift-%{version}.%{milestone}
 
 %patch0001 -p1
 %patch0002 -p1
+
+sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
+
 # Remove bundled egg-info
 rm -rf swift.egg-info
 # let RPM handle deps
@@ -365,6 +373,7 @@ exit 0
 %{_bindir}/swift-form-signature
 %{_bindir}/swift-temp-url
 %{python_sitelib}/swift/*.py*
+%{python_sitelib}/swift/cli
 %{python_sitelib}/swift/common
 %{python_sitelib}/swift/account
 %{python_sitelib}/swift/obj
@@ -375,6 +384,7 @@ exit 0
 %doc etc/account-server.conf-sample
 %{_mandir}/man5/account-server.conf.5*
 %{_mandir}/man1/swift-account-auditor.1*
+%{_mandir}/man1/swift-account-info.1*
 %{_mandir}/man1/swift-account-reaper.1*
 %{_mandir}/man1/swift-account-replicator.1*
 %{_mandir}/man1/swift-account-server.1*
@@ -383,6 +393,7 @@ exit 0
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/account-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/account-server
 %{_bindir}/swift-account-auditor
+%{_bindir}/swift-account-info
 %{_bindir}/swift-account-reaper
 %{_bindir}/swift-account-replicator
 %{_bindir}/swift-account-server
@@ -392,6 +403,7 @@ exit 0
 %doc etc/container-server.conf-sample
 %{_mandir}/man5/container-server.conf.5*
 %{_mandir}/man1/swift-container-auditor.1*
+%{_mandir}/man1/swift-container-info.1*
 %{_mandir}/man1/swift-container-replicator.1*
 %{_mandir}/man1/swift-container-server.1*
 %{_mandir}/man1/swift-container-sync.1*
@@ -401,6 +413,7 @@ exit 0
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
 %{_bindir}/swift-container-auditor
+%{_bindir}/swift-container-info
 %{_bindir}/swift-container-server
 %{_bindir}/swift-container-replicator
 %{_bindir}/swift-container-updater
@@ -455,6 +468,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Sat Apr 12 2014 Alan Pevec <apevec@redhat.com> 1.13.1-0.1.rc2
+- Update to Icehouse milestone 1.13.1.rc2
+
 * Fri Jan 31 2014 Alan Pevec <apevec@redhat.com> 1.12.0-1
 - Update to Icehouse milestone 1.12.0
 
