@@ -1,4 +1,4 @@
-From 9fea3526bb3d84a81d82b352df31c492644339b8 Mon Sep 17 00:00:00 2001
+From c16135a834bbe0551e75824d2c029a0bc9cf447a Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Thu, 5 Jan 2012 00:03:00 +0100
 Subject: [PATCH] Add fixes for building the doc package

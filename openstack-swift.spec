@@ -3,18 +3,17 @@
 %endif
 
 %global release_name icehouse
-%global milestone rc2
+%global milestone ...
 
 Name:             openstack-swift
 Version:          1.13.1
-Release:          0.1.%{milestone}%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-#Source0:          http://launchpad.net/swift/%{release_name}/%{version}/+download/swift-%{version}.tar.gz
-Source0:          https://launchpad.net/swift/%{release_name}/%{version}-%{milestone}/+download/swift-%{version}.%{milestone}.tar.gz
+Source0:          http://launchpad.net/swift/%{release_name}/%{version}/+download/swift-%{version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -52,10 +51,11 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 
 #
-# patches_base=1.13.1.rc2
+# patches_base=1.13.1
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
+Patch0003: 0003-Set-permissions-on-generated-ring-files.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
@@ -162,12 +162,13 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}.%{milestone}
+%setup -q -n swift-%{version}
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 
-sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
+#sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
 
 # Remove bundled egg-info
 rm -rf swift.egg-info
@@ -468,6 +469,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Sat Apr 19 2014 Pádraig Brady <pbrady@redhat.com> - 1.13.1-1
+- Update to Icehouse release
+
 * Sat Apr 12 2014 Alan Pevec <apevec@redhat.com> 1.13.1-0.1.rc2
 - Update to Icehouse milestone 1.13.1.rc2
 
