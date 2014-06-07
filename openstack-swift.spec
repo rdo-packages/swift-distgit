@@ -7,7 +7,7 @@
 
 Name:             openstack-swift
 Version:          1.13.1
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -469,6 +469,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.13.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Sat Apr 19 2014 Pádraig Brady <pbrady@redhat.com> - 1.13.1-1
 - Update to Icehouse release
 
