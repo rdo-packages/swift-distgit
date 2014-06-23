@@ -7,7 +7,7 @@
 
 Name:             openstack-swift
 Version:          1.13.1
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -76,8 +76,6 @@ Requires(preun):  systemd
 Requires(postun): systemd
 Requires(pre):    shadow-utils
 Obsoletes:        openstack-swift-auth  <= 1.4.0
-# swiftclient was split off in 1.6.0
-Requires:         python-swiftclient
 
 %description
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -469,6 +467,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Jun 23 2014 Pete Zaitcev - 1.13.1-3
+- Drop python-swiftclient to implement bz#1058131 in Rawhide
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.13.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
