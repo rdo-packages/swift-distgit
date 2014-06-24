@@ -7,7 +7,7 @@
 
 Name:             openstack-swift
 Version:          1.13.1
-Release:          3%{?dist}
+Release:          4%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -467,6 +467,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Jun 24 2014 Pete Zaitcev <zaitcev@redhat.com> - 1.13.1-4
+- Move default ports from 600x to 620x (#1107907 and a dozen of others)
+
 * Mon Jun 23 2014 Pete Zaitcev - 1.13.1-3
 - Drop python-swiftclient to implement bz#1058131 in Rawhide
 
