@@ -13,9 +13,9 @@ that the swift user can read the rings.
 Change-Id: Ia511931f471c5c9840012c3a75b89c1f35b1b245
 Closes-Bug: #1302700
 ---
- swift/common/ring/ring.py          |    1 +
- test/unit/common/ring/test_ring.py |   10 ++++++++++
- 2 files changed, 11 insertions(+), 0 deletions(-)
+ swift/common/ring/ring.py          |  1 +
+ test/unit/common/ring/test_ring.py | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/swift/common/ring/ring.py b/swift/common/ring/ring.py
 index 5b31528..a1f9024 100644

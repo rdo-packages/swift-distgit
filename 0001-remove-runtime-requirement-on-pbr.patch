@@ -4,8 +4,8 @@ Date: Wed, 9 Oct 2013 12:38:40 +0100
 Subject: [PATCH] remove runtime requirement on pbr
 
 ---
- swift/__init__.py |   18 ++----------------
- 1 files changed, 2 insertions(+), 16 deletions(-)
+ swift/__init__.py | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
 diff --git a/swift/__init__.py b/swift/__init__.py
 index 9d0e889..d7a4012 100644

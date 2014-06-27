@@ -10,8 +10,8 @@ Don't access the net and always reference
 the swift module from the package we're building
 Based on Nova/Glance EPEL patch by Pádraig Brady <P@draigBrady.com>
 ---
- doc/source/conf.py |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ doc/source/conf.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
 index 9b1b86c..bf061ad 100644
