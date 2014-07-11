@@ -6,14 +6,16 @@
 %global milestone ...
 
 Name:             openstack-swift
-Version:          1.13.1
-Release:          5%{?dist}
+Version:          2.0.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://launchpad.net/swift/%{release_name}/%{version}/+download/swift-%{version}.tar.gz
+# Terry is sometimes slow updating Launchpad, so we're switching to OpenStack.
+#Source0:          http://launchpad.net/swift/#{release_name}/#{version}/+download/swift-#{version}.tar.gz
+Source0:          http://tarballs.openstack.org/swift/swift-%{version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -43,20 +45,20 @@ Source56:         %{name}-object-auditor@.service
 Source57:         %{name}-object-updater.service
 Source58:         %{name}-object-updater@.service
 Source59:         %{name}-object-expirer.service
-# Is it possible to supply an instance-style expirer unit for single-node?
+Source63:         %{name}-container-reconciler.service
 Source6:          %{name}-proxy.service
 Source61:         proxy-server.conf
 Source62:         object-expirer.conf
+Source64:         container-reconciler.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
 
+## Based at https://github.com/redhat-openstack/swift/
 #
-# patches_base=1.13.1
+# patches_base=2.0.0
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
-Patch0003: 0003-Set-permissions-on-generated-ring-files.patch
-Patch0004: 0004-properly-quote-www-authenticate-header-value.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
@@ -165,8 +167,6 @@ This package contains documentation files for %{name}.
 
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
 
 #sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
 
@@ -225,6 +225,7 @@ install -p -D -m 755 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@
 install -p -D -m 755 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
 install -p -D -m 755 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
 install -p -D -m 755 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
+install -p -D -m 755 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
 install -p -D -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
 rm -fr %{buildroot}/%{python_sitelib}/test
@@ -240,6 +241,7 @@ install -p -D -m 660 %{SOURCE42} %{buildroot}%{_sysconfdir}/swift/container-serv
 install -p -D -m 660 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.conf
 install -p -D -m 660 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
 install -p -D -m 660 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
+install -p -D -m 660 %{SOURCE64} %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
 install -p -D -m 660 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
@@ -454,12 +456,15 @@ exit 0
 %{_mandir}/man5/proxy-server.conf.5*
 %{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-proxy-server.1*
+%{_unitdir}/%{name}-container-reconciler.service
 %{_unitdir}/%{name}-object-expirer.service
 %{_unitdir}/%{name}-proxy.service
 %dir %{_sysconfdir}/swift/proxy-server
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-reconciler.conf
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/proxy-server.conf
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/object-expirer.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
+%{_bindir}/swift-container-reconciler
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
 %{python_sitelib}/swift/proxy
@@ -469,6 +474,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Jul 10 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.0.0-1
+- Update to upstream 2.0.0, re-apply our patches
+
 * Fri Jun 27 2014 Pete Zaitcev <zaitcev@redhat.com> - 1.13.1-5
 - Fix CVE-2014-3497, unquoted realm in WWW-Authenticate
 
