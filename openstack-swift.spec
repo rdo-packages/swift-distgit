@@ -163,7 +163,7 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}
+%setup -q -n swift-%{upstream_version}
 
 %patch0001 -p1
 %patch0002 -p1
