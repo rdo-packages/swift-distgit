@@ -1,4 +1,4 @@
-From 435c3d3eff4700dae9a5c026c1bcdea7f28dec56 Mon Sep 17 00:00:00 2001
+From 55b54d819ffc5ac6927684bf85a3701309ca3c77 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Thu, 5 Jan 2012 00:03:00 +0100
 Subject: [PATCH] Add fixes for building the doc package
@@ -14,7 +14,7 @@ Based on Nova/Glance EPEL patch by Pádraig Brady <P@draigBrady.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
-index 9b1b86c..bf061ad 100644
+index cca53c2..7e08817 100644
 --- a/doc/source/conf.py
 +++ b/doc/source/conf.py
 @@ -20,14 +20,14 @@ import datetime
@@ -33,5 +33,8 @@ index 9b1b86c..bf061ad 100644
 -extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
 +extensions = ['sphinx.ext.autodoc',
                'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.pngmath',
-               'sphinx.ext.ifconfig']
+               'sphinx.ext.ifconfig', 'oslosphinx']
  todo_include_todos = True
+-- 
+1.9.3
+
