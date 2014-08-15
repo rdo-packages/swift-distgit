@@ -151,6 +151,7 @@ BuildRequires:    python-sphinx10 >= 1.0
 %endif
 %if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 BuildRequires:    python-sphinx >= 1.0
+BuildRequires:    python-oslo-sphinx
 %endif
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
@@ -474,6 +475,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Aug 15 2014 Derek Higgins <derekh@redhat.com> - XXX
+- Add dependency on python-oslo-sphinx
+
 * Thu Jul 10 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.0.0-1
 - Update to upstream 2.0.0, re-apply our patches
 
