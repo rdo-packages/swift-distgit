@@ -6,7 +6,7 @@
 %global milestone ...
 
 Name:             openstack-swift
-Version:          2.0.0
+Version:          2.1.0
 Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
@@ -55,14 +55,16 @@ Source7:          swift.conf
 
 ## Based at https://github.com/redhat-openstack/swift/
 #
-# patches_base=2.0.0
+# patches_base=2.1.0
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
+Patch0003: 0003-Stop-using-intersphinx.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
+BuildRequires:    python-oslo-sphinx
 BuildRequires:    python-pbr
 Requires:         python-configobj
 Requires:         python-eventlet >= 0.9.15
@@ -167,6 +169,7 @@ This package contains documentation files for %{name}.
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 
 #sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
 
@@ -474,6 +477,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Sep 15 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.1.0-1
+- Update to upstream 2.1.0
+
 * Thu Jul 10 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.0.0-1
 - Update to upstream 2.0.0, re-apply our patches
 
