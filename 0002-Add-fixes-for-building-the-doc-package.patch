@@ -1,4 +1,4 @@
-From 55b54d819ffc5ac6927684bf85a3701309ca3c77 Mon Sep 17 00:00:00 2001
+From ce0d470660833bea8023c81f42b71512a0b05533 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Thu, 5 Jan 2012 00:03:00 +0100
 Subject: [PATCH] Add fixes for building the doc package
@@ -10,14 +10,14 @@ Don't access the net and always reference
 the swift module from the package we're building
 Based on Nova/Glance EPEL patch by Pádraig Brady <P@draigBrady.com>
 ---
- doc/source/conf.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ doc/source/conf.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/doc/source/conf.py b/doc/source/conf.py
-index cca53c2..7e08817 100644
+index 5d2fbd3..2c3d63a 100644
 --- a/doc/source/conf.py
 +++ b/doc/source/conf.py
-@@ -20,14 +20,14 @@ import datetime
+@@ -20,8 +20,8 @@ import datetime
  # If extensions (or modules to document with autodoc) are in another directory,
  # add these directories to sys.path here. If the directory is relative to the
  # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -28,13 +28,6 @@ index cca53c2..7e08817 100644
  
  # -- General configuration ----------------------------------------------------
  
- # Add any Sphinx extension module names here, as strings. They can be
- # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
--extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
-+extensions = ['sphinx.ext.autodoc',
-               'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.pngmath',
-               'sphinx.ext.ifconfig', 'oslosphinx']
- todo_include_todos = True
 -- 
 1.9.3
 
