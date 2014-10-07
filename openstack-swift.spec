@@ -3,11 +3,11 @@
 %endif
 
 %global release_name icehouse
-%global milestone ...
+%global milestone rc1
 
 Name:             openstack-swift
-Version:          2.1.0
-Release:          2%{?dist}
+Version:          2.2.0
+Release:          0.1.rc1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -15,7 +15,7 @@ License:          ASL 2.0
 URL:              http://launchpad.net/swift
 # Terry is sometimes slow updating Launchpad, so we're switching to OpenStack.
 #Source0:          http://launchpad.net/swift/#{release_name}/#{version}/+download/swift-#{version}.tar.gz
-Source0:          http://tarballs.openstack.org/swift/swift-%{version}.tar.gz
+Source0:          http://tarballs.openstack.org/swift/swift-%{version}.%{milestone}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -55,11 +55,10 @@ Source7:          swift.conf
 
 ## Based at https://github.com/redhat-openstack/swift/
 #
-# patches_base=2.1.0
+# patches_base=2.2.0.rc1
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
-Patch0003: 0003-Stop-using-intersphinx.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
@@ -165,11 +164,10 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}
+%setup -q -n swift-%{version}.%{milestone}
 
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
 
 #sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
 
@@ -477,6 +475,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2.2.0-0.1.rc1
+- Update to upstream 2.2.0.rc1
+
 * Fri Sep 19 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.1.0-2
 - Depend on python-keystonemiddleware instead of python-keystoneclient
 
