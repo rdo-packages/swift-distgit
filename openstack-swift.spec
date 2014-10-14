@@ -7,7 +7,7 @@
 
 Name:             openstack-swift
 Version:          2.2.0
-Release:          0.1.rc1%{?dist}
+Release:          0.2.rc1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -201,33 +201,33 @@ SPHINX_DEBUG=1 sphinx-1.0-build -b html doc/source doc/build/html
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 # systemd units
-install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
-install -p -D -m 755 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
-install -p -D -m 755 %{SOURCE23} %{buildroot}%{_unitdir}/%{name}-account-replicator.service
-install -p -D -m 755 %{SOURCE24} %{buildroot}%{_unitdir}/%{name}-account-replicator@.service
-install -p -D -m 755 %{SOURCE25} %{buildroot}%{_unitdir}/%{name}-account-auditor.service
-install -p -D -m 755 %{SOURCE26} %{buildroot}%{_unitdir}/%{name}-account-auditor@.service
-install -p -D -m 755 %{SOURCE27} %{buildroot}%{_unitdir}/%{name}-account-reaper.service
-install -p -D -m 755 %{SOURCE28} %{buildroot}%{_unitdir}/%{name}-account-reaper@.service
-install -p -D -m 755 %{SOURCE4} %{buildroot}%{_unitdir}/%{name}-container.service
-install -p -D -m 755 %{SOURCE41} %{buildroot}%{_unitdir}/%{name}-container@.service
-install -p -D -m 755 %{SOURCE43} %{buildroot}%{_unitdir}/%{name}-container-replicator.service
-install -p -D -m 755 %{SOURCE44} %{buildroot}%{_unitdir}/%{name}-container-replicator@.service
-install -p -D -m 755 %{SOURCE45} %{buildroot}%{_unitdir}/%{name}-container-auditor.service
-install -p -D -m 755 %{SOURCE46} %{buildroot}%{_unitdir}/%{name}-container-auditor@.service
-install -p -D -m 755 %{SOURCE47} %{buildroot}%{_unitdir}/%{name}-container-updater.service
-install -p -D -m 755 %{SOURCE48} %{buildroot}%{_unitdir}/%{name}-container-updater@.service
-install -p -D -m 755 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
-install -p -D -m 755 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
-install -p -D -m 755 %{SOURCE53} %{buildroot}%{_unitdir}/%{name}-object-replicator.service
-install -p -D -m 755 %{SOURCE54} %{buildroot}%{_unitdir}/%{name}-object-replicator@.service
-install -p -D -m 755 %{SOURCE55} %{buildroot}%{_unitdir}/%{name}-object-auditor.service
-install -p -D -m 755 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@.service
-install -p -D -m 755 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
-install -p -D -m 755 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
-install -p -D -m 755 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
-install -p -D -m 755 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
-install -p -D -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
+install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
+install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
+install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/%{name}-account-replicator.service
+install -p -D -m 644 %{SOURCE24} %{buildroot}%{_unitdir}/%{name}-account-replicator@.service
+install -p -D -m 644 %{SOURCE25} %{buildroot}%{_unitdir}/%{name}-account-auditor.service
+install -p -D -m 644 %{SOURCE26} %{buildroot}%{_unitdir}/%{name}-account-auditor@.service
+install -p -D -m 644 %{SOURCE27} %{buildroot}%{_unitdir}/%{name}-account-reaper.service
+install -p -D -m 644 %{SOURCE28} %{buildroot}%{_unitdir}/%{name}-account-reaper@.service
+install -p -D -m 644 %{SOURCE4} %{buildroot}%{_unitdir}/%{name}-container.service
+install -p -D -m 644 %{SOURCE41} %{buildroot}%{_unitdir}/%{name}-container@.service
+install -p -D -m 644 %{SOURCE43} %{buildroot}%{_unitdir}/%{name}-container-replicator.service
+install -p -D -m 644 %{SOURCE44} %{buildroot}%{_unitdir}/%{name}-container-replicator@.service
+install -p -D -m 644 %{SOURCE45} %{buildroot}%{_unitdir}/%{name}-container-auditor.service
+install -p -D -m 644 %{SOURCE46} %{buildroot}%{_unitdir}/%{name}-container-auditor@.service
+install -p -D -m 644 %{SOURCE47} %{buildroot}%{_unitdir}/%{name}-container-updater.service
+install -p -D -m 644 %{SOURCE48} %{buildroot}%{_unitdir}/%{name}-container-updater@.service
+install -p -D -m 644 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
+install -p -D -m 644 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
+install -p -D -m 644 %{SOURCE53} %{buildroot}%{_unitdir}/%{name}-object-replicator.service
+install -p -D -m 644 %{SOURCE54} %{buildroot}%{_unitdir}/%{name}-object-replicator@.service
+install -p -D -m 644 %{SOURCE55} %{buildroot}%{_unitdir}/%{name}-object-auditor.service
+install -p -D -m 644 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@.service
+install -p -D -m 644 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
+install -p -D -m 644 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
+install -p -D -m 644 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
+install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
+install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
 rm -fr %{buildroot}/%{python_sitelib}/test
 # Misc other
@@ -475,6 +475,10 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Oct 13 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-0.2.rc1
+- Use After=network-online.target (#1150590)
+- Change the permissions of service units to 644, avoid warning messages
+
 * Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2.2.0-0.1.rc1
 - Update to upstream 2.2.0.rc1
 
