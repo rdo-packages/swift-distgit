@@ -2,20 +2,18 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %endif
 
-%global release_name icehouse
+%global release_name juno
 %global milestone rc1
 
 Name:             openstack-swift
 Version:          2.2.0
-Release:          0.2.rc1%{?dist}
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-# Terry is sometimes slow updating Launchpad, so we're switching to OpenStack.
-#Source0:          http://launchpad.net/swift/#{release_name}/#{version}/+download/swift-#{version}.tar.gz
-Source0:          http://tarballs.openstack.org/swift/swift-%{version}.%{milestone}.tar.gz
+Source0:          https://launchpad.net/swift/juno/%{version}/+download/swift-%{version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -164,21 +162,16 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}.%{milestone}
+%setup -q -n swift-%{version}
 
 %patch0001 -p1
 %patch0002 -p1
 
-#sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
-
 # Remove bundled egg-info
 rm -rf swift.egg-info
-# let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requires_dist config
-rm -rf {test-,}requirements.txt
+# Let RPM handle the dependencies
+rm -f requirements.txt
 
 # Remove dependency on pbr and set version as per rpm
 sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.py
@@ -475,6 +468,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Sat Oct 18 2014 Alan Pevec <apevec@redhat.com> 2.2.0-1
+- Update to Juno release 2.2.0
+
 * Mon Oct 13 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-0.2.rc1
 - Use After=network-online.target (#1150590)
 - Change the permissions of service units to 644, avoid warning messages
