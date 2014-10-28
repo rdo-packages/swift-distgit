@@ -7,7 +7,7 @@
 
 Name:             openstack-swift
 Version:          2.2.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -50,6 +50,8 @@ Source62:         object-expirer.conf
 Source64:         container-reconciler.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
+Source71:         %{name}.rsyslog
+Source72:         %{name}.logrotate
 
 ## Based at https://github.com/redhat-openstack/swift/
 #
@@ -243,9 +245,12 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/container-server
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/object-server
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/proxy-server
+# syslog
+install -d -m 755 %{buildroot}%{_localstatedir}/log/swift
+install -p -D -m 644 %{SOURCE71} %{buildroot}%{_sysconfdir}/rsyslog.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE72} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-swift
 # Swift run directories
-mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
-install -p -m 0644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 # Install recon directory
 install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
 # Install home directory
@@ -352,6 +357,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
+%config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
+%config(noreplace) %{_sysconfdir}/logrotate.d/openstack-swift
+%dir %{_localstatedir}/log/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
@@ -468,6 +476,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Oct 27 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-2
+- Intercept logging to local0.* and local2.* (#997983)
+
 * Sat Oct 18 2014 Alan Pevec <apevec@redhat.com> 2.2.0-1
 - Update to Juno release 2.2.0
 
