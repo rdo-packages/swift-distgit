@@ -1,6 +1,7 @@
 [Unit]
 Description=OpenStack Object Storage (swift) - Proxy Server
-After=syslog.target network.target
+Wants=network-online.target
+After=syslog.target network-online.target
 
 [Service]
 Type=simple

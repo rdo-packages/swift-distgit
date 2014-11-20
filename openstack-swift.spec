@@ -2,20 +2,18 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %endif
 
-%global release_name icehouse
-%global milestone ...
+%global release_name juno
+%global milestone rc1
 
 Name:             openstack-swift
-Version:          2.0.0
-Release:          1%{?dist}
+Version:          XXX
+Release:          XXX{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-# Terry is sometimes slow updating Launchpad, so we're switching to OpenStack.
-#Source0:          http://launchpad.net/swift/#{release_name}/#{version}/+download/swift-#{version}.tar.gz
-Source0:          http://tarballs.openstack.org/swift/swift-%{version}.tar.gz
+Source0:          https://launchpad.net/swift/juno/%{version}/+download/swift-%{version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -52,17 +50,19 @@ Source62:         object-expirer.conf
 Source64:         container-reconciler.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
+Source71:         %{name}.rsyslog
+Source72:         %{name}.logrotate
 
 ## Based at https://github.com/redhat-openstack/swift/
 #
-# patches_base=2.0.0
+# patches_base=2.2.0.rc1
 #
 Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
-Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
+BuildRequires:    python-oslo-sphinx
 BuildRequires:    python-pbr
 Requires:         python-configobj
 Requires:         python-eventlet >= 0.9.15
@@ -134,7 +134,7 @@ Summary:          A proxy server for Swift
 Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
-Requires:         python-keystoneclient
+Requires:         python-keystonemiddleware
 Requires:         openstack-swift-plugin-swift3
 
 %description      proxy
@@ -151,7 +151,6 @@ BuildRequires:    python-sphinx10 >= 1.0
 %endif
 %if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 BuildRequires:    python-sphinx >= 1.0
-BuildRequires:    python-oslo-sphinx
 %endif
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
@@ -167,18 +166,12 @@ This package contains documentation files for %{name}.
 %setup -q -n swift-%{upstream_version}
 
 %patch0001 -p1
-%patch0002 -p1
-
-#sed -i 's/%{version}.%{milestone}/%{version}/' PKG-INFO
 
 # Remove bundled egg-info
 rm -rf swift.egg-info
-# let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requires_dist config
-rm -rf {test-,}requirements.txt
+# Let RPM handle the dependencies
+rm -f requirements.txt
 
 # Remove dependency on pbr and set version as per rpm
 sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.py
@@ -201,33 +194,33 @@ SPHINX_DEBUG=1 sphinx-1.0-build -b html doc/source doc/build/html
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 # systemd units
-install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
-install -p -D -m 755 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
-install -p -D -m 755 %{SOURCE23} %{buildroot}%{_unitdir}/%{name}-account-replicator.service
-install -p -D -m 755 %{SOURCE24} %{buildroot}%{_unitdir}/%{name}-account-replicator@.service
-install -p -D -m 755 %{SOURCE25} %{buildroot}%{_unitdir}/%{name}-account-auditor.service
-install -p -D -m 755 %{SOURCE26} %{buildroot}%{_unitdir}/%{name}-account-auditor@.service
-install -p -D -m 755 %{SOURCE27} %{buildroot}%{_unitdir}/%{name}-account-reaper.service
-install -p -D -m 755 %{SOURCE28} %{buildroot}%{_unitdir}/%{name}-account-reaper@.service
-install -p -D -m 755 %{SOURCE4} %{buildroot}%{_unitdir}/%{name}-container.service
-install -p -D -m 755 %{SOURCE41} %{buildroot}%{_unitdir}/%{name}-container@.service
-install -p -D -m 755 %{SOURCE43} %{buildroot}%{_unitdir}/%{name}-container-replicator.service
-install -p -D -m 755 %{SOURCE44} %{buildroot}%{_unitdir}/%{name}-container-replicator@.service
-install -p -D -m 755 %{SOURCE45} %{buildroot}%{_unitdir}/%{name}-container-auditor.service
-install -p -D -m 755 %{SOURCE46} %{buildroot}%{_unitdir}/%{name}-container-auditor@.service
-install -p -D -m 755 %{SOURCE47} %{buildroot}%{_unitdir}/%{name}-container-updater.service
-install -p -D -m 755 %{SOURCE48} %{buildroot}%{_unitdir}/%{name}-container-updater@.service
-install -p -D -m 755 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
-install -p -D -m 755 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
-install -p -D -m 755 %{SOURCE53} %{buildroot}%{_unitdir}/%{name}-object-replicator.service
-install -p -D -m 755 %{SOURCE54} %{buildroot}%{_unitdir}/%{name}-object-replicator@.service
-install -p -D -m 755 %{SOURCE55} %{buildroot}%{_unitdir}/%{name}-object-auditor.service
-install -p -D -m 755 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@.service
-install -p -D -m 755 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
-install -p -D -m 755 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
-install -p -D -m 755 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
-install -p -D -m 755 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
-install -p -D -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
+install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
+install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
+install -p -D -m 644 %{SOURCE23} %{buildroot}%{_unitdir}/%{name}-account-replicator.service
+install -p -D -m 644 %{SOURCE24} %{buildroot}%{_unitdir}/%{name}-account-replicator@.service
+install -p -D -m 644 %{SOURCE25} %{buildroot}%{_unitdir}/%{name}-account-auditor.service
+install -p -D -m 644 %{SOURCE26} %{buildroot}%{_unitdir}/%{name}-account-auditor@.service
+install -p -D -m 644 %{SOURCE27} %{buildroot}%{_unitdir}/%{name}-account-reaper.service
+install -p -D -m 644 %{SOURCE28} %{buildroot}%{_unitdir}/%{name}-account-reaper@.service
+install -p -D -m 644 %{SOURCE4} %{buildroot}%{_unitdir}/%{name}-container.service
+install -p -D -m 644 %{SOURCE41} %{buildroot}%{_unitdir}/%{name}-container@.service
+install -p -D -m 644 %{SOURCE43} %{buildroot}%{_unitdir}/%{name}-container-replicator.service
+install -p -D -m 644 %{SOURCE44} %{buildroot}%{_unitdir}/%{name}-container-replicator@.service
+install -p -D -m 644 %{SOURCE45} %{buildroot}%{_unitdir}/%{name}-container-auditor.service
+install -p -D -m 644 %{SOURCE46} %{buildroot}%{_unitdir}/%{name}-container-auditor@.service
+install -p -D -m 644 %{SOURCE47} %{buildroot}%{_unitdir}/%{name}-container-updater.service
+install -p -D -m 644 %{SOURCE48} %{buildroot}%{_unitdir}/%{name}-container-updater@.service
+install -p -D -m 644 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
+install -p -D -m 644 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
+install -p -D -m 644 %{SOURCE53} %{buildroot}%{_unitdir}/%{name}-object-replicator.service
+install -p -D -m 644 %{SOURCE54} %{buildroot}%{_unitdir}/%{name}-object-replicator@.service
+install -p -D -m 644 %{SOURCE55} %{buildroot}%{_unitdir}/%{name}-object-auditor.service
+install -p -D -m 644 %{SOURCE56} %{buildroot}%{_unitdir}/%{name}-object-auditor@.service
+install -p -D -m 644 %{SOURCE57} %{buildroot}%{_unitdir}/%{name}-object-updater.service
+install -p -D -m 644 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@.service
+install -p -D -m 644 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
+install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
+install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
 rm -fr %{buildroot}/%{python_sitelib}/test
 # Misc other
@@ -250,9 +243,12 @@ install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/container-server
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/object-server
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/proxy-server
+# syslog
+install -d -m 755 %{buildroot}%{_localstatedir}/log/swift
+install -p -D -m 644 %{SOURCE71} %{buildroot}%{_sysconfdir}/rsyslog.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE72} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-swift
 # Swift run directories
-mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
-install -p -m 0644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 # Install recon directory
 install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
 # Install home directory
@@ -359,6 +355,9 @@ exit 0
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
+%config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
+%config(noreplace) %{_sysconfdir}/logrotate.d/openstack-swift
+%dir %{_localstatedir}/log/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
@@ -475,8 +474,24 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
-* Fri Aug 15 2014 Derek Higgins <derekh@redhat.com> - XXX
-- Add dependency on python-oslo-sphinx
+* Mon Oct 27 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-2
+- Intercept logging to local0.* and local2.* (#997983)
+
+* Sat Oct 18 2014 Alan Pevec <apevec@redhat.com> 2.2.0-1
+- Update to Juno release 2.2.0
+
+* Mon Oct 13 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-0.2.rc1
+- Use After=network-online.target (#1150590)
+- Change the permissions of service units to 644, avoid warning messages
+
+* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2.2.0-0.1.rc1
+- Update to upstream 2.2.0.rc1
+
+* Fri Sep 19 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.1.0-2
+- Depend on python-keystonemiddleware instead of python-keystoneclient
+
+* Mon Sep 15 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.1.0-1
+- Update to upstream 2.1.0
 
 * Thu Jul 10 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.0.0-1
 - Update to upstream 2.0.0, re-apply our patches
