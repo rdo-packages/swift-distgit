@@ -7,7 +7,7 @@
 
 Name:             openstack-swift
 Version:          2.2.0
-Release:          2%{?dist}
+Release:          3%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -250,7 +250,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/swift
 install -p -D -m 644 %{SOURCE71} %{buildroot}%{_sysconfdir}/rsyslog.d/openstack-swift.conf
 install -p -D -m 644 %{SOURCE72} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-swift
 # Swift run directories
-install -p -D -m 644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_libdir}/tmpfiles.d/openstack-swift.conf
 # Install recon directory
 install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
 # Install home directory
@@ -354,7 +354,7 @@ exit 0
 %{_mandir}/man1/swift-orphans.1*
 %{_mandir}/man1/swift-recon.1*
 %{_mandir}/man1/swift-ring-builder.1*
-%config(noreplace) %{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+%{_libdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
 %config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
@@ -476,6 +476,10 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Jan 14 2015 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-3
+- Intercept logging to local[012].* because Packstack uses LOCAL1 too (#997983)
+- Move the /var/run conf from /etc/tmpfiles.d to /usr/lib/tmpfiles.d (#1180984)
+
 * Mon Oct 27 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-2
 - Intercept logging to local0.* and local2.* (#997983)
 
