@@ -478,6 +478,7 @@ exit 0
 %changelog
 * Wed Jan 28 2015 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-4
 - Update parameters to authtoken in proxy-server.conf, upstream review 150832
+- Add mandatory middleware to pipeline of proxy (#1051113, #1181126)
 
 * Wed Jan 14 2015 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-3
 - Intercept logging to local[012].* because Packstack uses LOCAL1 too (#997983)
