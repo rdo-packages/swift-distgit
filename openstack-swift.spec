@@ -1,19 +1,18 @@
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%endif
+%global release_name kilo
+%global milestone .0rc2
+%global service swift
 
-%global release_name juno
-%global milestone rc1
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.2.0
-Release:          4%{?dist}
+Version:          2.3
+Release:          0.1%{?milestone}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          https://launchpad.net/swift/juno/%{version}/+download/swift-%{version}.tar.gz
+Source0:          http://launchpad.net/%{service}/%{release_name}/%{release_name}-rc2/+download/%{service}-%{upstream_version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -54,25 +53,21 @@ Source71:         %{name}.rsyslog
 Source72:         %{name}.logrotate
 
 ## Based at https://github.com/redhat-openstack/swift/
-#
-# patches_base=2.2.0.rc1
-#
-Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
-Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
-BuildRequires:    python-oslo-sphinx
 BuildRequires:    python-pbr
 Requires:         python-configobj
-Requires:         python-eventlet >= 0.9.15
+Requires:         python-eventlet >= 0.16.1
 Requires:         python-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 Requires:         python-simplejson
 Requires:         pyxattr
 Requires:         python-setuptools
 Requires:         python-netifaces
+Requires:         python-dns
+Requires:         python-pyeclib
 
 BuildRequires:    systemd
 Requires(post):   systemd
@@ -147,12 +142,8 @@ This package contains the %{name} proxy server.
 %package doc
 Summary:          Documentation for %{name}
 Group:            Documentation
-%if 0%{?rhel} == 6
-BuildRequires:    python-sphinx10 >= 1.0
-%endif
-%if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 BuildRequires:    python-sphinx >= 1.0
-%endif
+BuildRequires:    python-oslo-sphinx >= 2.5.0
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
 BuildRequires:    pyxattr
@@ -164,32 +155,17 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{version}
-
-%patch0001 -p1
-%patch0002 -p1
-
-# Remove bundled egg-info
-rm -rf swift.egg-info
+%setup -q -n swift-%{upstream_version}
 
 # Let RPM handle the dependencies
 rm -f requirements.txt
-
-# Remove dependency on pbr and set version as per rpm
-sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.py
 
 %build
 %{__python} setup.py build
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 %{__python} setup.py build_sphinx
-%endif
-%if 0%{?rhel} == 6
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-SPHINX_DEBUG=1 sphinx-1.0-build -b html doc/source doc/build/html
-%endif
 # Fix hidden-file-or-dir warning
 #rm doc/build/html/.buildinfo
 
@@ -343,7 +319,8 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README.md
+%license LICENSE
+%doc README.md
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
 %{_mandir}/man5/dispersion.conf.5*
@@ -382,6 +359,7 @@ exit 0
 %{python_sitelib}/swift/common
 %{python_sitelib}/swift/account
 %{python_sitelib}/swift/obj
+%{python_sitelib}/swift/locale
 %{python_sitelib}/swift-%{version}*.egg-info
 
 %files account
@@ -450,6 +428,7 @@ exit 0
 %{_bindir}/swift-object-replicator
 %{_bindir}/swift-object-server
 %{_bindir}/swift-object-updater
+%{_bindir}/swift-object-reconstructor
 
 %files proxy
 %defattr(-,root,root,-)
