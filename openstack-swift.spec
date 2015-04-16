@@ -1,19 +1,12 @@
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%endif
-
-%global release_name juno
-%global milestone rc1
-
 Name:             openstack-swift
-Version:          XXX
-Release:          XXX{?dist}
+Version:          2.3.0
+Release:          0.1.rc1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          https://launchpad.net/swift/juno/%{version}/+download/swift-%{version}.tar.gz
+Source0:          http://tarballs.openstack.org/swift/swift-master.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -54,15 +47,10 @@ Source71:         %{name}.rsyslog
 Source72:         %{name}.logrotate
 
 ## Based at https://github.com/redhat-openstack/swift/
-#
-# patches_base=2.2.0.rc1
-#
-Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
-BuildRequires:    python-oslo-sphinx
 BuildRequires:    python-pbr
 Requires:         python-configobj
 Requires:         python-eventlet >= 0.9.15
@@ -146,12 +134,8 @@ This package contains the %{name} proxy server.
 %package doc
 Summary:          Documentation for %{name}
 Group:            Documentation
-%if 0%{?rhel} == 6
-BuildRequires:    python-sphinx10 >= 1.0
-%endif
-%if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 BuildRequires:    python-sphinx >= 1.0
-%endif
+BuildRequires:    python-oslo-sphinx >= 2.5.0
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
 BuildRequires:    pyxattr
@@ -165,29 +149,15 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n swift-%{upstream_version}
 
-%patch0001 -p1
-
-# Remove bundled egg-info
-rm -rf swift.egg-info
-
 # Let RPM handle the dependencies
 rm -f requirements.txt
-
-# Remove dependency on pbr and set version as per rpm
-sed -i 's/%RPMVERSION%/%{version}/; s/%RPMRELEASE%/%{release}/' swift/__init__.py
 
 %build
 %{__python} setup.py build
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 %{__python} setup.py build_sphinx
-%endif
-%if 0%{?rhel} == 6
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-SPHINX_DEBUG=1 sphinx-1.0-build -b html doc/source doc/build/html
-%endif
 # Fix hidden-file-or-dir warning
 #rm doc/build/html/.buildinfo
 
@@ -248,7 +218,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/swift
 install -p -D -m 644 %{SOURCE71} %{buildroot}%{_sysconfdir}/rsyslog.d/openstack-swift.conf
 install -p -D -m 644 %{SOURCE72} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-swift
 # Swift run directories
-install -p -D -m 644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_libdir}/tmpfiles.d/openstack-swift.conf
 # Install recon directory
 install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
 # Install home directory
@@ -341,7 +311,8 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README.md
+%license LICENSE
+%doc README.md
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
 %{_mandir}/man5/dispersion.conf.5*
@@ -352,7 +323,7 @@ exit 0
 %{_mandir}/man1/swift-orphans.1*
 %{_mandir}/man1/swift-recon.1*
 %{_mandir}/man1/swift-ring-builder.1*
-%config(noreplace) %{_sysconfdir}/tmpfiles.d/openstack-swift.conf
+%{_libdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
 %config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
@@ -380,6 +351,7 @@ exit 0
 %{python_sitelib}/swift/common
 %{python_sitelib}/swift/account
 %{python_sitelib}/swift/obj
+%{python_sitelib}/swift/locale
 %{python_sitelib}/swift-%{version}*.egg-info
 
 %files account
@@ -448,6 +420,7 @@ exit 0
 %{_bindir}/swift-object-replicator
 %{_bindir}/swift-object-server
 %{_bindir}/swift-object-updater
+%{_bindir}/swift-object-reconstructor
 
 %files proxy
 %defattr(-,root,root,-)
