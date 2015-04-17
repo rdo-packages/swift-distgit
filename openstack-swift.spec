@@ -53,13 +53,15 @@ BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
 Requires:         python-configobj
-Requires:         python-eventlet >= 0.9.15
+Requires:         python-eventlet >= 0.16.1
 Requires:         python-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 Requires:         python-simplejson
 Requires:         pyxattr
 Requires:         python-setuptools
 Requires:         python-netifaces
+Requires:         python-dns
+Requires:         python-pyeclib
 
 BuildRequires:    systemd
 Requires(post):   systemd
