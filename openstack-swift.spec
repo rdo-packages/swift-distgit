@@ -5,7 +5,7 @@
 
 Name:             openstack-swift
 Version:          2.3.0
-Release:          1%{?milestone}%{?dist}
+Release:          2%{?milestone}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            Development/Languages
@@ -455,5 +455,8 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Thu Apr 30 2015 Alan Pevec <alan.pevec@redhat.com> 2015.1.0-1
 - OpenStack Kilo release
