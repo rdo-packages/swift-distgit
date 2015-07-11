@@ -1,9 +1,8 @@
 Name:             openstack-swift
-Version:          2.3.0
-Release:          0.1.rc1%{?dist}
+Version:          XXX
+Release:          XXX
 Summary:          OpenStack Object Storage (Swift)
 
-Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
 Source0:          http://tarballs.openstack.org/swift/swift-master.tar.gz
@@ -84,7 +83,6 @@ expensive equipment.
 
 %package          account
 Summary:          Account services for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
@@ -96,7 +94,6 @@ This package contains the %{name} account server.
 
 %package          container
 Summary:          Container services for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
@@ -108,7 +105,6 @@ This package contains the %{name} container server.
 
 %package          object
 Summary:          Object services for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         rsync >= 3.0
@@ -121,7 +117,6 @@ This package contains the %{name} object server.
 
 %package          proxy
 Summary:          A proxy server for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         python-keystonemiddleware
@@ -135,7 +130,7 @@ This package contains the %{name} proxy server.
 
 %package doc
 Summary:          Documentation for %{name}
-Group:            Documentation
+
 BuildRequires:    python-sphinx >= 1.0
 BuildRequires:    python-oslo-sphinx >= 2.5.0
 # Required for generating docs (otherwise py-modindex.html is missing)
@@ -155,16 +150,16 @@ This package contains documentation files for %{name}.
 rm -f requirements.txt
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%{__python} setup.py build_sphinx
+%{__python2} setup.py build_sphinx
 # Fix hidden-file-or-dir warning
 #rm doc/build/html/.buildinfo
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 # systemd units
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
@@ -194,7 +189,7 @@ install -p -D -m 644 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.
 install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
 install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
-rm -fr %{buildroot}/%{python_sitelib}/test
+rm -fr %{buildroot}/%{python2_sitelib}/test
 # Misc other
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/account-server
@@ -334,7 +329,7 @@ exit 0
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
-%dir %{python_sitelib}/swift
+%dir %{python2_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-config
 %{_bindir}/swift-drive-audit
@@ -348,13 +343,13 @@ exit 0
 %{_bindir}/swift-orphans
 %{_bindir}/swift-form-signature
 %{_bindir}/swift-temp-url
-%{python_sitelib}/swift/*.py*
-%{python_sitelib}/swift/cli
-%{python_sitelib}/swift/common
-%{python_sitelib}/swift/account
-%{python_sitelib}/swift/obj
-%{python_sitelib}/swift/locale
-%{python_sitelib}/swift-%{version}*.egg-info
+%{python2_sitelib}/swift/*.py*
+%{python2_sitelib}/swift/cli
+%{python2_sitelib}/swift/common
+%{python2_sitelib}/swift/account
+%{python2_sitelib}/swift/obj
+%{python2_sitelib}/swift/locale
+%{python2_sitelib}/swift-%{version}*.egg-info
 
 %files account
 %defattr(-,root,root,-)
@@ -395,7 +390,7 @@ exit 0
 %{_bindir}/swift-container-replicator
 %{_bindir}/swift-container-updater
 %{_bindir}/swift-container-sync
-%{python_sitelib}/swift/container
+%{python2_sitelib}/swift/container
 
 %files object
 %defattr(-,root,root,-)
@@ -442,201 +437,10 @@ exit 0
 %{_bindir}/swift-container-reconciler
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
-%{python_sitelib}/swift/proxy
+%{python2_sitelib}/swift/proxy
 
 %files doc
 %defattr(-,root,root,-)
 %doc LICENSE doc/build/html
 
 %changelog
-* Mon Oct 27 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-2
-- Intercept logging to local0.* and local2.* (#997983)
-
-* Sat Oct 18 2014 Alan Pevec <apevec@redhat.com> 2.2.0-1
-- Update to Juno release 2.2.0
-
-* Mon Oct 13 2014 Pete Zaitcev <zaitcev@redhat.com> 2.2.0-0.2.rc1
-- Use After=network-online.target (#1150590)
-- Change the permissions of service units to 644, avoid warning messages
-
-* Tue Oct 07 2014 Haikel Guemar <hguemar@fedoraproject.org> 2.2.0-0.1.rc1
-- Update to upstream 2.2.0.rc1
-
-* Fri Sep 19 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.1.0-2
-- Depend on python-keystonemiddleware instead of python-keystoneclient
-
-* Mon Sep 15 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.1.0-1
-- Update to upstream 2.1.0
-
-* Thu Jul 10 2014 Pete Zaitcev <zaitcev@redhat.com> - 2.0.0-1
-- Update to upstream 2.0.0, re-apply our patches
-
-* Fri Jun 27 2014 Pete Zaitcev <zaitcev@redhat.com> - 1.13.1-5
-- Fix CVE-2014-3497, unquoted realm in WWW-Authenticate
-
-* Tue Jun 24 2014 Pete Zaitcev <zaitcev@redhat.com> - 1.13.1-4
-- Move default ports from 600x to 620x (#1107907 and a dozen of others)
-
-* Mon Jun 23 2014 Pete Zaitcev - 1.13.1-3
-- Drop python-swiftclient to implement bz#1058131 in Rawhide
-
-* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.13.1-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
-
-* Sat Apr 19 2014 Pádraig Brady <pbrady@redhat.com> - 1.13.1-1
-- Update to Icehouse release
-
-* Sat Apr 12 2014 Alan Pevec <apevec@redhat.com> 1.13.1-0.1.rc2
-- Update to Icehouse milestone 1.13.1.rc2
-
-* Fri Jan 31 2014 Alan Pevec <apevec@redhat.com> 1.12.0-1
-- Update to Icehouse milestone 1.12.0
-
-* Fri Jan 03 2014 Pádraig Brady <pbrady@redhat.com> 1.11.0-1
-- Update to first icehouse release 1.11.0
-
-* Wed Dec 04 2013 Pete Zaitcev <zaitcev@redhat.com> 1.10.0-3
-- Change config modes to 640, like in every other OpenStack project
-
-* Fri Oct 18 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-2
-- Update to Havana GA
-- Fix service startup issue due to bad depencency checking (#1020449)
-- add swift home directory for signing_dir (#967631)
-
-* Wed Oct 09 2013 Pádraig Brady <pbrady@redhat.com> 1.10.0-0.1.rc1
-- Update to 1.10.0 RC1
-
-* Mon Sep 23 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-2
-- Move account/ to base package like we did for obj/ in 1.7.5-4
-
-* Thu Sep 19 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.1-1
-- Update to 1.9.1, includes CVE-2013-4155
-- Includes unfortunately standards-compliant XML listings, to be fixed
-- Reseller prefix in Keystone must end with an underscore
-- Make only proxy depend on openstack-swift-plugin-swift3
-
-* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.9.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
-
-* Wed Jul 17 2013 Pete Zaitcev <zaitcev@redhat.com> 1.9.0-1
-- Update to 1.9.0
-
-* Fri Apr 05 2013 Derek Higgins <derekh@redhat.com> - 1.8.0-2
-- change path to middleware in proxy conf file
-- add dependency for python-keystoneclient for proxy
-
-* Thu Apr 4 2013 Pete Zaitcev <zaitcev@redhat.com> 1.8.0-1
-- Update to 1.8.0; this is the "Grizzly" release of OpenStack
-
-* Mon Mar 18 2013 Pete Zaitcev <zaitcev@redhat.com> 1.7.6-2
-- Move ownership of /var/cache/swift to main package per Zane's comments
-
-* Sun Mar 10 2013 Alan Pevec <apevec@redhat.com> 1.7.6-1
-- Update to 1.7.6
-
-* Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-4
-- Fix the moved object-expirer so it runs with object is not installed
-
-* Thu Feb 14 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-3
-- Add /var/cache/swift, by bz#870409, equally affects all Fedora versions
-
-* Mon Jan 28 2013 Pete Zaitcev <zaitcev@redhat.com> - 1.7.5-2
-- Drop dependency on python-webob, because Swift uses an in-tree swob now
-- Update scriptlets to use macro systemd_postun and friends (bz#850016)
-- Drop systemd-sysv-convert
-- Relocate object-expirer into the proxy bundle
-- Add the expirer configuration, multi-node only
-
-* Mon Dec 03 2012 Derek Higgins <derekh@redhat.com> - 1.7.5-1
-- Update to 1.7.5
-- adding swift-bench-client
-- removing dup dependency on python-netifaces
-- changing README -> README.md
-
-* Mon Nov 5 2012 Pete Zaitcev <zaitcev@redhat.com> - 1.7.4-2
-- Add missing unit files bz#807170
-
-* Thu Sep 27 2012 Derek Higgins <derekh@redhat.com> - 1.7.4-1
-- Update to 1.7.4
-
-* Thu Sep 20 2012 Derek Higgins <derekh@redhat.com> 1.7.2-1
-- Update to 1.7.2
-
-* Fri Sep 14 2012 Derek Higgins <derekh@redhat.com> 1.7.0-2
-- Adding config files
-
-* Thu Sep 13 2012 Derek Higgins <derekh@redhat.com> 1.7.0-1
-- Update to 1.7.0
-
-* Mon Aug 13 2012 Alan Pevec <apevec@redhat.com> 1.6.0-1
-- Update to 1.6.0
-
-* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.5.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
-
-* Fri Jun 15 2012 Alan Pevec <apevec@redhat.com> 1.5.0-1
-- Update to 1.5.0
-
-* Thu Mar 22 2012 Alan Pevec <apevec@redhat.com> 1.4.8-1
-- Update to 1.4.8
-
-* Fri Mar 09 2012 Alan Pevec <apevec@redhat.com> 1.4.7-1
-- Update to 1.4.7
-
-* Mon Feb 13 2012 Alan Pevec <apevec@redhat.com> 1.4.6-1
-- Update to 1.4.6
-- Switch from SysV init scripts to systemd units rhbz#734594
-
-* Thu Jan 26 2012 Alan Pevec <apevec@redhat.com> 1.4.5-1
-- Update to 1.4.5
-
-* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.4-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
-
-* Fri Nov 25 2011 Alan Pevec <apevec@redhat.com> 1.4.4-1
-- Update to 1.4.4
-
-* Wed Nov 23 2011 David Nalley <david@gnsa.us> -1.4.3-2
-* fixed some missing requires
-
-* Sat Nov 05 2011 David Nalley <david@gnsa.us> - 1.4.3-1
-- Update to 1.4.3
-- fix init script add, registration, deletion BZ 685155
-- fixing BR to facilitate epel6 building
-
-* Tue Aug 23 2011 David Nalley <david@gnsa.us> - 1.4.0-2
-- adding uid:gid for bz 732693
-
-* Wed Jun 22 2011 David Nalley <david@gnsa.us> - 1.4.1-1
-- Update to 1.4.0
-- change the name of swift binary from st to swift
-
-* Sat Jun 04 2011 David Nalley <david@gnsa.us> - 1.4.0-1
-- Update to 1.4.0
-
-* Fri May 20 2011 David Nalley <david@gnsa.us> - 1.3.0-1
-- Update to 1.3.0
-
-* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
-
-* Sun Dec 05 2010 Silas Sewell <silas@sewell.ch> - 1.1.0-1
-- Update to 1.1.0
-
-* Sun Aug 08 2010 Silas Sewell <silas@sewell.ch> - 1.0.2-5
-- Update for new Python macro guidelines
-- Use dos2unix instead of sed
-- Make gecos field more descriptive
-
-* Wed Jul 28 2010 Silas Sewell <silas@sewell.ch> - 1.0.2-4
-- Rename to openstack-swift
-
-* Wed Jul 28 2010 Silas Sewell <silas@sewell.ch> - 1.0.2-3
-- Fix return value in swift-functions
-
-* Tue Jul 27 2010 Silas Sewell <silas@sewell.ch> - 1.0.2-2
-- Add swift user
-- Update init scripts
-
-* Sun Jul 18 2010 Silas Sewell <silas@sewell.ch> - 1.0.2-1
-- Initial build
