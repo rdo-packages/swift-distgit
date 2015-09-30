@@ -1,17 +1,19 @@
-%global release_name kilo
+%global release_name liberty
 %global service swift
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.3.0
-Release:          2%{?milestone}%{?dist}
+Version:          2.4.0
+Release:          1%{?milestone}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
-Group:            Development/Languages
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
 Source0:          http://launchpad.net/%{service}/%{release_name}/%{version}/+download/%{service}-%{upstream_version}.tar.gz
+
+Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
+Patch0002: 0002-Add-fixes-for-building-the-doc-package.patch
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -89,7 +91,6 @@ expensive equipment.
 
 %package          account
 Summary:          Account services for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
@@ -101,7 +102,6 @@ This package contains the %{name} account server.
 
 %package          container
 Summary:          Container services for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 
@@ -113,7 +113,6 @@ This package contains the %{name} container server.
 
 %package          object
 Summary:          Object services for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         rsync >= 3.0
@@ -126,11 +125,11 @@ This package contains the %{name} object server.
 
 %package          proxy
 Summary:          A proxy server for Swift
-Group:            Applications/System
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         python-keystonemiddleware
 Requires:         openstack-swift-plugin-swift3
+Requires:         openstack-swift-container
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -140,7 +139,7 @@ This package contains the %{name} proxy server.
 
 %package doc
 Summary:          Documentation for %{name}
-Group:            Documentation
+
 BuildRequires:    python-sphinx >= 1.0
 BuildRequires:    python-oslo-sphinx >= 2.5.0
 # Required for generating docs (otherwise py-modindex.html is missing)
@@ -156,20 +155,23 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n swift-%{upstream_version}
 
+%patch0001 -p1
+%patch0002 -p1
+
 # Let RPM handle the dependencies
 rm -f requirements.txt
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%{__python} setup.py build_sphinx
+%{__python2} setup.py build_sphinx
 # Fix hidden-file-or-dir warning
 #rm doc/build/html/.buildinfo
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 # systemd units
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
@@ -199,7 +201,7 @@ install -p -D -m 644 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.
 install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
 install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 # Remove tests
-rm -fr %{buildroot}/%{python_sitelib}/test
+rm -fr %{buildroot}/%{python2_sitelib}/test
 # Misc other
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/account-server
@@ -339,13 +341,14 @@ exit 0
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
-%dir %{python_sitelib}/swift
+%dir %{python2_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-config
 %{_bindir}/swift-drive-audit
 %{_bindir}/swift-get-nodes
 %{_bindir}/swift-init
 %{_bindir}/swift-ring-builder
+%{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-dispersion-populate
 %{_bindir}/swift-dispersion-report
 %{_bindir}/swift-recon*
@@ -353,13 +356,13 @@ exit 0
 %{_bindir}/swift-orphans
 %{_bindir}/swift-form-signature
 %{_bindir}/swift-temp-url
-%{python_sitelib}/swift/*.py*
-%{python_sitelib}/swift/cli
-%{python_sitelib}/swift/common
-%{python_sitelib}/swift/account
-%{python_sitelib}/swift/obj
-%{python_sitelib}/swift/locale
-%{python_sitelib}/swift-%{version}*.egg-info
+%{python2_sitelib}/swift/*.py*
+%{python2_sitelib}/swift/cli
+%{python2_sitelib}/swift/common
+%{python2_sitelib}/swift/account
+%{python2_sitelib}/swift/obj
+%{python2_sitelib}/swift/locale
+%{python2_sitelib}/swift-%{version}*.egg-info
 
 %files account
 %defattr(-,root,root,-)
@@ -400,7 +403,7 @@ exit 0
 %{_bindir}/swift-container-replicator
 %{_bindir}/swift-container-updater
 %{_bindir}/swift-container-sync
-%{python_sitelib}/swift/container
+%{python2_sitelib}/swift/container
 
 %files object
 %defattr(-,root,root,-)
@@ -447,14 +450,16 @@ exit 0
 %{_bindir}/swift-container-reconciler
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
-%{python_sitelib}/swift/proxy
+%{python2_sitelib}/swift/proxy
 
 %files doc
 %defattr(-,root,root,-)
-%license LICENSE
-%doc doc/build/html
+%doc LICENSE doc/build/html
 
 %changelog
+* Wed Sep 30 2015 Haikel Guemar <hguemar@fedoraproject.org> 2.4.0-1
+- Update to upstream 2.4.0
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
