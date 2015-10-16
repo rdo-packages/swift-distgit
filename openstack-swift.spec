@@ -4,7 +4,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.4.0
+Version:          2.5.0
 Release:          1%{?milestone}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
@@ -59,6 +59,7 @@ BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
+BuildRequires:    python-six
 Requires:         python-configobj
 Requires:         python-eventlet >= 0.16.1
 Requires:         python-greenlet >= 0.3.1
@@ -66,6 +67,7 @@ Requires:         python-paste-deploy
 Requires:         python-simplejson
 Requires:         pyxattr
 Requires:         python-setuptools
+Requires:         python-six
 Requires:         python-netifaces
 Requires:         python-dns
 Requires:         python-pyeclib
@@ -457,6 +459,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Oct 16 2015 Haikel Guemar <hguemar@fedoraproject.org> 2.5.0-1
+- Update to upstream 2.5.0
+
 * Wed Sep 30 2015 Haikel Guemar <hguemar@fedoraproject.org> 2.4.0-1
 - Update to upstream 2.4.0
 
