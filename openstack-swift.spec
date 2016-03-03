@@ -129,6 +129,16 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains the %{name} proxy server.
 
+%package -n python-swift-tests
+Summary:        Swift tests
+Requires:       openstack-swift = %{version}-%{release}
+
+%description -n python-swift-tests
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
+in clusters for reliable, redundant, and large-scale storage of static objects.
+
+This package contains the Swift test files.
+
 %package doc
 Summary:          Documentation for %{name}
 
@@ -189,8 +199,6 @@ install -p -D -m 644 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@
 install -p -D -m 644 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
 install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
 install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
-# Remove tests
-rm -fr %{buildroot}/%{python2_sitelib}/test
 # Misc other
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/account-server
@@ -231,6 +239,9 @@ for m in doc/manpages/*.1; do
   install -p -m 0644 $m %{buildroot}%{_mandir}/man1
 done
 
+# tests
+mkdir -p %{buildroot}%{_datadir}/swift/test
+cp -r test %{buildroot}%{python2_sitelib}/swift/test
 %clean
 rm -rf %{buildroot}
 
@@ -352,6 +363,11 @@ exit 0
 %{python2_sitelib}/swift/obj
 %{python2_sitelib}/swift/locale
 %{python2_sitelib}/swift-%{version}*.egg-info
+%exclude %{python2_sitelib}/swift/test
+
+%files -n python-swift-tests
+%license LICENSE
+%{python2_sitelib}/swift/test
 
 %files account
 %defattr(-,root,root,-)
