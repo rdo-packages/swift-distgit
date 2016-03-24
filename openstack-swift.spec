@@ -1,11 +1,13 @@
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+
 Name:             openstack-swift
-Version:          XXX
-Release:          XXX
+Version:          2.6.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://tarballs.openstack.org/swift/swift-master.tar.gz
+Source0:          http://tarballs.openstack.org/swift/swift-%{version}%{?milestone}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -462,3 +464,5 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Mar 24 2016 RDO <rdo-list@redhat.com> 2.6.0-0.1
+- Rebuild for Mitaka 
