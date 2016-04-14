@@ -1,5 +1,5 @@
-# UUID          Group Name
-6ddfecad023c6f4fa3ac8c4d2583c502ea675a73 	Non-Interactive Users
-685c6a10ccbbf73fda6cca19290f6a4d4aaee0bc       	swift-distgit-core
-713f5ca5314cc592feb3c0c3b16391d79fffc975        	swift-distgit-ptl
-global:Registered-Users		Registered Users
+# UUID                                  	Group Name
+#
+685c6a10ccbbf73fda6cca19290f6a4d4aaee0bc	swift-distgit-core
+713f5ca5314cc592feb3c0c3b16391d79fffc975	openstack/swift-distgit-ptl
+global:Registered-Users                 	Registered Users
