@@ -321,7 +321,7 @@ exit 0
 %files
 %defattr(-,root,root,-)
 %license LICENSE
-%doc README.md
+%doc README.rst
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
 %{_mandir}/man5/dispersion.conf.5*
