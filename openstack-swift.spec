@@ -69,6 +69,9 @@ Requires(postun): systemd
 Requires(pre):    shadow-utils
 Obsoletes:        openstack-swift-auth  <= 1.4.0
 
+# Required to compile translation files
+BuildRequires:    python-babel
+
 %description
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
 in clusters for reliable, redundant, and large-scale storage of static objects.
@@ -155,12 +158,16 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{upstream_version}
+%autosetup -n swift-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
 rm -f requirements.txt
 
 %build
+# Generate i18n files
+%{__python2} setup.py compile_catalog
+
+# Build
 %{__python2} setup.py build
 # Fails unless we create the build directory
 mkdir -p doc/build
@@ -242,6 +249,16 @@ done
 # tests
 mkdir -p %{buildroot}%{_datadir}/swift/test
 cp -r test %{buildroot}%{python2_sitelib}/swift/test
+
+# Install i18n files
+install -d -m 755 %{buildroot}%{_datadir}
+rm %{buildroot}%{python2_sitelib}/swift/locale/*/LC_*/swift*po
+rm %{buildroot}%{python2_sitelib}/swift/locale/*pot || : #pot files are being removed from source git trees
+mv %{buildroot}%{python2_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
+
+# Find language files
+%find_lang swift --all-name
+
 %clean
 rm -rf %{buildroot}
 
@@ -318,7 +335,7 @@ exit 0
 %systemd_postun %{name}-proxy.service
 %systemd_postun %{name}-object-expirer.service
 
-%files
+%files -f swift.lang
 %defattr(-,root,root,-)
 %license LICENSE
 %doc README.rst
@@ -361,7 +378,6 @@ exit 0
 %{python2_sitelib}/swift/common
 %{python2_sitelib}/swift/account
 %{python2_sitelib}/swift/obj
-%{python2_sitelib}/swift/locale
 %{python2_sitelib}/swift-%{version}*.egg-info
 %exclude %{python2_sitelib}/swift/test
 
