@@ -1,7 +1,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.6.0
+Version:          2.7.0
 Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
@@ -464,5 +464,8 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Apr 12 2016 Haikel Guemar <hguemar@fedoraproject.org> 2.7.0-1
+- Update to 2.7.0
+
 * Thu Mar 24 2016 RDO <rdo-list@redhat.com> 2.6.0-0.1
 - Rebuild for Mitaka 
