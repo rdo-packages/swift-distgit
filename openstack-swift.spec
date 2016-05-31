@@ -44,6 +44,8 @@ Source20:         %{name}.tmpfs
 Source7:          swift.conf
 Source71:         %{name}.rsyslog
 Source72:         %{name}.logrotate
+Source73:         %{name}-object-reconstructor.service
+Source74:         %{name}-object-reconstructor@.service
 
 ## Based at https://github.com/redhat-openstack/swift/
 
@@ -204,6 +206,8 @@ install -p -D -m 644 %{SOURCE58} %{buildroot}%{_unitdir}/%{name}-object-updater@
 install -p -D -m 644 %{SOURCE59} %{buildroot}%{_unitdir}/%{name}-object-expirer.service
 install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-reconciler.service
 install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
+install -p -D -m 644 %{SOURCE73} %{buildroot}%{_unitdir}/%{name}-object-reconstructor.service
+install -p -D -m 644 %{SOURCE74} %{buildroot}%{_unitdir}/%{name}-object-reconstructor@.service
 # Misc other
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/account-server
