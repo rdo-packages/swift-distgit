@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_88944a38",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-06-01T07:38:04Z",
+      "side": 1,
+      "message": "spec file on rpm-master branch is actually a spec template, and cannot be used directly by the rpmbuild, DLRN generates Version: Release: and Source0: lines using upstream version derived from git source tee (basically, for Python projects it\u0027s parsing setup.py --version).\nThat\u0027s why XXX is kept as a reminder that actual version is not known at the time of writing :)\n\n\"Normal\" distgit are in RELEASE-rdo branches, for RDO Mitaka that\u0027s mitaka-rdo.\n*-rdo will be eventually automatically generated from rpm-* branches, for now it\u0027s manual and I did 2.7.0 rebase in\nhttps://github.com/rdo-packages/swift-distgit/commits/mitaka-rdo",
+      "revId": "49b0d0a46b6af13aa64537b4d634308c06c92720",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e8a2a699",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-06-01T07:38:04Z",
+      "side": 1,
+      "message": "rpm-master doesn\u0027t have %changelog entries, they will be eventually automatically generated using reno on *-rdo branches.",
+      "revId": "49b0d0a46b6af13aa64537b4d634308c06c92720",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
