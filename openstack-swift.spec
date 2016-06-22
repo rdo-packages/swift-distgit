@@ -125,7 +125,6 @@ Summary:          A proxy server for Swift
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         python-keystonemiddleware
-Requires:         openstack-swift-plugin-swift3
 Requires:         openstack-swift-container
 
 %description      proxy
