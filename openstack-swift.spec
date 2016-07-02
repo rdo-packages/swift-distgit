@@ -125,7 +125,6 @@ Summary:          A proxy server for Swift
 
 Requires:         %{name} = %{version}-%{release}
 Requires:         python-keystonemiddleware
-Requires:         openstack-swift-container
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -381,7 +380,9 @@ exit 0
 %{python2_sitelib}/swift/cli
 %{python2_sitelib}/swift/common
 %{python2_sitelib}/swift/account
+%{python2_sitelib}/swift/container
 %{python2_sitelib}/swift/obj
+%{python2_sitelib}/swift/proxy
 %{python2_sitelib}/swift-%{version}*.egg-info
 %exclude %{python2_sitelib}/swift/test
 
@@ -428,7 +429,6 @@ exit 0
 %{_bindir}/swift-container-replicator
 %{_bindir}/swift-container-updater
 %{_bindir}/swift-container-sync
-%{python2_sitelib}/swift/container
 
 %files object
 %defattr(-,root,root,-)
@@ -477,7 +477,6 @@ exit 0
 %{_bindir}/swift-container-reconciler
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
-%{python2_sitelib}/swift/proxy
 
 %files doc
 %defattr(-,root,root,-)
