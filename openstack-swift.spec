@@ -47,32 +47,18 @@ Source72:         %{name}.logrotate
 Source73:         %{name}-object-reconstructor.service
 Source74:         %{name}-object-reconstructor@.service
 
-## Based at https://github.com/redhat-openstack/swift/
-
 BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
-Requires:         python-configobj
-Requires:         python-eventlet >= 0.16.1
-Requires:         python-greenlet >= 0.3.1
-Requires:         python-paste-deploy
-Requires:         python-simplejson
-Requires:         pyxattr
-Requires:         python-setuptools
-Requires:         python-netifaces
-Requires:         python-dns
-Requires:         python-pyeclib
 
 BuildRequires:    systemd
-Requires(post):   systemd
-Requires(preun):  systemd
-Requires(postun): systemd
-Requires(pre):    shadow-utils
 Obsoletes:        openstack-swift-auth  <= 1.4.0
 
 # Required to compile translation files
 BuildRequires:    python-babel
+
+Requires:         python-swift = %{version}-%{release}
 
 %description
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -86,10 +72,37 @@ logic to ensure data replication and distribution across different devices,
 inexpensive commodity hard drives and servers can be used in lieu of more
 expensive equipment.
 
+%package -n       python-swift
+Summary:          Python libraries for the OpenStack Object Storage (Swift)
+
+Obsoletes:        openstack-swift <= 2.9.0
+
+Requires:         python-configobj
+Requires:         python-eventlet >= 0.16.1
+Requires:         python-greenlet >= 0.3.1
+Requires:         python-paste-deploy
+# Not in 2.7.0 anymore, went to stock json in order to support py3
+#Requires:         python-simplejson
+Requires:         pyxattr
+Requires:         python-setuptools
+Requires:         python-netifaces
+Requires:         python-dns
+Requires:         python-pyeclib
+
+Requires(post):   systemd
+Requires(preun):  systemd
+Requires(postun): systemd
+Requires(pre):    shadow-utils
+
+%description -n   python-swift
+The Python library associated with the OpenStack Object Storage (Swift)
+service.
+
 %package          account
 Summary:          Account services for Swift
 
-Requires:         %{name} = %{version}-%{release}
+Requires:         python-swift = %{version}-%{release}
+Requires:         rsync >= 3.0
 
 %description      account
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -100,7 +113,8 @@ This package contains the %{name} account server.
 %package          container
 Summary:          Container services for Swift
 
-Requires:         %{name} = %{version}-%{release}
+Requires:         python-swift = %{version}-%{release}
+Requires:         rsync >= 3.0
 
 %description      container
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -111,7 +125,7 @@ This package contains the %{name} container server.
 %package          object
 Summary:          Object services for Swift
 
-Requires:         %{name} = %{version}-%{release}
+Requires:         python-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      object
@@ -123,9 +137,8 @@ This package contains the %{name} object server.
 %package          proxy
 Summary:          A proxy server for Swift
 
-Requires:         %{name} = %{version}-%{release}
+Requires:         python-swift = %{version}-%{release}
 Requires:         python-keystonemiddleware
-Requires:         openstack-swift-container
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -135,7 +148,7 @@ This package contains the %{name} proxy server.
 
 %package -n python-swift-tests
 Summary:        Swift tests
-Requires:       openstack-swift = %{version}-%{release}
+Requires:       python-swift = %{version}-%{release}
 
 %description -n python-swift-tests
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -339,12 +352,11 @@ exit 0
 %systemd_postun %{name}-proxy.service
 %systemd_postun %{name}-object-expirer.service
 
-%files -f swift.lang
+%files -n python-swift -f swift.lang
 %defattr(-,root,root,-)
 %license LICENSE
 %doc README.rst
-%doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
-%doc etc/swift.conf-sample
+%doc etc/*-sample
 %{_mandir}/man5/dispersion.conf.5*
 %{_mandir}/man1/swift-dispersion-populate.1*
 %{_mandir}/man1/swift-dispersion-report.1*
@@ -381,7 +393,9 @@ exit 0
 %{python2_sitelib}/swift/cli
 %{python2_sitelib}/swift/common
 %{python2_sitelib}/swift/account
+%{python2_sitelib}/swift/container
 %{python2_sitelib}/swift/obj
+%{python2_sitelib}/swift/proxy
 %{python2_sitelib}/swift-%{version}*.egg-info
 %exclude %{python2_sitelib}/swift/test
 
@@ -391,7 +405,6 @@ exit 0
 
 %files account
 %defattr(-,root,root,-)
-%doc etc/account-server.conf-sample
 %{_mandir}/man5/account-server.conf.5*
 %{_mandir}/man1/swift-account-auditor.1*
 %{_mandir}/man1/swift-account-info.1*
@@ -410,7 +423,6 @@ exit 0
 
 %files container
 %defattr(-,root,root,-)
-%doc etc/container-server.conf-sample
 %{_mandir}/man5/container-server.conf.5*
 %{_mandir}/man1/swift-container-auditor.1*
 %{_mandir}/man1/swift-container-info.1*
@@ -428,11 +440,9 @@ exit 0
 %{_bindir}/swift-container-replicator
 %{_bindir}/swift-container-updater
 %{_bindir}/swift-container-sync
-%{python2_sitelib}/swift/container
 
 %files object
 %defattr(-,root,root,-)
-%doc etc/object-server.conf-sample etc/rsyncd.conf-sample
 %{_mandir}/man5/object-server.conf.5*
 %{_mandir}/man1/swift-object-auditor.1*
 %{_mandir}/man1/swift-object-info.1*
@@ -461,7 +471,6 @@ exit 0
 
 %files proxy
 %defattr(-,root,root,-)
-%doc etc/proxy-server.conf-sample etc/object-expirer.conf-sample
 %{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man5/proxy-server.conf.5*
 %{_mandir}/man1/swift-object-expirer.1*
@@ -477,7 +486,6 @@ exit 0
 %{_bindir}/swift-container-reconciler
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
-%{python2_sitelib}/swift/proxy
 
 %files doc
 %defattr(-,root,root,-)
