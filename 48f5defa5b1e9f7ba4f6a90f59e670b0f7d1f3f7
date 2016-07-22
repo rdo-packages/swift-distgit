@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_4ad6f7c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-07-22T08:40:16Z",
+      "side": 1,
+      "message": "this links back to review.rdo it should be explicit URL https://review.openstack.org/345029",
+      "revId": "48f5defa5b1e9f7ba4f6a90f59e670b0f7d1f3f7",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
