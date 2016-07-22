@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_0ac19fe4",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-07-22T10:52:59Z",
+      "side": 1,
+      "message": "btw \u003c\u003d 2.9.0 might not work if we want to backport this to Mitaka",
+      "revId": "a7b6c4f1447a18f9cf945a8d05c9e8219063e4f3",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
