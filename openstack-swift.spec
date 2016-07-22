@@ -75,6 +75,7 @@ expensive equipment.
 %package -n       python-swift
 Summary:          Python libraries for the OpenStack Object Storage (Swift)
 
+Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift <= 2.9.0
 
 Requires:         python-configobj
@@ -276,7 +277,7 @@ mv %{buildroot}%{python2_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
 %clean
 rm -rf %{buildroot}
 
-%pre
+%pre -n python-swift
 getent group swift >/dev/null || groupadd -r swift -g 160
 getent passwd swift >/dev/null || \
 useradd -r -g swift -u 160 -d %{_sharedstatedir}/swift -s /sbin/nologin \
