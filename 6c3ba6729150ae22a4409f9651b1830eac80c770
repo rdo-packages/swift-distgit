@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_8d22c9ff",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-07-22T19:54:52Z",
+      "side": 0,
+      "message": "Why was this removed?\nLooks like at least some Puppet manifests relied on that.",
+      "revId": "6c3ba6729150ae22a4409f9651b1830eac80c770",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
