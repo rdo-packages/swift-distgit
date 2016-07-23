@@ -76,7 +76,7 @@ expensive equipment.
 Summary:          Python libraries for the OpenStack Object Storage (Swift)
 
 Provides:         openstack-swift = %{version}-%{release}
-Obsoletes:        openstack-swift <= 2.9.0
+Obsoletes:        openstack-swift
 
 Requires:         python-configobj
 Requires:         python-eventlet >= 0.16.1
