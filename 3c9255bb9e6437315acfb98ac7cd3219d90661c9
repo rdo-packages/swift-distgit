@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_72fe466d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "nice! agree, I think we are still missing bulk and tempurl",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_1209d295",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "defaults",
+      "range": {
+        "startLine": 30,
+        "startChar": 22,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_b2f71e8c",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "why did we choose to default to 8 and not auto?",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_d2d73aec",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "can we add a comment above saying this pipeline has no security at all and if deployed as is, the cluster would be completely public",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_f2da3616",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "missing the tempauth filter below, even if it\u0027s commented out, it should be provided",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_3204ce7d",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "how about bulk and tempurl?",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_52034a73",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2016-08-11T19:43:56Z",
+      "side": 1,
+      "message": "would it be wrong to enable versioned writes here and remove from container configuration? or maybe another patch?",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
