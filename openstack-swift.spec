@@ -164,6 +164,9 @@ BuildRequires:    python-sphinx >= 1.0
 BuildRequires:    python-oslo-sphinx >= 2.5.0
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
+BuildRequires:    python-netifaces
+BuildRequires:    python-paste-deploy
+BuildRequires:    python-pyeclib
 BuildRequires:    pyxattr
 
 %description      doc
@@ -363,6 +366,7 @@ exit 0
 %{_mandir}/man1/swift-dispersion-report.1*
 %{_mandir}/man1/swift-get-nodes.1*
 %{_mandir}/man1/swift-init.1*
+%{_mandir}/man1/swift-oldies.1.*
 %{_mandir}/man1/swift-orphans.1*
 %{_mandir}/man1/swift-recon.1*
 %{_mandir}/man1/swift-ring-builder.1*
