@@ -164,6 +164,9 @@ BuildRequires:    python-sphinx >= 1.0
 BuildRequires:    python-oslo-sphinx >= 2.5.0
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
+BuildRequires:    python-netifaces
+BuildRequires:    python-paste-deploy
+BuildRequires:    python-pyeclib
 BuildRequires:    pyxattr
 
 %description      doc
