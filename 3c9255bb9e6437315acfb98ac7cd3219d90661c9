@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_78caa5a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2016-08-18T21:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_72fe466d",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_1209d295",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_98d96186",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2016-08-18T21:48:28Z",
+      "side": 1,
+      "message": "It hanged on since the default was 2, and that was found insufficient for most people. Probably could be dropped, although I\u0027m not convinced leaving it at CPU count is the best idea.",
+      "parentUuid": "1a106d94_b2f71e8c",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_d2d73aec",
         "filename": "proxy-server.conf",
         "patchSetId": 3
@@ -76,6 +118,24 @@
       "writtenOn": "2016-08-11T19:43:56Z",
       "side": 1,
       "message": "can we add a comment above saying this pipeline has no security at all and if deployed as is, the cluster would be completely public",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_f8e69543",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2016-08-18T21:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_d2d73aec",
       "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
@@ -99,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_d8e3d931",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2016-08-18T21:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_f2da3616",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_3204ce7d",
         "filename": "proxy-server.conf",
         "patchSetId": 3
@@ -116,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_38d02d53",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2016-08-18T21:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_3204ce7d",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_52034a73",
         "filename": "proxy-server.conf",
         "patchSetId": 3
@@ -127,6 +223,24 @@
       "writtenOn": "2016-08-11T19:43:56Z",
       "side": 1,
       "message": "would it be wrong to enable versioned writes here and remove from container configuration? or maybe another patch?",
+      "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_18d57143",
+        "filename": "proxy-server.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2016-08-18T21:48:28Z",
+      "side": 1,
+      "message": "Indeed I would rather make another one. A while back there was a concern that people would enable versioning by mistake and fill up clusters. In private clouds without a chargeback mechanism, there was no feedback to users when they do something ill-advised. But may be groundless now that we have working quotas.",
+      "parentUuid": "1a106d94_52034a73",
       "revId": "3c9255bb9e6437315acfb98ac7cd3219d90661c9",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
