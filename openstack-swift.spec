@@ -362,14 +362,21 @@ exit 0
 %doc README.rst
 %doc etc/*-sample
 %{_mandir}/man5/dispersion.conf.5*
+%{_mandir}/man1/swift-account-audit.1*
+%{_mandir}/man1/swift-ring-builder-analyzer.1*
+%{_mandir}/man1/swift-config.1*
 %{_mandir}/man1/swift-dispersion-populate.1*
 %{_mandir}/man1/swift-dispersion-report.1*
+%{_mandir}/man1/swift-drive-audit.1*
+%{_mandir}/man1/swift-form-signature.1*
 %{_mandir}/man1/swift-get-nodes.1*
 %{_mandir}/man1/swift-init.1*
 %{_mandir}/man1/swift-oldies.1.*
 %{_mandir}/man1/swift-orphans.1*
 %{_mandir}/man1/swift-recon.1*
+%{_mandir}/man1/swift-recon-cron.1*
 %{_mandir}/man1/swift-ring-builder.1*
+%{_mandir}/man1/swift-temp-url.1*
 %{_libdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
@@ -451,6 +458,7 @@ exit 0
 %{_mandir}/man5/object-server.conf.5*
 %{_mandir}/man1/swift-object-auditor.1*
 %{_mandir}/man1/swift-object-info.1*
+%{_mandir}/man1/swift-object-reconstructor.1*
 %{_mandir}/man1/swift-object-replicator.1*
 %{_mandir}/man1/swift-object-server.1*
 %{_mandir}/man1/swift-object-updater.1*
@@ -478,8 +486,10 @@ exit 0
 %defattr(-,root,root,-)
 %{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man5/proxy-server.conf.5*
+%{_mandir}/man1/swift-container-reconciler.1*
 %{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-proxy-server.1*
+%{_mandir}/man1/swift-reconciler-enqueue.1*
 %{_unitdir}/%{name}-container-reconciler.service
 %{_unitdir}/%{name}-object-expirer.service
 %{_unitdir}/%{name}-proxy.service
