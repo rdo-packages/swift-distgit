@@ -1,3 +1,4 @@
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 Name:             openstack-swift
 Version:          XXX
 Release:          XXX
@@ -5,7 +6,7 @@ Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://tarballs.openstack.org/swift/swift-master.tar.gz
+Source0:          http://tarballs.openstack.org/swift/swift-%{upstream_version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -377,6 +378,7 @@ exit 0
 %{_mandir}/man1/swift-recon-cron.1*
 %{_mandir}/man1/swift-ring-builder.1*
 %{_mandir}/man1/swift-temp-url.1*
+%{_mandir}/man5/swift.conf.5*
 %{_libdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
@@ -504,6 +506,7 @@ exit 0
 
 %files doc
 %defattr(-,root,root,-)
-%doc LICENSE doc/build/html
+%doc doc/build/html
+%license  LICENSE
 
 %changelog
