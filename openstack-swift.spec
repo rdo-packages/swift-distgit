@@ -1,12 +1,17 @@
-%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+%{!?upstream_version: %global upstream_version %{commit}}
+%global commit e07f9be8f5db130361a2bf106b6c7f1ac9bdd841
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+# DO NOT REMOVE ALPHATAG
+%global alphatag .%{shortcommit}git
+
 Name:             openstack-swift
-Version:          XXX
-Release:          XXX
+Version:          2.9.1
+Release:          0%{?alphatag}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          http://tarballs.openstack.org/swift/swift-%{upstream_version}.tar.gz
+Source0:          https://github.com/openstack/swift/archive/%{commit}.tar.gz#/swift-%{shortcommit}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -177,7 +182,7 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{upstream_version}
+%autosetup -n swift-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
 rm -f requirements.txt
@@ -410,7 +415,7 @@ exit 0
 %{python2_sitelib}/swift/container
 %{python2_sitelib}/swift/obj
 %{python2_sitelib}/swift/proxy
-%{python2_sitelib}/swift-%{version}*.egg-info
+%{python2_sitelib}/swift-*.egg-info
 %exclude %{python2_sitelib}/swift/test
 
 %files -n python-swift-tests
@@ -510,3 +515,6 @@ exit 0
 %license  LICENSE
 
 %changelog
+* Thu Sep 22 2016 Alfredo Moralejo <amoralej@redhat.com> 2.9.1-0.e07f9be8git
+- Update to post 2.9.0 (e07f9be8f5db130361a2bf106b6c7f1ac9bdd841)
+
