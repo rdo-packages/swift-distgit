@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "facab960_8d31f40d",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 85
+      },
+      "writtenOn": "2016-09-22T11:20:57Z",
+      "side": 1,
+      "message": "github tarball is not sdist, so we might be introducing unknown issues compared to Trunk build from current-passed-ci\n\nWe\u0027ll have to look at reusing exact snap from current-passed-ci, I\u0027ve added it to https://trello.com/c/WXfkfrbM/368-branching-follow-up",
+      "revId": "c19cce3a6dfd659a86b278574d7143fd2152a2f1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
