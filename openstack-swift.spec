@@ -1,7 +1,7 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 Name:             openstack-swift
-Version:          XXX
-Release:          XXX
+Version:          2.9.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -510,3 +510,6 @@ exit 0
 %license  LICENSE
 
 %changelog
+* Thu Sep 22 2016 Alfredo Moralejo <amoralej@redhat.com> 2.9.0-1
+- Update to 2.9.0
+
