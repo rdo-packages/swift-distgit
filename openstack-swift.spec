@@ -95,6 +95,7 @@ Requires:         python-setuptools
 Requires:         python-netifaces
 Requires:         python-dns
 Requires:         python-pyeclib
+Requires:         python-six
 
 Requires(post):   systemd
 Requires(preun):  systemd
