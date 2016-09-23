@@ -6,7 +6,7 @@
 
 Name:             openstack-swift
 Version:          2.9.1
-Release:          0.1%{?alphatag}%{?dist}
+Release:          0.2%{?alphatag}%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -516,6 +516,9 @@ exit 0
 %license  LICENSE
 
 %changelog
+* Fri Sep 23 2016 Christian Schwede <cschwede AT redhat.com> 2.9.1-0.2.e07f9be8git
+- Add missing python-six dependency
+
 * Thu Sep 22 2016 Alfredo Moralejo <amoralej@redhat.com> 2.9.1-0.1.e07f9be8git
 - Update to post 2.9.0 (e07f9be8f5db130361a2bf106b6c7f1ac9bdd841)
 
