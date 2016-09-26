@@ -1,17 +1,13 @@
-%{!?upstream_version: %global upstream_version %{commit}}
-%global commit e07f9be8f5db130361a2bf106b6c7f1ac9bdd841
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-# DO NOT REMOVE ALPHATAG
-%global alphatag .%{shortcommit}git
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.9.1
-Release:          0.2%{?alphatag}%{?dist}
+Version:          2.10.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
 URL:              http://launchpad.net/swift
-Source0:          https://github.com/openstack/swift/archive/%{commit}.tar.gz#/swift-%{shortcommit}.tar.gz
+Source0:          http://tarballs.openstack.org/swift/swift-%{upstream_version}.tar.gz
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
@@ -516,9 +512,12 @@ exit 0
 %license  LICENSE
 
 %changelog
+* Mon Sep 26 2016 Alfredo Moralejo <amoralej@redhat.com> 2.10.0-1
+- Update to 2.10.0
+
 * Fri Sep 23 2016 Christian Schwede <cschwede AT redhat.com> 2.9.1-0.2.e07f9be8git
 - Add missing python-six dependency
 
-* Thu Sep 22 2016 Alfredo Moralejo <amoralej@redhat.com> 2.9.1-0.1.e07f9be8git
+* Thu Sep 22 2016 Alfredo Moralejo <amoralej@redhat.com> 2.9.1-0.e07f9be8git
 - Update to post 2.9.0 (e07f9be8f5db130361a2bf106b6c7f1ac9bdd841)
 
