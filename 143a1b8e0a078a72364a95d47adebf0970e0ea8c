@@ -16,6 +16,24 @@
       "revId": "143a1b8e0a078a72364a95d47adebf0970e0ea8c",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_e161c6d4",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2016-09-27T10:08:33Z",
+      "side": 1,
+      "message": "yeap, fixed.",
+      "parentUuid": "dacfb570_815c7a27",
+      "revId": "143a1b8e0a078a72364a95d47adebf0970e0ea8c",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
