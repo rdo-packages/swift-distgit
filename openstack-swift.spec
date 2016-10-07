@@ -2,7 +2,7 @@
 
 Name:             openstack-swift
 Version:          2.10.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -143,6 +143,7 @@ Summary:          A proxy server for Swift
 
 Requires:         python-swift = %{version}-%{release}
 Requires:         python-keystonemiddleware
+Requires:         python-ceilometermiddleware
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -512,6 +513,9 @@ exit 0
 %license  LICENSE
 
 %changelog
+* Tue Oct 11 2016 Pradeep Kilambi <pkilambi@redhat.com> 2.10.0-2
+- Add ceilometermiddleware dependency to swift-proxy
+
 * Mon Sep 26 2016 Alfredo Moralejo <amoralej@redhat.com> 2.10.0-1
 - Update to 2.10.0
 
