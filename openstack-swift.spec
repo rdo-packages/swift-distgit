@@ -149,6 +149,18 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 
 This package contains the %{name} proxy server.
 
+%package          proxy-ceilometer
+Summary:          A proxy server for Swift with Ceilometer middleware
+
+Requires:         openstack-swift-proxy = %{version}-%{release}
+Requires:         python-ceilometermiddleware
+
+%description      proxy-ceilometer
+OpenStack Object Storage (Swift) aggregates commodity servers to work together
+in clusters for reliable, redundant, and large-scale storage of static objects.
+
+This package contains the %{name} proxy server with Ceilometer middleware.
+
 %package -n python-swift-tests
 Summary:        Swift tests
 Requires:       python-swift = %{version}-%{release}
