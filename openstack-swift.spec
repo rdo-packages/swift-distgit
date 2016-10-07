@@ -142,6 +142,7 @@ Summary:          A proxy server for Swift
 
 Requires:         python-swift = %{version}-%{release}
 Requires:         python-keystonemiddleware
+Requires:         python-ceilometermiddleware
 
 %description      proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
