@@ -2,4 +2,4 @@
 # RHOS and RDO if installed with Packstack (also, in docs).
 # The breakout action prevents logging into /var/log/messages, bz#997983.
 local0.*;local2.*        /var/log/swift/swift.log
-&                        ~
+&                        stop
