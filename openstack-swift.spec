@@ -1,8 +1,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.10.0
-Release:          2%{?dist}
+Version:          2.10.1
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -513,6 +513,9 @@ exit 0
 %license  LICENSE
 
 %changelog
+* Tue Jan 10 2017 Alfredo Moralejo <amoralej@redhat.com> 2.10.1-1
+- Update to 2.10.1
+
 * Tue Oct 11 2016 Pradeep Kilambi <pkilambi@redhat.com> 2.10.0-2
 - Add ceilometermiddleware dependency to swift-proxy
 
