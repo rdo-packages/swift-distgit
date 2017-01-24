@@ -512,3 +512,4 @@ exit 0
 %license  LICENSE
 
 %changelog
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/swift/commit/?id=8b40ebe69b08e14c54d569e0fc67479f1b8af0cb
