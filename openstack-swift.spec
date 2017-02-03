@@ -80,7 +80,7 @@ Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift
 
 Requires:         python-configobj
-Requires:         python-eventlet >= 0.16.1
+Requires:         python-eventlet >= 0.17.4
 Requires:         python-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 # Not in 2.7.0 anymore, went to stock json in order to support py3
@@ -91,6 +91,7 @@ Requires:         python-netifaces
 Requires:         python-dns
 Requires:         python-pyeclib
 Requires:         python-six
+Requires:         python-cryptography
 
 Requires(post):   systemd
 Requires(preun):  systemd
