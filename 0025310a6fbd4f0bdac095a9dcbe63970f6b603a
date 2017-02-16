@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ac7a964_05a79c50",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2017-02-16T16:05:17Z",
+      "side": 1,
+      "message": "This one is not included in the rpms AFAICT - thus not raising errors when running \"rpm -Va\". Could be changed as well, but IMO ok? Same for the others",
+      "parentUuid": "7ac7a964_a5afc82a",
+      "range": {
+        "startLine": 387,
+        "startChar": 30,
+        "endLine": 387,
+        "endChar": 34
+      },
+      "revId": "0025310a6fbd4f0bdac095a9dcbe63970f6b603a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac7a964_c5acc438",
         "filename": "openstack-swift.spec",
         "patchSetId": 1
