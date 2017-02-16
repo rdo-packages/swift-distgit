@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac7a964_a5afc82a",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2017-02-16T16:02:00Z",
+      "side": 1,
+      "message": "how about this?",
+      "range": {
+        "startLine": 387,
+        "startChar": 30,
+        "endLine": 387,
+        "endChar": 34
+      },
+      "revId": "0025310a6fbd4f0bdac095a9dcbe63970f6b603a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac7a964_c5acc438",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2017-02-16T16:02:00Z",
+      "side": 1,
+      "message": "same\nand lines 453, 482",
+      "range": {
+        "startLine": 434,
+        "startChar": 24,
+        "endLine": 434,
+        "endChar": 28
+      },
+      "revId": "0025310a6fbd4f0bdac095a9dcbe63970f6b603a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
