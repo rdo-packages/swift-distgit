@@ -47,6 +47,9 @@ Source71:         %{name}.rsyslog
 Source72:         %{name}.logrotate
 Source73:         %{name}-object-reconstructor.service
 Source74:         %{name}-object-reconstructor@.service
+Source75:         %{name}-container-sync.service
+Source76:         %{name}-container-sync@.service
+
 
 BuildArch:        noarch
 BuildRequires:    python-devel
@@ -228,6 +231,8 @@ install -p -D -m 644 %{SOURCE63} %{buildroot}%{_unitdir}/%{name}-container-recon
 install -p -D -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
 install -p -D -m 644 %{SOURCE73} %{buildroot}%{_unitdir}/%{name}-object-reconstructor.service
 install -p -D -m 644 %{SOURCE74} %{buildroot}%{_unitdir}/%{name}-object-reconstructor@.service
+install -p -D -m 644 %{SOURCE75} %{buildroot}%{_unitdir}/%{name}-container-sync.service
+install -p -D -m 644 %{SOURCE76} %{buildroot}%{_unitdir}/%{name}-container-sync@.service
 # Misc other
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/account-server
@@ -314,18 +319,21 @@ exit 0
 %systemd_post %{name}-container-replicator.service
 %systemd_post %{name}-container-auditor.service
 %systemd_post %{name}-container-updater.service
+%systemd_post %{name}-container-sync.service
 
 %preun container
 %systemd_preun %{name}-container.service
 %systemd_preun %{name}-container-replicator.service
 %systemd_preun %{name}-container-auditor.service
 %systemd_preun %{name}-container-updater.service
+%systemd_preun %{name}-container-sync.service
 
 %postun container
 %systemd_postun %{name}-container.service
 %systemd_postun %{name}-container-replicator.service
 %systemd_postun %{name}-container-auditor.service
 %systemd_postun %{name}-container-updater.service
+%systemd_postun %{name}-container-sync.service
 
 %post object
 %systemd_post %{name}-object.service
