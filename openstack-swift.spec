@@ -1,8 +1,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:             openstack-swift
-Version:          2.7.0
-Release:          2%{?dist}
+Version:          2.7.1
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -45,8 +45,6 @@ Source64:         container-reconciler.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
 Source71:         %{name}.rsyslog
-
-Patch0001: 0001-Fix-upgrade-bug-in-versioned_writes.patch
 
 Source72:         %{name}.logrotate
 
@@ -161,8 +159,6 @@ This package contains documentation files for %{name}.
 
 %prep
 %setup -q -n swift-%{upstream_version}
-
-%patch0001 -p1
 
 # Let RPM handle the dependencies
 rm -f requirements.txt
@@ -469,6 +465,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue May 23 2017 Alfredo Moralejo <amoralej@redhat.com> 2.7.1-1
+- Update to 2.7.1
+
 * Tue May 17 2016 Alan Pevec <apevec AT redhat.com> - 2.7.0-2
 - Fix upgrade bug in versioned_writes
   https://bugs.launchpad.net/swift/+bug/1562083
