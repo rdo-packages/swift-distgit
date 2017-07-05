@@ -491,6 +491,7 @@ exit 0
 %{_bindir}/swift-object-auditor
 %{_bindir}/swift-object-info
 %{_bindir}/swift-object-replicator
+%{_bindir}/swift-object-relinker
 %{_bindir}/swift-object-server
 %{_bindir}/swift-object-updater
 %{_bindir}/swift-object-reconstructor
