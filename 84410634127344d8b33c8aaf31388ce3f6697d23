@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa7fdbe_af821afe",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2017-07-05T17:04:21Z",
+      "side": 1,
+      "message": "This is a trick to pass the rpmlint job, but I think it\u0027s a good idea nonetheless.",
+      "revId": "84410634127344d8b33c8aaf31388ce3f6697d23",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
