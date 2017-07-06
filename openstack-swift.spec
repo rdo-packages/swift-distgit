@@ -55,6 +55,7 @@ BuildArch:        noarch
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
+BuildRequires:    git
 
 BuildRequires:    systemd
 Obsoletes:        openstack-swift-auth  <= 1.4.0
@@ -168,7 +169,7 @@ This package contains the Swift test files.
 Summary:          Documentation for %{name}
 
 BuildRequires:    python-sphinx >= 1.0
-BuildRequires:    python-oslo-sphinx >= 2.5.0
+BuildRequires:    python-openstackdocstheme
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python-eventlet
 BuildRequires:    python-netifaces
@@ -183,7 +184,7 @@ in clusters for reliable, redundant, and large-scale storage of static objects.
 This package contains documentation files for %{name}.
 
 %prep
-%setup -q -n swift-%{upstream_version}
+%autosetup -n swift-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
 rm -f requirements.txt
@@ -195,7 +196,7 @@ rm -f requirements.txt
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%{__python2} setup.py build_sphinx
+%{__python2} setup.py build_sphinx -b html
 # Fix hidden-file-or-dir warning
 #rm doc/build/html/.buildinfo
 
