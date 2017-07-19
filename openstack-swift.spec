@@ -1,4 +1,17 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+
+%global common_desc \
+OpenStack Object Storage (Swift) aggregates commodity servers to work together \
+in clusters for reliable, redundant, and large-scale storage of static objects. \
+Objects are written to multiple hardware devices in the data center, with the \
+OpenStack software responsible for ensuring data replication and integrity \
+across the cluster. Storage clusters can scale horizontally by adding new nodes, \
+which are automatically configured. Should a node fail, OpenStack works to \
+replicate its content from other active nodes. Because OpenStack uses software \
+logic to ensure data replication and distribution across different devices, \
+inexpensive commodity hard drives and servers can be used in lieu of more \
+expensive equipment.
+
 Name:             openstack-swift
 Version:          XXX
 Release:          XXX
@@ -66,16 +79,7 @@ BuildRequires:    python-babel
 Requires:         python-swift = %{version}-%{release}
 
 %description
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
-Objects are written to multiple hardware devices in the data center, with the
-OpenStack software responsible for ensuring data replication and integrity
-across the cluster. Storage clusters can scale horizontally by adding new nodes,
-which are automatically configured. Should a node fail, OpenStack works to
-replicate its content from other active nodes. Because OpenStack uses software
-logic to ensure data replication and distribution across different devices,
-inexpensive commodity hard drives and servers can be used in lieu of more
-expensive equipment.
+%{common_desc}
 
 %package -n       python-swift
 Summary:          Python libraries for the OpenStack Object Storage (Swift)
@@ -103,8 +107,9 @@ Requires(postun): systemd
 Requires(pre):    shadow-utils
 
 %description -n   python-swift
-The Python library associated with the OpenStack Object Storage (Swift)
-service.
+%{common_desc}
+
+This package contains the %{name} Python library.
 
 %package          account
 Summary:          Account services for Swift
@@ -113,8 +118,7 @@ Requires:         python-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      account
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
+%{common_desc}
 
 This package contains the %{name} account server.
 
@@ -125,8 +129,7 @@ Requires:         python-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      container
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
+%{common_desc}
 
 This package contains the %{name} container server.
 
@@ -137,8 +140,7 @@ Requires:         python-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      object
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
+%{common_desc}
 
 This package contains the %{name} object server.
 
@@ -150,8 +152,7 @@ Requires:         python-keystonemiddleware
 Requires:         python-ceilometermiddleware
 
 %description      proxy
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
+%{common_desc}
 
 This package contains the %{name} proxy server.
 
@@ -160,10 +161,9 @@ Summary:        Swift tests
 Requires:       python-swift = %{version}-%{release}
 
 %description -n python-swift-tests
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
+%{common_desc}
 
-This package contains the Swift test files.
+This package contains the %{name} test files.
 
 %package doc
 Summary:          Documentation for %{name}
@@ -178,8 +178,7 @@ BuildRequires:    python-pyeclib
 BuildRequires:    pyxattr
 
 %description      doc
-OpenStack Object Storage (Swift) aggregates commodity servers to work together
-in clusters for reliable, redundant, and large-scale storage of static objects.
+%{common_desc}
 
 This package contains documentation files for %{name}.
 
