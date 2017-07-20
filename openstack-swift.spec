@@ -1,4 +1,5 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+%global with_doc 1
 
 %global common_desc \
 OpenStack Object Storage (Swift) aggregates commodity servers to work together \
@@ -165,6 +166,7 @@ Requires:       python-swift = %{version}-%{release}
 
 This package contains the %{name} test files.
 
+%if 0%{?with_doc}
 %package doc
 Summary:          Documentation for %{name}
 
@@ -181,6 +183,7 @@ BuildRequires:    pyxattr
 %{common_desc}
 
 This package contains documentation files for %{name}.
+%endif
 
 %prep
 %autosetup -n swift-%{upstream_version} -S git
@@ -192,12 +195,15 @@ rm -f requirements.txt
 %{__python2} setup.py build
 # Generate i18n files
 %{__python2} setup.py compile_catalog -d build/lib/swift/locale
+
+%if 0%{?with_doc}
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
 %{__python2} setup.py build_sphinx -b html
 # Fix hidden-file-or-dir warning
-#rm doc/build/html/.buildinfo
+rm doc/build/html/.buildinfo
+%endif
 
 %install
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
@@ -516,9 +522,11 @@ exit 0
 %{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
 
+%if 0%{?with_doc}
 %files doc
 %defattr(-,root,root,-)
 %doc doc/build/html
 %license  LICENSE
+%endif
 
 %changelog
