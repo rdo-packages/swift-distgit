@@ -22,6 +22,30 @@
       "revId": "25fa2a87733e28a94b0133a94fdb7710abd0ed36",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa7fdbe_a36f8491",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-07-21T08:05:47Z",
+      "side": 1,
+      "message": "you are right, we are including this file in the package:\n\n$ rpm -qlp https://logs.rdoproject.org/89/7789/1/check/DLRN-rpmbuild/Za6bf3d2bc8b94cda954e058493160f64/centos/current/openstack-swift-doc-2.14.1-0.20170720193341.3c11f6b.el7.centos.noarch.rpm|grep buildinfo\n/usr/share/doc/openstack-swift-doc-2.14.1/html/.buildinfo\n\nBut can be a follow-up patch.",
+      "parentUuid": "9aa7fdbe_23055411",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "25fa2a87733e28a94b0133a94fdb7710abd0ed36",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
