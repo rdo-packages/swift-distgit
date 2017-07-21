@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa7fdbe_23055411",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 127
+      },
+      "writtenOn": "2017-07-21T01:04:35Z",
+      "side": 1,
+      "message": "we should probably check to see if this needs enabled or purged but that can be done as part of another patch.",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "25fa2a87733e28a94b0133a94fdb7710abd0ed36",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
