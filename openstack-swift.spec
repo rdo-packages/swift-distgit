@@ -66,6 +66,7 @@ Source76:         %{name}-container-sync@.service
 
 
 BuildArch:        noarch
+BuildRequires:    openstack-macros
 BuildRequires:    python-devel
 BuildRequires:    python-setuptools
 BuildRequires:    python-pbr
@@ -189,7 +190,7 @@ This package contains documentation files for %{name}.
 %autosetup -n swift-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
-rm -f requirements.txt
+%py_req_cleanup
 
 %build
 %{__python2} setup.py build
