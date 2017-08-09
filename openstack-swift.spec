@@ -188,6 +188,9 @@ This package contains documentation files for %{name}.
 
 %prep
 %autosetup -n swift-%{upstream_version} -S git
+# NOTE(ykarel) Remove once docutils is upgraded to >=1.13.1,
+# bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
+sed -i '/warning-is-error/d' setup.cfg
 
 # Let RPM handle the dependencies
 %py_req_cleanup
