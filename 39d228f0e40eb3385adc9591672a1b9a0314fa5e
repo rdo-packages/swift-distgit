@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a890539_daed668d",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-08-21T10:24:17Z",
+      "side": 1,
+      "message": "configobj is not longer required.",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "39d228f0e40eb3385adc9591672a1b9a0314fa5e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
