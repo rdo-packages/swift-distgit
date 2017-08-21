@@ -89,14 +89,12 @@ Summary:          Python libraries for the OpenStack Object Storage (Swift)
 Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift < %{version}-%{release}
 
-Requires:         python-configobj
 Requires:         python-eventlet >= 0.17.4
 Requires:         python-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 # Not in 2.7.0 anymore, went to stock json in order to support py3
 #Requires:         python-simplejson
 Requires:         pyxattr
-Requires:         python-setuptools
 Requires:         python-netifaces
 Requires:         python-dns
 Requires:         python-pyeclib
