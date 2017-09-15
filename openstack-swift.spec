@@ -101,9 +101,7 @@ Requires:         python-pyeclib
 Requires:         python-six
 Requires:         python-cryptography
 
-Requires(post):   systemd
-Requires(preun):  systemd
-Requires(postun): systemd
+%{?systemd_requires}
 Requires(pre):    shadow-utils
 
 %description -n   python-swift
