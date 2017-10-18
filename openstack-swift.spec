@@ -420,7 +420,6 @@ exit 0
 %{_bindir}/swift-oldies
 %{_bindir}/swift-orphans
 %{_bindir}/swift-form-signature
-%{_bindir}/swift-temp-url
 %{python2_sitelib}/swift/*.py*
 %{python2_sitelib}/swift/cli
 %{python2_sitelib}/swift/common
