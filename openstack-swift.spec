@@ -394,7 +394,6 @@ exit 0
 %{_mandir}/man1/swift-recon.1*
 %{_mandir}/man1/swift-recon-cron.1*
 %{_mandir}/man1/swift-ring-builder.1*
-%{_mandir}/man1/swift-temp-url.1*
 %{_mandir}/man5/swift.conf.5*
 %{_mandir}/man5/container-sync-realms.conf.5*
 %{_libdir}/tmpfiles.d/openstack-swift.conf
