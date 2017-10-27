@@ -505,6 +505,7 @@ exit 0
 %defattr(-,root,root,-)
 %{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man5/proxy-server.conf.5*
+%{_mandir}/man5/container-reconciler.conf.5*
 %{_mandir}/man1/swift-container-reconciler.1*
 %{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-proxy-server.1*
