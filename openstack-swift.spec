@@ -148,6 +148,8 @@ Summary:          A proxy server for Swift
 Requires:         python-swift = %{version}-%{release}
 Requires:         python-keystonemiddleware
 Requires:         python-ceilometermiddleware
+Requires:         python2-oslo-config
+Requires:         python2-castellan
 
 %description      proxy
 %{common_desc}
