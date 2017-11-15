@@ -100,6 +100,8 @@ Requires:         python-dns
 Requires:         python-pyeclib
 Requires:         python-six
 Requires:         python-cryptography
+Requires:         python-oslo-config >= 2:4.0.0
+Requires:         python-castellan >= 0.7.0
 
 %{?systemd_requires}
 Requires(pre):    shadow-utils
