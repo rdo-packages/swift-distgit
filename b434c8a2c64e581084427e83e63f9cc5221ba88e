@@ -70,6 +70,30 @@
       "revId": "b434c8a2c64e581084427e83e63f9cc5221ba88e",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da86d52c_f2c7b962",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2017-11-15T20:06:23Z",
+      "side": 1,
+      "message": "ok, you are the experts on swift. Just make sure nothing else out of proxy server uses that keyserver. The risk i see is if something else starts using it in future but i guess you\u0027ll fix it if it happens.",
+      "parentUuid": "da86d52c_d2e39503",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "b434c8a2c64e581084427e83e63f9cc5221ba88e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
