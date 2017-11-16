@@ -183,6 +183,30 @@
       "revId": "b434c8a2c64e581084427e83e63f9cc5221ba88e",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da86d52c_b53e0b28",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2017-11-16T22:13:03Z",
+      "side": 1,
+      "message": "If I understood correctly this spec file all swift source code is really in the python-swift package (which includes the swift/common/middleware)[0].\n\nEach sub-package proxy, account, container, object only includes the binaries to start each of the services.\n\nSo even if middleware code is in base package (i.e., python-swift) the proxy server can\u0027t really start without the proxy sub-package.\n\n[0] - See lines 424-430\n[1] - proxy example, see lines 523,525",
+      "parentUuid": "da86d52c_f2f17996",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "b434c8a2c64e581084427e83e63f9cc5221ba88e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
