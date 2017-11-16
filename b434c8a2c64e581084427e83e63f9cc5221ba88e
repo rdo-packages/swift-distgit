@@ -207,6 +207,30 @@
       "revId": "b434c8a2c64e581084427e83e63f9cc5221ba88e",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da86d52c_f54883ce",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 238
+      },
+      "writtenOn": "2017-11-16T22:15:18Z",
+      "side": 1,
+      "message": "I just noticed that python-cryptography was added in python-swift and that\u0027s a crypto middleware package only too, so maybe these two packages should get moved to python-swift???",
+      "parentUuid": "da86d52c_b53e0b28",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "b434c8a2c64e581084427e83e63f9cc5221ba88e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
