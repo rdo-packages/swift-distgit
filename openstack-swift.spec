@@ -376,6 +376,9 @@ exit 0
 %systemd_postun %{name}-proxy.service
 %systemd_postun %{name}-object-expirer.service
 
+%post -n python-swift
+/usr/bin/kill -HUP `cat /var/run/syslogd.pid 2>/dev/null` 2>/dev/null || :
+
 %files -n python-swift -f swift.lang
 %defattr(-,root,root,-)
 %license LICENSE
