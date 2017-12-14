@@ -376,6 +376,9 @@ exit 0
 %systemd_postun %{name}-proxy.service
 %systemd_postun %{name}-object-expirer.service
 
+%post swift
+%systemd_post %{name}-rsyslog.service
+
 %files -n python-swift -f swift.lang
 %defattr(-,root,root,-)
 %license LICENSE
