@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6ced46_1d04637d",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 303
+      },
+      "writtenOn": "2018-01-04T14:22:20Z",
+      "side": 1,
+      "message": "I think the previous way was better. Restarting rsyslog can cause issues/lost logs where as a hup is just a config reload. I think this is why you see the kill -HUP.",
+      "revId": "718268e5995ec6aa08f133aa483eeee6e697d496",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
