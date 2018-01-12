@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa963961_29824e53",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2018-01-12T18:54:15Z",
+      "side": 1,
+      "message": "please replace a bare %post with\n\n%post -n python-swift",
+      "revId": "eb7f056d9d7388bce2dfdb902b8a8e4b6f99ea28",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
