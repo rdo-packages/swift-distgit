@@ -67,16 +67,16 @@ Source76:         %{name}-container-sync@.service
 
 BuildArch:        noarch
 BuildRequires:    openstack-macros
-BuildRequires:    python-devel
-BuildRequires:    python-setuptools
-BuildRequires:    python-pbr
+BuildRequires:    python2-devel
+BuildRequires:    python2-setuptools
+BuildRequires:    python2-pbr
 BuildRequires:    git
 
 BuildRequires:    systemd
 Obsoletes:        openstack-swift-auth  <= 1.4.0
 
 # Required to compile translation files
-BuildRequires:    python-babel
+BuildRequires:    python2-babel
 
 Requires:         python-swift = %{version}-%{release}
 
@@ -89,19 +89,19 @@ Summary:          Python libraries for the OpenStack Object Storage (Swift)
 Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift < %{version}-%{release}
 
-Requires:         python-eventlet >= 0.17.4
-Requires:         python-greenlet >= 0.3.1
+Requires:         python2-eventlet >= 0.17.4
+Requires:         python2-greenlet >= 0.3.1
 Requires:         python-paste-deploy
 # Not in 2.7.0 anymore, went to stock json in order to support py3
 #Requires:         python-simplejson
-Requires:         pyxattr
+Requires:         python2-pyxattr
 Requires:         python-netifaces
-Requires:         python-dns
-Requires:         python-pyeclib
+Requires:         python2-dns
+Requires:         python2-pyeclib
 Requires:         python-six
-Requires:         python-cryptography
-Requires:         python-oslo-config >= 2:4.0.0
-Requires:         python-castellan >= 0.7.0
+Requires:         python2-cryptography
+Requires:         python2-oslo-config >= 2:5.1.0
+Requires:         python2-castellan >= 0.7.0
 
 %{?systemd_requires}
 Requires(pre):    shadow-utils
@@ -148,8 +148,8 @@ This package contains the %{name} object server.
 Summary:          A proxy server for Swift
 
 Requires:         python-swift = %{version}-%{release}
-Requires:         python-keystonemiddleware
-Requires:         python-ceilometermiddleware
+Requires:         python2-keystonemiddleware
+Requires:         python2-ceilometermiddleware
 
 %description      proxy
 %{common_desc}
@@ -169,14 +169,14 @@ This package contains the %{name} test files.
 %package doc
 Summary:          Documentation for %{name}
 
-BuildRequires:    python-sphinx >= 1.0
-BuildRequires:    python-openstackdocstheme
+BuildRequires:    python2-sphinx >= 1.0
+BuildRequires:    python2-openstackdocstheme
 # Required for generating docs (otherwise py-modindex.html is missing)
-BuildRequires:    python-eventlet
+BuildRequires:    python2-eventlet
 BuildRequires:    python-netifaces
 BuildRequires:    python-paste-deploy
-BuildRequires:    python-pyeclib
-BuildRequires:    pyxattr
+BuildRequires:    python2-pyeclib
+BuildRequires:    python2-pyxattr
 
 %description      doc
 %{common_desc}
