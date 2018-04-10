@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab14d0d_a558ab57",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-04-10T09:01:11Z",
+      "side": 1,
+      "message": "following",
+      "range": {
+        "startLine": 203,
+        "startChar": 37,
+        "endLine": 203,
+        "endChar": 45
+      },
+      "revId": "ef5a98117248a481b0418741d6a6928c0792a06e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ab14d0d_8555af1e",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2018-04-10T09:01:11Z",
+      "side": 1,
+      "message": "{buildinfo,doctrees}",
+      "range": {
+        "startLine": 207,
+        "startChar": 19,
+        "endLine": 207,
+        "endChar": 28
+      },
+      "revId": "ef5a98117248a481b0418741d6a6928c0792a06e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
