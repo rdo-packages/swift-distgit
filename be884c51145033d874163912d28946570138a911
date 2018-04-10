@@ -22,6 +22,30 @@
       "revId": "be884c51145033d874163912d28946570138a911",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ab14d0d_857ecfac",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2018-04-10T08:54:03Z",
+      "side": 1,
+      "message": "Yes, it is. Doc building is reporting a warning because of this bz, so we still need to disable warning-is-error.",
+      "parentUuid": "1ab14d0d_0572bfe5",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 58
+      },
+      "revId": "be884c51145033d874163912d28946570138a911",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
