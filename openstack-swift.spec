@@ -186,9 +186,6 @@ This package contains documentation files for %{name}.
 
 %prep
 %autosetup -n swift-%{upstream_version} -S git
-# NOTE(ykarel) Remove once docutils is upgraded to >=1.13.1,
-# bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
-sed -i '/warning-is-error/d' setup.cfg
 
 # Let RPM handle the dependencies
 %py_req_cleanup
@@ -202,9 +199,12 @@ sed -i '/warning-is-error/d' setup.cfg
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%{__python2} setup.py build_sphinx -b html
+export PYTHONPATH=.
+# NOTE(ykarel) Re-add -W option once following bz is fixed.
+# bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
+sphinx-build -b html doc/source doc/build/html
 # Fix hidden-file-or-dir warning
-rm doc/build/html/.buildinfo
+rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
 
 %install
