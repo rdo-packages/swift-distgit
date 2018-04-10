@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab14d0d_a52f8ba0",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2018-04-10T09:19:52Z",
+      "side": 1,
+      "message": "Missing \"-rf\"",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 39
+      },
+      "revId": "4bc46edba58c2a138b9879f25f8b8a58efd87f0a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
