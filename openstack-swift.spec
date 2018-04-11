@@ -515,6 +515,7 @@ exit 0
 %{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-proxy-server.1*
 %{_mandir}/man1/swift-reconciler-enqueue.1*
+%{_mandir}/man1/swift-object-relinker.1*
 %{_unitdir}/%{name}-container-reconciler.service
 %{_unitdir}/%{name}-object-expirer.service
 %{_unitdir}/%{name}-proxy.service
