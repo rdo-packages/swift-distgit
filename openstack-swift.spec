@@ -40,6 +40,8 @@ Source45:         %{name}-container-auditor.service
 Source46:         %{name}-container-auditor@.service
 Source47:         %{name}-container-updater.service
 Source48:         %{name}-container-updater@.service
+Source49:         %{name}-container-sharder.service
+# we seriously need to think about dropping the enumerated units - no sharder@
 Source5:          %{name}-object.service
 Source51:         %{name}-object@.service
 Source52:         object-server.conf
@@ -226,6 +228,7 @@ install -p -D -m 644 %{SOURCE45} %{buildroot}%{_unitdir}/%{name}-container-audit
 install -p -D -m 644 %{SOURCE46} %{buildroot}%{_unitdir}/%{name}-container-auditor@.service
 install -p -D -m 644 %{SOURCE47} %{buildroot}%{_unitdir}/%{name}-container-updater.service
 install -p -D -m 644 %{SOURCE48} %{buildroot}%{_unitdir}/%{name}-container-updater@.service
+install -p -D -m 644 %{SOURCE49} %{buildroot}%{_unitdir}/%{name}-container-sharder.service
 install -p -D -m 644 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
 install -p -D -m 644 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
 install -p -D -m 644 %{SOURCE53} %{buildroot}%{_unitdir}/%{name}-object-replicator.service
@@ -413,17 +416,18 @@ exit 0
 %dir %{python2_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-config
-%{_bindir}/swift-drive-audit
-%{_bindir}/swift-get-nodes
-%{_bindir}/swift-init
-%{_bindir}/swift-ring-builder
-%{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-dispersion-populate
 %{_bindir}/swift-dispersion-report
-%{_bindir}/swift-recon*
+%{_bindir}/swift-drive-audit
+%{_bindir}/swift-form-signature
+%{_bindir}/swift-get-nodes
+%{_bindir}/swift-init
+%{_bindir}/swift-manage-shard-ranges
 %{_bindir}/swift-oldies
 %{_bindir}/swift-orphans
-%{_bindir}/swift-form-signature
+%{_bindir}/swift-ring-builder
+%{_bindir}/swift-ring-builder-analyzer
+%{_bindir}/swift-recon*
 %{python2_sitelib}/swift/*.py*
 %{python2_sitelib}/swift/cli
 %{python2_sitelib}/swift/common
@@ -475,6 +479,7 @@ exit 0
 %{_bindir}/swift-container-replicator
 %{_bindir}/swift-container-updater
 %{_bindir}/swift-container-sync
+%{_bindir}/swift-container-sharder
 
 %files object
 %defattr(-,root,root,-)
