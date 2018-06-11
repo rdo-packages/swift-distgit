@@ -65,6 +65,7 @@ Source73:         %{name}-object-reconstructor.service
 Source74:         %{name}-object-reconstructor@.service
 Source75:         %{name}-container-sync.service
 Source76:         %{name}-container-sync@.service
+Source77:         internal-client.conf
 
 
 BuildArch:        noarch
@@ -258,6 +259,7 @@ install -p -D -m 660 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.c
 install -p -D -m 660 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
 install -p -D -m 660 %{SOURCE64} %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
 install -p -D -m 660 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
+install -p -D -m 660 %{SOURCE77} %{buildroot}%{_sysconfdir}/swift/internal-client.conf
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
