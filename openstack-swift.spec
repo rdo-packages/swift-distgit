@@ -404,6 +404,7 @@ exit 0
 %{_mandir}/man1/swift-recon.1*
 %{_mandir}/man1/swift-recon-cron.1*
 %{_mandir}/man1/swift-ring-builder.1*
+%{_mandir}/man1/swift-ring-composer.1*
 %{_mandir}/man5/swift.conf.5*
 %{_mandir}/man5/container-sync-realms.conf.5*
 %{_libdir}/tmpfiles.d/openstack-swift.conf
@@ -429,6 +430,7 @@ exit 0
 %{_bindir}/swift-orphans
 %{_bindir}/swift-ring-builder
 %{_bindir}/swift-ring-builder-analyzer
+%{_bindir}/swift-ring-composer
 %{_bindir}/swift-recon*
 %{python2_sitelib}/swift/*.py*
 %{python2_sitelib}/swift/cli
