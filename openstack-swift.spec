@@ -105,6 +105,9 @@ Requires:         python-six
 Requires:         python2-cryptography
 Requires:         python2-oslo-config >= 2:5.1.0
 Requires:         python2-castellan >= 0.7.0
+Requires:         python2-ipaddress >= 1.0.16
+Requires:         python-lxml >= 3.2.1
+Requires:         python2-requests >= 2.14.2
 
 %{?systemd_requires}
 Requires(pre):    shadow-utils
@@ -180,6 +183,7 @@ BuildRequires:    python-netifaces
 BuildRequires:    python-paste-deploy
 BuildRequires:    python2-pyeclib
 BuildRequires:    pyxattr
+BuildRequires:    python-lxml
 
 %description      doc
 %{common_desc}
