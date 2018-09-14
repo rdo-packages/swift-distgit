@@ -1,5 +1,6 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
-%global with_doc 1
+# FIXME(ykarel) disable doc build until openstackdocstheme 1.23.2 is available
+%global with_doc 0
 
 %global common_desc \
 OpenStack Object Storage (Swift) aggregates commodity servers to work together \
