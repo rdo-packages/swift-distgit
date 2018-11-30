@@ -109,7 +109,11 @@ Requires:         python2-ipaddress >= 1.0.16
 Requires:         python-lxml >= 3.2.1
 Requires:         python2-requests >= 2.14.2
 
+%if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
+%else
+%{?systemd_ordering} # does not exist on EL7
+%endif
 Requires(pre):    shadow-utils
 
 %description -n   python-swift
