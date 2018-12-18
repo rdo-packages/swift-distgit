@@ -1,3 +1,4 @@
+%__openstack_set_env
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 
