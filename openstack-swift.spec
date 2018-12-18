@@ -1,3 +1,6 @@
+%if 0%{?rhel}
+%{__openstack_set_env}
+%endif
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 
