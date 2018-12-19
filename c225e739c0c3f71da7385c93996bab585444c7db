@@ -16,6 +16,24 @@
       "revId": "c225e739c0c3f71da7385c93996bab585444c7db",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ad32947_f949d38f",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2018-12-19T17:17:12Z",
+      "side": 1,
+      "message": "%{__openstack_set_env} ? No problem, I\u0027ll change it",
+      "parentUuid": "7ad32947_9971bfe3",
+      "revId": "c225e739c0c3f71da7385c93996bab585444c7db",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
