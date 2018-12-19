@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad32947_d935f7f7",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2018-12-19T17:35:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this is needed, it should work without it in Fedora :?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "bced4c23233c502d436e1476a6185a308d2b2b2b",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
