@@ -298,6 +298,10 @@ done
 mkdir -p %{buildroot}%{_datadir}/swift/test
 cp -r test %{buildroot}%{python2_sitelib}/swift/test
 
+# Remove unnecessary shebangs
+sed -i '/\/usr\/bin\/env python/{d;q}' %{buildroot}%{python2_sitelib}/swift/test/probe/test_object_partpower_increase.py
+sed -i '/\/usr\/bin\/env python/{d;q}' %{buildroot}%{python2_sitelib}/swift/test/functional/test_symlink.py
+
 # Install i18n files
 install -d -m 755 %{buildroot}%{_datadir}
 rm -f %{buildroot}%{python2_sitelib}/swift/locale/*/LC_*/swift*po
