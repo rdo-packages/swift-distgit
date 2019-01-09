@@ -74,6 +74,7 @@ BuildRequires:    python2-devel
 BuildRequires:    python2-setuptools
 BuildRequires:    python2-pbr
 BuildRequires:    git
+BuildRequires:    /usr/bin/pathfix.py
 
 BuildRequires:    systemd
 Obsoletes:        openstack-swift-auth  <= 1.4.0
@@ -297,6 +298,9 @@ done
 # tests
 mkdir -p %{buildroot}%{_datadir}/swift/test
 cp -r test %{buildroot}%{python2_sitelib}/swift/test
+
+# Fix shebangs
+pathfix.py -pni "%{__python2} %{py2_shbang_opts}" %{buildroot}%{python2_sitearch}/swift/test/
 
 # Install i18n files
 install -d -m 755 %{buildroot}%{_datadir}
