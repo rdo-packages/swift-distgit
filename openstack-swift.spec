@@ -81,33 +81,40 @@ Obsoletes:        openstack-swift-auth  <= 1.4.0
 # Required to compile translation files
 BuildRequires:    python2-babel
 
-Requires:         python-swift = %{version}-%{release}
+Requires:         python2-swift = %{version}-%{release}
 
 %description
 %{common_desc}
 
-%package -n       python-swift
+%package -n       python2-swift
 Summary:          Python libraries for the OpenStack Object Storage (Swift)
 
 Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift < %{version}-%{release}
+%{?python_provide:%python_provide python2-swift}
 
 Requires:         python2-eventlet >= 0.17.4
 Requires:         python2-greenlet >= 0.3.1
-Requires:         python-paste-deploy
-# Not in 2.7.0 anymore, went to stock json in order to support py3
-#Requires:         python-simplejson
-Requires:         pyxattr
-Requires:         python-netifaces
 Requires:         python2-dns
 Requires:         python2-pyeclib
-Requires:         python-six
 Requires:         python2-cryptography
 Requires:         python2-oslo-config >= 2:5.1.0
 Requires:         python2-castellan >= 0.7.0
 Requires:         python2-ipaddress >= 1.0.16
-Requires:         python-lxml >= 3.2.1
 Requires:         python2-requests >= 2.14.2
+Requires:         python2-six
+
+%if 0%{?rhosp} == 0
+Requires:         python-paste-deploy
+Requires:         pyxattr
+Requires:         python-netifaces
+Requires:         python-lxml >= 3.2.1
+%else
+Requires:         python2-paste-deploy
+Requires:         python2-pyxattr
+Requires:         python2-netifaces
+Requires:         python2-lxml >= 3.2.1
+%endif
 
 %if 0%{?rhel} && 0%{?rhel} < 8
 %{?systemd_requires}
@@ -116,7 +123,7 @@ Requires:         python2-requests >= 2.14.2
 %endif
 Requires(pre):    shadow-utils
 
-%description -n   python-swift
+%description -n   python2-swift
 %{common_desc}
 
 This package contains the %{name} Python library.
@@ -124,7 +131,7 @@ This package contains the %{name} Python library.
 %package          account
 Summary:          Account services for Swift
 
-Requires:         python-swift = %{version}-%{release}
+Requires:         python2-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      account
@@ -135,7 +142,7 @@ This package contains the %{name} account server.
 %package          container
 Summary:          Container services for Swift
 
-Requires:         python-swift = %{version}-%{release}
+Requires:         python2-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      container
@@ -146,7 +153,7 @@ This package contains the %{name} container server.
 %package          object
 Summary:          Object services for Swift
 
-Requires:         python-swift = %{version}-%{release}
+Requires:         python2-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      object
@@ -157,7 +164,7 @@ This package contains the %{name} object server.
 %package          proxy
 Summary:          A proxy server for Swift
 
-Requires:         python-swift = %{version}-%{release}
+Requires:         python2-swift = %{version}-%{release}
 Requires:         python2-keystonemiddleware
 Requires:         python2-ceilometermiddleware
 
@@ -166,11 +173,12 @@ Requires:         python2-ceilometermiddleware
 
 This package contains the %{name} proxy server.
 
-%package -n python-swift-tests
-Summary:        Swift tests
-Requires:       python-swift = %{version}-%{release}
+%package -n python2-swift-tests
+Summary:          Swift tests
+Requires:         python2-swift = %{version}-%{release}
+%{?python_provide:%python_provide python2-swift-tests}
 
-%description -n python-swift-tests
+%description -n python2-swift-tests
 %{common_desc}
 
 This package contains the %{name} test files.
@@ -183,11 +191,19 @@ BuildRequires:    python2-sphinx >= 1.0
 BuildRequires:    python2-openstackdocstheme
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python2-eventlet
+BuildRequires:    python2-pyeclib
+
+%if 0%{?rhosp} == 0
 BuildRequires:    python-netifaces
 BuildRequires:    python-paste-deploy
-BuildRequires:    python2-pyeclib
 BuildRequires:    pyxattr
 BuildRequires:    python-lxml
+%else
+BuildRequires:    python2-netifaces
+BuildRequires:    python2-paste-deploy
+BuildRequires:    python2-pyxattr
+BuildRequires:    python2-lxml
+%endif
 
 %description      doc
 %{common_desc}
@@ -317,7 +333,7 @@ mv %{buildroot}%{python2_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
 %clean
 rm -rf %{buildroot}
 
-%pre -n python-swift
+%pre -n python2-swift
 getent group swift >/dev/null || groupadd -r swift -g 160
 getent passwd swift >/dev/null || \
 useradd -r -g swift -u 160 -d %{_sharedstatedir}/swift -s /sbin/nologin \
@@ -396,10 +412,10 @@ exit 0
 %systemd_postun %{name}-proxy.service
 %systemd_postun %{name}-object-expirer.service
 
-%post -n python-swift
+%post -n python2-swift
 /usr/bin/kill -HUP `cat /var/run/syslogd.pid 2>/dev/null` 2>/dev/null || :
 
-%files -n python-swift -f swift.lang
+%files -n python2-swift -f swift.lang
 %defattr(-,root,root,-)
 %license LICENSE
 %doc README.rst
@@ -457,7 +473,7 @@ exit 0
 %{python2_sitelib}/swift-%{version}*.egg-info
 %exclude %{python2_sitelib}/swift/test
 
-%files -n python-swift-tests
+%files -n python2-swift-tests
 %license LICENSE
 %{python2_sitelib}/swift/test
 
