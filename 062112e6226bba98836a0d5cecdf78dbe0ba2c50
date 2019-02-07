@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f74891bf_ade39f35",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-02-07T04:08:00Z",
+      "side": 1,
+      "message": "can keep python2-six out of the conditionals.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "062112e6226bba98836a0d5cecdf78dbe0ba2c50",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2926b291_49d43a87",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-02-07T04:08:00Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 29
+      },
+      "revId": "062112e6226bba98836a0d5cecdf78dbe0ba2c50",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01602506_6dd11f6c",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-02-07T04:08:00Z",
+      "side": 1,
+      "message": "should also provide python-swift-tests for backward compatibility, atleast it\u0027s being used in puppet-tempest.",
+      "revId": "062112e6226bba98836a0d5cecdf78dbe0ba2c50",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
