@@ -105,16 +105,16 @@ Requires:         python2-ipaddress >= 1.0.16
 Requires:         python2-requests >= 2.14.2
 Requires:         python2-six
 
-%if 0%{?rhosp} == 0
-Requires:         python-paste-deploy
-Requires:         pyxattr
-Requires:         python-netifaces
-Requires:         python-lxml >= 3.2.1
-%else
+%if 0%{?rhel} > 7 || 0%{?fedora}
 Requires:         python2-paste-deploy
 Requires:         python2-pyxattr
 Requires:         python2-netifaces
 Requires:         python2-lxml >= 3.2.1
+%else
+Requires:         python-paste-deploy
+Requires:         pyxattr
+Requires:         python-netifaces
+Requires:         python-lxml >= 3.2.1
 %endif
 
 %if 0%{?rhel} && 0%{?rhel} < 8
