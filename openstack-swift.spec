@@ -511,6 +511,7 @@ exit 0
 %config(noreplace) %attr(640, swift, swift) %{_sysconfdir}/swift/internal-client.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
 %{_bindir}/swift-container-auditor
+%{_bindir}/swift-container-deleter
 %{_bindir}/swift-container-info
 %{_bindir}/swift-container-server
 %{_bindir}/swift-container-replicator
@@ -578,4 +579,3 @@ exit 0
 %endif
 
 %changelog
-
