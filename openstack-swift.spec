@@ -1,3 +1,14 @@
+# Macros for py2/py3 compatibility
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global pyver %{python3_pkgversion}
+%else
+%global pyver 2
+%endif
+%global pyver_bin python%{pyver}
+%global pyver_sitelib %python%{pyver}_sitelib
+%global pyver_install %py%{pyver}_install
+%global pyver_build %py%{pyver}_build
+# End of macros for py2/py3 compatibility
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 %global rhosp 0
@@ -71,50 +82,51 @@ Source77:         internal-client.conf
 
 BuildArch:        noarch
 BuildRequires:    openstack-macros
-BuildRequires:    python2-devel
-BuildRequires:    python2-setuptools
-BuildRequires:    python2-pbr
+BuildRequires:    python%{pyver}-devel
+BuildRequires:    python%{pyver}-setuptools
+BuildRequires:    python%{pyver}-pbr
 BuildRequires:    git
 
 BuildRequires:    systemd
 Obsoletes:        openstack-swift-auth  <= 1.4.0
 
 # Required to compile translation files
-BuildRequires:    python2-babel
+BuildRequires:    python%{pyver}-babel
 
-Requires:         python2-swift = %{version}-%{release}
+Requires:         python%{pyver}-swift = %{version}-%{release}
 
 %description
 %{common_desc}
 
-%package -n       python2-swift
+%package -n       python%{pyver}-swift
 Summary:          Python libraries for the OpenStack Object Storage (Swift)
 
 Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift < %{version}-%{release}
 %{?python_provide:%python_provide python2-swift}
 
-Requires:         python2-eventlet >= 0.17.4
-Requires:         python2-greenlet >= 0.3.1
-Requires:         python2-dns
-Requires:         python2-pyeclib
-Requires:         python2-cryptography
-Requires:         python2-oslo-config >= 2:5.1.0
-Requires:         python2-castellan >= 0.7.0
-Requires:         python2-ipaddress >= 1.0.16
-Requires:         python2-requests >= 2.14.2
-Requires:         python2-six
+Requires:         python%{pyver}-eventlet >= 0.17.4
+Requires:         python%{pyver}-greenlet >= 0.3.1
+Requires:         python%{pyver}-dns
+Requires:         python%{pyver}-pyeclib
+Requires:         python%{pyver}-cryptography
+Requires:         python%{pyver}-oslo-config >= 2:5.1.0
+Requires:         python%{pyver}-castellan >= 0.7.0
+Requires:         python%{pyver}-ipaddress >= 1.0.16
+Requires:         python%{pyver}-requests >= 2.14.2
+Requires:         python%{pyver}-six
 
-%if 0%{?rhel} > 7 || 0%{?fedora}
-Requires:         python2-paste-deploy
-Requires:         python2-pyxattr
-Requires:         python2-netifaces
-Requires:         python2-lxml >= 3.2.1
-%else
+# Handle python2 exception
+%if %{pyver} == 2
 Requires:         python-paste-deploy
 Requires:         pyxattr
 Requires:         python-netifaces
 Requires:         python-lxml >= 3.2.1
+%else
+Requires:         python%{pyver}-paste-deploy
+Requires:         python%{pyver}-pyxattr
+Requires:         python%{pyver}-netifaces
+Requires:         python%{pyver}-lxml >= 3.2.1
 %endif
 
 %if 0%{?rhel} && 0%{?rhel} < 8
@@ -124,7 +136,7 @@ Requires:         python-lxml >= 3.2.1
 %endif
 Requires(pre):    shadow-utils
 
-%description -n   python2-swift
+%description -n   python%{pyver}-swift
 %{common_desc}
 
 This package contains the %{name} Python library.
@@ -132,7 +144,7 @@ This package contains the %{name} Python library.
 %package          account
 Summary:          Account services for Swift
 
-Requires:         python2-swift = %{version}-%{release}
+Requires:         python%{pyver}-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      account
@@ -143,7 +155,7 @@ This package contains the %{name} account server.
 %package          container
 Summary:          Container services for Swift
 
-Requires:         python2-swift = %{version}-%{release}
+Requires:         python%{pyver}-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      container
@@ -154,7 +166,7 @@ This package contains the %{name} container server.
 %package          object
 Summary:          Object services for Swift
 
-Requires:         python2-swift = %{version}-%{release}
+Requires:         python%{pyver}-swift = %{version}-%{release}
 Requires:         rsync >= 3.0
 
 %description      object
@@ -165,21 +177,21 @@ This package contains the %{name} object server.
 %package          proxy
 Summary:          A proxy server for Swift
 
-Requires:         python2-swift = %{version}-%{release}
-Requires:         python2-keystonemiddleware
-Requires:         python2-ceilometermiddleware
+Requires:         python%{pyver}-swift = %{version}-%{release}
+Requires:         python%{pyver}-keystonemiddleware
+Requires:         python%{pyver}-ceilometermiddleware
 
 %description      proxy
 %{common_desc}
 
 This package contains the %{name} proxy server.
 
-%package -n python2-swift-tests
+%package -n python%{pyver}-swift-tests
 Summary:          Swift tests
-Requires:         python2-swift = %{version}-%{release}
+Requires:         python%{pyver}-swift = %{version}-%{release}
 %{?python_provide:%python_provide python2-swift-tests}
 
-%description -n python2-swift-tests
+%description -n python%{pyver}-swift-tests
 %{common_desc}
 
 This package contains the %{name} test files.
@@ -188,22 +200,23 @@ This package contains the %{name} test files.
 %package doc
 Summary:          Documentation for %{name}
 
-BuildRequires:    python2-sphinx >= 1.0
-BuildRequires:    python2-openstackdocstheme
+BuildRequires:    python%{pyver}-sphinx >= 1.0
+BuildRequires:    python%{pyver}-openstackdocstheme
 # Required for generating docs (otherwise py-modindex.html is missing)
-BuildRequires:    python2-eventlet
-BuildRequires:    python2-pyeclib
+BuildRequires:    python%{pyver}-eventlet
+BuildRequires:    python%{pyver}-pyeclib
 
-%if 0%{?rhosp} == 0
+# Handle python2 exception
+%if %{pyver} == 2
 BuildRequires:    python-netifaces
 BuildRequires:    python-paste-deploy
 BuildRequires:    pyxattr
 BuildRequires:    python-lxml
 %else
-BuildRequires:    python2-netifaces
-BuildRequires:    python2-paste-deploy
-BuildRequires:    python2-pyxattr
-BuildRequires:    python2-lxml
+BuildRequires:    python%{pyver}-netifaces
+BuildRequires:    python%{pyver}-paste-deploy
+BuildRequires:    python%{pyver}-pyxattr
+BuildRequires:    python%{pyver}-lxml
 %endif
 
 %description      doc
@@ -219,9 +232,9 @@ This package contains documentation files for %{name}.
 %py_req_cleanup
 
 %build
-%{__python2} setup.py build
+%{pyver_bin} setup.py build
 # Generate i18n files
-%{__python2} setup.py compile_catalog -d build/lib/swift/locale
+%{pyver_bin} setup.py compile_catalog -d build/lib/swift/locale
 
 %if 0%{?with_doc}
 # Fails unless we create the build directory
@@ -230,13 +243,13 @@ mkdir -p doc/build
 export PYTHONPATH=.
 # NOTE(ykarel) Re-add -W option once following bz is fixed.
 # bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
-sphinx-build -b html doc/source doc/build/html
+sphinx-build-%{pyver} -b html doc/source doc/build/html
 # Fix hidden-file-or-dir warning
 rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
 
 %install
-%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
+%{pyver_install}
 # systemd units
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
@@ -313,20 +326,20 @@ done
 
 # tests
 mkdir -p %{buildroot}%{_datadir}/swift/test
-cp -r test %{buildroot}%{python2_sitelib}/swift/test
+cp -r test %{buildroot}%{pyver_sitelib}/swift/test
 
 # Remove unnecessary shebangs
-sed -i '1{/^#!/d}' %{buildroot}%{python2_sitelib}/swift/test/probe/test_object_partpower_increase.py
-sed -i '1{/^#!/d}' %{buildroot}%{python2_sitelib}/swift/test/functional/test_symlink.py
+sed -i '1{/^#!/d}' %{buildroot}%{pyver_sitelib}/swift/test/probe/test_object_partpower_increase.py
+sed -i '1{/^#!/d}' %{buildroot}%{pyver_sitelib}/swift/test/functional/test_symlink.py
 # Remove executable bit to avoid rpmlint failures
-chmod -x %{buildroot}%{python2_sitelib}/swift/test/probe/test_object_partpower_increase.py
-chmod -x %{buildroot}%{python2_sitelib}/swift/test/functional/test_symlink.py
+chmod -x %{buildroot}%{pyver_sitelib}/swift/test/probe/test_object_partpower_increase.py
+chmod -x %{buildroot}%{pyver_sitelib}/swift/test/functional/test_symlink.py
 
 # Install i18n files
 install -d -m 755 %{buildroot}%{_datadir}
-rm -f %{buildroot}%{python2_sitelib}/swift/locale/*/LC_*/swift*po
-rm -f %{buildroot}%{python2_sitelib}/swift/locale/*pot
-mv %{buildroot}%{python2_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
+rm -f %{buildroot}%{pyver_sitelib}/swift/locale/*/LC_*/swift*po
+rm -f %{buildroot}%{pyver_sitelib}/swift/locale/*pot
+mv %{buildroot}%{pyver_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
 
 # Find language files
 %find_lang swift --all-name
@@ -334,7 +347,7 @@ mv %{buildroot}%{python2_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
 %clean
 rm -rf %{buildroot}
 
-%pre -n python2-swift
+%pre -n python%{pyver}-swift
 getent group swift >/dev/null || groupadd -r swift -g 160
 getent passwd swift >/dev/null || \
 useradd -r -g swift -u 160 -d %{_sharedstatedir}/swift -s /sbin/nologin \
@@ -413,10 +426,10 @@ exit 0
 %systemd_postun %{name}-proxy.service
 %systemd_postun %{name}-object-expirer.service
 
-%post -n python2-swift
+%post -n python%{pyver}-swift
 /usr/bin/kill -HUP `cat /var/run/syslogd.pid 2>/dev/null` 2>/dev/null || :
 
-%files -n python2-swift -f swift.lang
+%files -n python%{pyver}-swift -f swift.lang
 %defattr(-,root,root,-)
 %license LICENSE
 %doc README.rst
@@ -448,7 +461,7 @@ exit 0
 %dir %attr(0755, swift, swift) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, swift) %{_localstatedir}/cache/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
-%dir %{python2_sitelib}/swift
+%dir %{pyver_sitelib}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-config
 %{_bindir}/swift-dispersion-populate
@@ -464,19 +477,19 @@ exit 0
 %{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-ring-composer
 %{_bindir}/swift-recon*
-%{python2_sitelib}/swift/*.py*
-%{python2_sitelib}/swift/cli
-%{python2_sitelib}/swift/common
-%{python2_sitelib}/swift/account
-%{python2_sitelib}/swift/container
-%{python2_sitelib}/swift/obj
-%{python2_sitelib}/swift/proxy
-%{python2_sitelib}/swift-%{version}*.egg-info
-%exclude %{python2_sitelib}/swift/test
+%{pyver_sitelib}/swift/*.py*
+%{pyver_sitelib}/swift/cli
+%{pyver_sitelib}/swift/common
+%{pyver_sitelib}/swift/account
+%{pyver_sitelib}/swift/container
+%{pyver_sitelib}/swift/obj
+%{pyver_sitelib}/swift/proxy
+%{pyver_sitelib}/swift-%{version}*.egg-info
+%exclude %{pyver_sitelib}/swift/test
 
-%files -n python2-swift-tests
+%files -n python%{pyver}-swift-tests
 %license LICENSE
-%{python2_sitelib}/swift/test
+%{pyver_sitelib}/swift/test
 
 %files account
 %defattr(-,root,root,-)
