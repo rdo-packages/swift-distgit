@@ -79,7 +79,6 @@ Source75:         %{name}-container-sync.service
 Source76:         %{name}-container-sync@.service
 Source77:         internal-client.conf
 
-
 BuildArch:        noarch
 BuildRequires:    openstack-macros
 BuildRequires:    python%{pyver}-devel
@@ -241,9 +240,7 @@ This package contains documentation files for %{name}.
 mkdir -p doc/build
 # Build docs
 export PYTHONPATH=.
-# NOTE(ykarel) Re-add -W option once following bz is fixed.
-# bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
-sphinx-build-%{pyver} -b html doc/source doc/build/html
+sphinx-build-%{pyver} -W -b html doc/source doc/build/html
 # Fix hidden-file-or-dir warning
 rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
@@ -473,18 +470,14 @@ exit 0
 %{_bindir}/swift-manage-shard-ranges
 %{_bindir}/swift-oldies
 %{_bindir}/swift-orphans
+%{_bindir}/swift-recon
+%{_bindir}/swift-recon-cron
+%{_bindir}/swift-reconciler-enqueue
 %{_bindir}/swift-ring-builder
 %{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-ring-composer
-%{_bindir}/swift-recon*
-%{pyver_sitelib}/swift/*.py*
-%{pyver_sitelib}/swift/cli
-%{pyver_sitelib}/swift/common
-%{pyver_sitelib}/swift/account
-%{pyver_sitelib}/swift/container
-%{pyver_sitelib}/swift/obj
-%{pyver_sitelib}/swift/proxy
-%{pyver_sitelib}/swift-%{version}*.egg-info
+%{pyver_sitelib}/swift
+%{pyver_sitelib}/swift-%{upstream_version}-py?.*.egg-info
 %exclude %{pyver_sitelib}/swift/test
 
 %files -n python%{pyver}-swift-tests
