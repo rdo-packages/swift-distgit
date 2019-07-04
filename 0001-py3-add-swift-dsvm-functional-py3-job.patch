@@ -1,0 +1,149 @@
+From 39a54fecdc5d7f9a09f34fcd9e81ec60948b51d7 Mon Sep 17 00:00:00 2001
+From: Tim Burke <tim.burke@gmail.com>
+Date: Wed, 17 Apr 2019 13:11:33 -0700
+Subject: [PATCH] py3: add swift-dsvm-functional-py3 job
+
+Note that keystone wants to stick some UTF-8 encoded bytes into
+memcached, but we want to store it as JSON... or something?
+
+Also, make sure we can hit memcache for containers with invalid UTF-8.
+Although maybe it'd be better to catch that before we ever try memcache?
+
+Change-Id: I1fbe133c8ec73ef6644ecfcbb1931ddef94e0400
+---
+ .zuul.yaml                    | 24 ++++++++++++++++++++++++
+ etc/object-server.conf-sample |  2 +-
+ swift/common/memcached.py     | 10 +++++++++-
+ test/functional/tests.py      | 12 +++++++++++-
+ 4 files changed, 45 insertions(+), 3 deletions(-)
+
+diff --git a/.zuul.yaml b/.zuul.yaml
+index b758e6b77..d688a1185 100644
+--- a/.zuul.yaml
++++ b/.zuul.yaml
+@@ -193,6 +193,20 @@
+     run: tools/playbooks/dsvm/run.yaml
+     post-run: tools/playbooks/dsvm/post.yaml
+ 
++- job:
++    name: swift-dsvm-functional-py3
++    parent: swift-dsvm-functional
++    description: |
++      Setup a Swift/Keystone environment under py3 and run Swift's func tests
++      (also under py3).
++    vars:
++      # only run the subset expected to work on py3
++      tox_envlist: func-py3
++      devstack_localrc:
++        USE_PYTHON3: true
++        # explicitly clear swift's default-disabled status
++        DISABLED_PYTHON3_PACKAGES: ''
++
+ - job:
+     name: swift-dsvm-functional-ipv6
+     parent: swift-dsvm-functional
+@@ -432,6 +446,11 @@
+               - ^(api-ref|doc|releasenotes)/.*$
+               - ^test/probe/.*$
+               - ^(.gitreview|.mailmap|AUTHORS|CHANGELOG)$
++        - swift-dsvm-functional-py3:
++            irrelevant-files:
++              - ^(api-ref|doc|releasenotes)/.*$
++              - ^test/probe/.*$
++              - ^(.gitreview|.mailmap|AUTHORS|CHANGELOG)$
+         - swift-dsvm-functional-ipv6:
+             irrelevant-files:
+               - ^(api-ref|doc|releasenotes)/.*$
+@@ -479,6 +498,11 @@
+               - ^(api-ref|doc|releasenotes)/.*$
+               - ^test/probe/.*$
+               - ^(.gitreview|.mailmap|AUTHORS|CHANGELOG)$
++        - swift-dsvm-functional-py3:
++            irrelevant-files:
++              - ^(api-ref|doc|releasenotes)/.*$
++              - ^test/probe/.*$
++              - ^(.gitreview|.mailmap|AUTHORS|CHANGELOG)$
+         - swift-dsvm-functional-ipv6:
+             irrelevant-files:
+               - ^(api-ref|doc|releasenotes)/.*$
+diff --git a/etc/object-server.conf-sample b/etc/object-server.conf-sample
+index f28f9f36f..04a7be687 100644
+--- a/etc/object-server.conf-sample
++++ b/etc/object-server.conf-sample
+@@ -473,7 +473,7 @@ use = egg:swift#recon
+ # to 86400 (1 day).
+ # rsync_tempfile_timeout = auto
+ 
+-# [object-expirer]
++[object-expirer]
+ # If this true, this expirer will execute tasks from legacy expirer task queue,
+ # at least one object server should run with dequeue_from_legacy = true
+ # dequeue_from_legacy = false
+diff --git a/swift/common/memcached.py b/swift/common/memcached.py
+index f655538ba..b7187da0e 100644
+--- a/swift/common/memcached.py
++++ b/swift/common/memcached.py
+@@ -44,6 +44,7 @@ version is at:
+ http://github.com/memcached/memcached/blob/1.4.2/doc/protocol.txt
+ """
+ 
++import six
+ import six.moves.cPickle as pickle
+ import json
+ import logging
+@@ -77,7 +78,10 @@ ERROR_LIMIT_DURATION = 60
+ 
+ def md5hash(key):
+     if not isinstance(key, bytes):
+-        key = key.encode('utf-8')
++        if six.PY2:
++            key = key.encode('utf-8')
++        else:
++            key = key.encode('utf-8', errors='surrogateescape')
+     return md5(key).hexdigest().encode('ascii')
+ 
+ 
+@@ -269,6 +273,8 @@ class MemcacheRing(object):
+             value = pickle.dumps(value, PICKLE_PROTOCOL)
+             flags |= PICKLE_FLAG
+         elif serialize:
++            if isinstance(value, bytes):
++                value = value.decode('utf8')
+             value = json.dumps(value).encode('ascii')
+             flags |= JSON_FLAG
+         elif not isinstance(value, bytes):
+@@ -438,6 +444,8 @@ class MemcacheRing(object):
+                 value = pickle.dumps(value, PICKLE_PROTOCOL)
+                 flags |= PICKLE_FLAG
+             elif serialize:
++                if isinstance(value, bytes):
++                    value = value.decode('utf8')
+                 value = json.dumps(value).encode('ascii')
+                 flags |= JSON_FLAG
+             msg.append(set_msg(key, flags, timeout, value))
+diff --git a/test/functional/tests.py b/test/functional/tests.py
+index 8cddf1291..ce5a96f70 100644
+--- a/test/functional/tests.py
++++ b/test/functional/tests.py
+@@ -407,7 +407,17 @@ class TestAccount(Base):
+         quoted_hax = urllib.parse.quote(hax)
+         conn.connection.request('GET', '/v1/' + quoted_hax, None, {})
+         resp = conn.connection.getresponse()
+-        resp_headers = dict((h.lower(), v) for h, v in resp.getheaders())
++
++        resp_headers = {}
++        for h, v in resp.getheaders():
++            h = h.lower()
++            if h in resp_headers:
++                # py2 would do this for us, but py3 apparently keeps them
++                # separate? Not sure which I like more...
++                resp_headers[h] += ',' + v
++            else:
++                resp_headers[h] = v
++
+         self.assertIn('www-authenticate', resp_headers)
+         actual = resp_headers['www-authenticate']
+         expected = 'Swift realm="%s"' % quoted_hax
+-- 
+2.20.1
+

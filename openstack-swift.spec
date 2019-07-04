@@ -79,6 +79,8 @@ Source75:         %{name}-container-sync.service
 Source76:         %{name}-container-sync@.service
 Source77:         internal-client.conf
 
+Patch0001:        0001-py3-add-swift-dsvm-functional-py3-job.patch
+
 
 BuildArch:        noarch
 BuildRequires:    openstack-macros
