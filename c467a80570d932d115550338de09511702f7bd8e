@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e38784b1_0dcf4dd7",
+        "filename": "proxy-server.conf",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 270
+      },
+      "writtenOn": "2019-07-08T11:18:29Z",
+      "side": 1,
+      "message": "Is the project_domain_name  missing ?",
+      "revId": "c467a80570d932d115550338de09511702f7bd8e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
