@@ -16,6 +16,24 @@
       "revId": "c467a80570d932d115550338de09511702f7bd8e",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90ce4376_408f9c90",
+        "filename": "proxy-server.conf",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2019-07-12T07:27:47Z",
+      "side": 1,
+      "message": "It could although it\u0027s actually configured by deployment tools (puppet-swift), http://logs.rdoproject.org/31/21331/5/check/legacy-weirdo-dlrn-master-puppet-scenario002/55a6a28/logs/weirdo-project/logs/etc/swift/proxy-server.conf.txt.gz",
+      "parentUuid": "e38784b1_0dcf4dd7",
+      "revId": "c467a80570d932d115550338de09511702f7bd8e",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
