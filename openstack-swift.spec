@@ -79,7 +79,6 @@ Source75:         %{name}-container-sync.service
 Source76:         %{name}-container-sync@.service
 Source77:         internal-client.conf
 
-
 BuildArch:        noarch
 BuildRequires:    openstack-macros
 BuildRequires:    python%{pyver}-devel
@@ -92,6 +91,8 @@ Obsoletes:        openstack-swift-auth  <= 1.4.0
 
 # Required to compile translation files
 BuildRequires:    python%{pyver}-babel
+# Required to build docs: doxygen invokes actual code and its imports
+BuildRequires:    python%{pyver}-keystoneclient
 
 Requires:         python%{pyver}-swift = %{version}-%{release}
 
@@ -178,6 +179,7 @@ This package contains the %{name} object server.
 Summary:          A proxy server for Swift
 
 Requires:         python%{pyver}-swift = %{version}-%{release}
+Requires:         python%{pyver}-keystoneclient
 Requires:         python%{pyver}-keystonemiddleware
 Requires:         python%{pyver}-ceilometermiddleware
 
@@ -244,6 +246,8 @@ mkdir -p doc/build
 export PYTHONPATH=.
 # NOTE(ykarel) Re-add -W option once following bz is fixed.
 # bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
+# This requires sphinx that can deal with lxml and **kwargs. The one in
+# CentOS 7 throws "Inline strong start-string without end-string."
 sphinx-build-%{pyver} -b html doc/source doc/build/html
 # Fix hidden-file-or-dir warning
 rm -rf doc/build/html/.{doctrees,buildinfo}
@@ -474,22 +478,15 @@ exit 0
 %{_bindir}/swift-manage-shard-ranges
 %{_bindir}/swift-oldies
 %{_bindir}/swift-orphans
+%{_bindir}/swift-recon
+%{_bindir}/swift-recon-cron
+%{_bindir}/swift-reconciler-enqueue
 %{_bindir}/swift-ring-builder
 %{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-ring-composer
-%{_bindir}/swift-recon*
-%{pyver_sitelib}/swift/*.py*
-%{pyver_sitelib}/swift/cli
-%{pyver_sitelib}/swift/common
-%{pyver_sitelib}/swift/account
-%{pyver_sitelib}/swift/container
-%{pyver_sitelib}/swift/obj
-%{pyver_sitelib}/swift/proxy
-%{pyver_sitelib}/swift-%{version}*.egg-info
+%{pyver_sitelib}/swift
+%{pyver_sitelib}/swift-%{upstream_version}-py?.*.egg-info
 %exclude %{pyver_sitelib}/swift/test
-%if %{pyver} == 3
-%{pyver_sitelib}/swift/__pycache__
-%endif
 
 %files -n python%{pyver}-swift-tests
 %license LICENSE
