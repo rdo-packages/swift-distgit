@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db0c0882_5b418be5",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-09-12T05:45:42Z",
+      "side": 1,
+      "message": "still not working with python2 and centos7, may be it can be enabled once we have centos8(as doc build passing in Fedora job)",
+      "range": {
+        "startLine": 247,
+        "startChar": 22,
+        "endLine": 247,
+        "endChar": 24
+      },
+      "revId": "562f485a0f8f3edea632d5a911ab103503e57d95",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
