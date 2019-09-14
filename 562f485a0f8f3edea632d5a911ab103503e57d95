@@ -22,6 +22,30 @@
       "revId": "562f485a0f8f3edea632d5a911ab103503e57d95",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "288f2d49_88eb7ea1",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 76
+      },
+      "writtenOn": "2019-09-14T02:48:06Z",
+      "side": 1,
+      "message": "Looks like it\u0027s the old problem of lxml having docstrings with prototypes which have **kwargs, and then sphinx choking on these with \u0027Inline strong start-string without end-string.\u0027 We need Sphinx 2.2 to fix this.",
+      "parentUuid": "db0c0882_5b418be5",
+      "range": {
+        "startLine": 247,
+        "startChar": 22,
+        "endLine": 247,
+        "endChar": 24
+      },
+      "revId": "562f485a0f8f3edea632d5a911ab103503e57d95",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
