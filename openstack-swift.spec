@@ -459,7 +459,7 @@ exit 0
 %config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-swift
 %dir %{_localstatedir}/log/swift
-%dir %attr(0755, swift, swift) %{_localstatedir}/run/swift
+%dir %attr(0755, swift, root) %{_localstatedir}/run/swift
 %dir %attr(0755, swift, swift) %{_localstatedir}/cache/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
 %dir %{pyver_sitelib}/swift
