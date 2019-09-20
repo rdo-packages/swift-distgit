@@ -105,7 +105,7 @@ Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift < %{version}-%{release}
 %{?python_provide:%python_provide python%{pyver}-swift}
 
-Requires:         python%{pyver}-eventlet >= 0.17.4
+Requires:         python%{pyver}-eventlet >= 0.25.0
 Requires:         python%{pyver}-greenlet >= 0.3.1
 Requires:         python%{pyver}-dns
 Requires:         python%{pyver}-pyeclib
