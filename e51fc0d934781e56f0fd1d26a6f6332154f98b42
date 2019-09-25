@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7691c1_705a7886",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-09-25T10:22:58Z",
+      "side": 1,
+      "message": "also please update it to 0.3.2 as upstream updated it https://github.com/openstack/swift/blob/master/requirements.txt#L7",
+      "range": {
+        "startLine": 109,
+        "startChar": 45,
+        "endLine": 109,
+        "endChar": 50
+      },
+      "revId": "e51fc0d934781e56f0fd1d26a6f6332154f98b42",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
