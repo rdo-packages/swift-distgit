@@ -26,8 +26,8 @@ inexpensive commodity hard drives and servers can be used in lieu of more \
 expensive equipment.
 
 Name:             openstack-swift
-Version:          XXX
-Release:          XXX
+Version:          2.23.0
+Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -594,3 +594,6 @@ exit 0
 %endif
 
 %changelog
+* Fri Oct 04 2019 RDO <dev@lists.rdoproject.org> 2.23.0-1
+- Update to 2.23.0
+
