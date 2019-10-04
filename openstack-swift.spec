@@ -205,6 +205,7 @@ Summary:          Documentation for %{name}
 
 BuildRequires:    python%{pyver}-sphinx >= 1.0
 BuildRequires:    python%{pyver}-openstackdocstheme
+BuildRequires:    python%{pyver}-sphinxcontrib-rsvgconverter
 # Required for generating docs (otherwise py-modindex.html is missing)
 BuildRequires:    python%{pyver}-eventlet
 BuildRequires:    python%{pyver}-pyeclib
