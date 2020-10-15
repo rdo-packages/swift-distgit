@@ -1,3 +1,5 @@
+%{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
+%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 %global rhosp 0
@@ -16,7 +18,7 @@ expensive equipment.
 
 Name:             openstack-swift
 Version:          2.26.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
 License:          ASL 2.0
@@ -67,8 +69,18 @@ Source74:         %{name}-object-reconstructor@.service
 Source75:         %{name}-container-sync.service
 Source76:         %{name}-container-sync@.service
 Source77:         internal-client.conf
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+Source101:        https://tarballs.openstack.org/swift/swift-%{upstream_version}.tar.gz.asc
+Source102:        https://releases.openstack.org/_static/%{sources_gpg_sign}.txt
+%endif
 
 BuildArch:        noarch
+
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+BuildRequires:  /usr/bin/gpgv2
+%endif
 BuildRequires:    openstack-macros
 BuildRequires:    python3-devel
 BuildRequires:    python3-setuptools
@@ -201,6 +213,10 @@ This package contains documentation files for %{name}.
 %endif
 
 %prep
+# Required for tarball sources verification
+%if 0%{?sources_gpg} == 1
+%{gpgverify}  --keyring=%{SOURCE102} --signature=%{SOURCE101} --data=%{SOURCE0}
+%endif
 %autosetup -n swift-%{upstream_version} -S git
 
 # Let RPM handle the dependencies
@@ -565,6 +581,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Oct 20 2020 Joel Capitao <jcapitao@redhat.com> 2.26.0-2
+- Enable sources tarball validation using GPG signature.
+
 * Wed Sep 30 2020 RDO <dev@lists.rdoproject.org> 2.26.0-1
 - Update to 2.26.0
 
