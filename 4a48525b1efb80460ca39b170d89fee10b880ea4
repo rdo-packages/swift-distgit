@@ -22,6 +22,30 @@
       "revId": "4a48525b1efb80460ca39b170d89fee10b880ea4",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9c66dc7_d8779d39",
+        "filename": "openstack-swift.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2021-03-04T08:20:30Z",
+      "side": 1,
+      "message": "ack good idea, updating",
+      "parentUuid": "1eb3a31a_612c5339",
+      "range": {
+        "startLine": 339,
+        "startChar": 50,
+        "endLine": 339,
+        "endChar": 104
+      },
+      "revId": "4a48525b1efb80460ca39b170d89fee10b880ea4",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
