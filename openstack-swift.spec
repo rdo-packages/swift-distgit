@@ -303,7 +303,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/log/swift
 install -p -D -m 644 %{SOURCE71} %{buildroot}%{_sysconfdir}/rsyslog.d/openstack-swift.conf
 install -p -D -m 644 %{SOURCE72} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-swift
 # Swift run directories
-install -p -D -m 644 %{SOURCE20} %{buildroot}%{_libdir}/tmpfiles.d/openstack-swift.conf
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_tmpfilesdir}/openstack-swift.conf
 # Install recon directory
 install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
 # Install home directory
@@ -449,7 +449,7 @@ exit 0
 %{_mandir}/man1/swift-ring-composer.1*
 %{_mandir}/man5/swift.conf.5*
 %{_mandir}/man5/container-sync-realms.conf.5*
-%{_libdir}/tmpfiles.d/openstack-swift.conf
+%{_tmpfilesdir}/openstack-swift.conf
 %dir %attr(0755, swift, swift)%{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
 %config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
