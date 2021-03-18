@@ -110,16 +110,16 @@ Obsoletes:        openstack-swift < %{version}-%{release}
 
 Requires:         python3-eventlet >= 0.25.0
 Requires:         python3-greenlet >= 0.3.2
-Requires:         python3-pyeclib
-Requires:         python3-cryptography
+Requires:         python3-pyeclib >= 1.3.1
+Requires:         python3-cryptography >= 2.0.2
 Requires:         python3-oslo-config >= 2:5.1.0
 Requires:         python3-castellan >= 0.7.0
 Requires:         python3-requests >= 2.14.2
-Requires:         python3-six
+Requires:         python3-six >= 1.10.0
 
-Requires:         python3-paste-deploy
-Requires:         python3-pyxattr
-Requires:         python3-netifaces
+Requires:         python3-paste-deploy >= 1.3.3
+Requires:         python3-pyxattr >= 0.4
+Requires:         python3-netifaces >= 0.8
 Requires:         python3-lxml >= 3.4.1
 
 %if 0%{?rhel} && 0%{?rhel} < 8
