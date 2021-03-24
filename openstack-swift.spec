@@ -58,6 +58,7 @@ Source59:         %{name}-object-expirer.service
 Source63:         %{name}-container-reconciler.service
 Source6:          %{name}-proxy.service
 Source61:         proxy-server.conf
+Source62:         object-expirer.conf
 Source64:         container-reconciler.conf
 Source20:         %{name}.tmpfs
 Source7:          swift.conf
@@ -287,6 +288,7 @@ install -p -D -m 660 %{SOURCE22} %{buildroot}%{_sysconfdir}/swift/account-server
 install -p -D -m 660 %{SOURCE42} %{buildroot}%{_sysconfdir}/swift/container-server.conf
 install -p -D -m 660 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.conf
 install -p -D -m 660 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
+install -p -D -m 660 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
 install -p -D -m 660 %{SOURCE64} %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
 install -p -D -m 660 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
 install -p -D -m 660 %{SOURCE77} %{buildroot}%{_sysconfdir}/swift/internal-client.conf
@@ -390,7 +392,6 @@ exit 0
 
 %post object
 %systemd_post %{name}-object.service
-%systemd_post %{name}-object-expirer.service
 %systemd_post %{name}-object-replicator.service
 %systemd_post %{name}-object-reconstructor.service
 %systemd_post %{name}-object-auditor.service
@@ -398,7 +399,6 @@ exit 0
 
 %preun object
 %systemd_preun %{name}-object.service
-%systemd_preun %{name}-object-expirer.service
 %systemd_preun %{name}-object-replicator.service
 %systemd_preun %{name}-object-reconstructor.service
 %systemd_preun %{name}-object-auditor.service
@@ -406,7 +406,6 @@ exit 0
 
 %postun object
 %systemd_postun %{name}-object.service
-%systemd_postun %{name}-object-expirer.service
 %systemd_postun %{name}-object-replicator.service
 %systemd_postun %{name}-object-reconstructor.service
 %systemd_postun %{name}-object-auditor.service
@@ -414,12 +413,15 @@ exit 0
 
 %post proxy
 %systemd_post %{name}-proxy.service
+%systemd_post %{name}-object-expirer.service
 
 %preun proxy
 %systemd_preun %{name}-proxy.service
+%systemd_preun %{name}-object-expirer.service
 
 %postun proxy
 %systemd_postun %{name}-proxy.service
+%systemd_postun %{name}-object-expirer.service
 
 %post -n python3-swift
 /usr/bin/kill -HUP `cat /var/run/syslogd.pid 2>/dev/null` 2>/dev/null || :
@@ -443,7 +445,6 @@ exit 0
 %{_mandir}/man1/swift-orphans.1*
 %{_mandir}/man1/swift-recon.1*
 %{_mandir}/man1/swift-recon-cron.1*
-%{_mandir}/man1/swift-reconciler-enqueue.1*
 %{_mandir}/man1/swift-ring-builder.1*
 %{_mandir}/man1/swift-ring-composer.1*
 %{_mandir}/man5/swift.conf.5*
@@ -527,12 +528,9 @@ exit 0
 %files object
 %defattr(-,root,root,-)
 %{_mandir}/man5/object-server.conf.5*
-%{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man1/swift-object-auditor.1*
-%{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-object-info.1*
 %{_mandir}/man1/swift-object-reconstructor.1*
-%{_mandir}/man1/swift-object-relinker.1*
 %{_mandir}/man1/swift-object-replicator.1*
 %{_mandir}/man1/swift-object-server.1*
 %{_mandir}/man1/swift-object-updater.1*
@@ -540,7 +538,6 @@ exit 0
 %{_unitdir}/%{name}-object@.service
 %{_unitdir}/%{name}-object-auditor.service
 %{_unitdir}/%{name}-object-auditor@.service
-%{_unitdir}/%{name}-object-expirer.service
 %{_unitdir}/%{name}-object-replicator.service
 %{_unitdir}/%{name}-object-replicator@.service
 %{_unitdir}/%{name}-object-reconstructor.service
@@ -551,7 +548,6 @@ exit 0
 %config(noreplace) %attr(640, swift, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
 %{_bindir}/swift-object-auditor
-%{_bindir}/swift-object-expirer
 %{_bindir}/swift-object-info
 %{_bindir}/swift-object-replicator
 %{_bindir}/swift-object-relinker
@@ -561,17 +557,24 @@ exit 0
 
 %files proxy
 %defattr(-,root,root,-)
+%{_mandir}/man5/object-expirer.conf.5*
 %{_mandir}/man5/proxy-server.conf.5*
 %{_mandir}/man5/container-reconciler.conf.5*
 %{_mandir}/man1/swift-container-reconciler.1*
+%{_mandir}/man1/swift-object-expirer.1*
 %{_mandir}/man1/swift-proxy-server.1*
+%{_mandir}/man1/swift-reconciler-enqueue.1*
+%{_mandir}/man1/swift-object-relinker.1*
 %{_unitdir}/%{name}-container-reconciler.service
+%{_unitdir}/%{name}-object-expirer.service
 %{_unitdir}/%{name}-proxy.service
 %dir %{_sysconfdir}/swift/proxy-server
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-reconciler.conf
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/proxy-server.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/object-expirer.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
 %{_bindir}/swift-container-reconciler
+%{_bindir}/swift-object-expirer
 %{_bindir}/swift-proxy-server
 
 %if 0%{?with_doc}
