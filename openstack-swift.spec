@@ -226,7 +226,7 @@ This package contains documentation files for %{name}.
 %build
 %{py3_build}
 # Generate i18n files
-%{__python3} setup.py compile_catalog -d build/lib/swift/locale
+%{__python3} setup.py compile_catalog -d build/lib/swift/locale --domain swift
 
 %if 0%{?with_doc}
 # Fails unless we create the build directory
