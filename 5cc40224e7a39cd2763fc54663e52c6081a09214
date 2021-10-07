@@ -1,0 +1,9 @@
+Workflow+1: Javier Peña <jpena@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Code-Review+2: Pete Zaitcev <zaitcev@gmail.com>
+Code-Review+2: Yatin Karel <ykarel@redhat.com>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Thu, 07 Oct 2021 10:53:04 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/swift-distgit/+/35676
+Project: openstack/swift-distgit
+Branch: refs/heads/train-rdo
