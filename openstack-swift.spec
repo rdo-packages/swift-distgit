@@ -375,6 +375,7 @@ exit 0
 %systemd_post %{name}-container-auditor.service
 %systemd_post %{name}-container-updater.service
 %systemd_post %{name}-container-sync.service
+%systemd_post %{name}-container-sharder.service
 
 %preun container
 %systemd_preun %{name}-container.service
@@ -382,6 +383,7 @@ exit 0
 %systemd_preun %{name}-container-auditor.service
 %systemd_preun %{name}-container-updater.service
 %systemd_preun %{name}-container-sync.service
+%systemd_preun %{name}-container-sharder.service
 
 %postun container
 %systemd_postun %{name}-container.service
@@ -389,6 +391,7 @@ exit 0
 %systemd_postun %{name}-container-auditor.service
 %systemd_postun %{name}-container-updater.service
 %systemd_postun %{name}-container-sync.service
+%systemd_postun %{name}-container-sharder.service
 
 %post object
 %systemd_post %{name}-object.service
