@@ -117,7 +117,7 @@ Requires:         python3-castellan >= 0.7.0
 Requires:         python3-requests >= 2.14.2
 Requires:         python3-six >= 1.10.0
 
-Requires:         python3-paste-deploy >= 1.3.3
+Requires:         python3-paste-deploy >= 2.0.0
 Requires:         python3-pyxattr >= 0.4
 Requires:         python3-netifaces >= 0.8
 Requires:         python3-lxml >= 3.4.1
