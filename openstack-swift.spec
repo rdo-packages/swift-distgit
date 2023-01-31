@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0xa63ea142678138d1bb15f2e303bdfd64dd164087
+%global sources_gpg_sign 0xa7475c5f2122fec3f90343223fe3bf5aad1080e4
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 %global rhosp 0
@@ -17,7 +17,7 @@ inexpensive commodity hard drives and servers can be used in lieu of more \
 expensive equipment.
 
 Name:             openstack-swift
-Version:          2.30.0
+Version:          2.30.1
 Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
@@ -588,6 +588,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Jan 31 2023 RDO <dev@lists.rdoproject.org> 2.30.1-1
+- Update to 2.30.1
+
 * Tue Sep 20 2022 RDO <dev@lists.rdoproject.org> 2.30.0-1
 - Update to 2.30.0
 
