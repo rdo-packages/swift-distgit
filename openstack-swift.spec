@@ -1,6 +1,12 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+# we are excluding some BRs from automatic generator
+%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order bashate os-api-ref
+# Exclude sphinx from BRs if docs are disabled
+%if ! 0%{?with_doc}
+%global excluded_brs %{excluded_brs} sphinx openstackdocstheme
+%endif
 %global with_doc 1
 %global rhosp 0
 
@@ -21,7 +27,7 @@ Version:          XXX
 Release:          XXX
 Summary:          OpenStack Object Storage (Swift)
 
-License:          ASL 2.0
+License:          Apache-2.0
 URL:              http://launchpad.net/swift
 Source0:          https://tarballs.openstack.org/swift/swift-%{upstream_version}.tar.gz
 
@@ -83,18 +89,12 @@ BuildRequires:  /usr/bin/gpgv2
 %endif
 BuildRequires:    openstack-macros
 BuildRequires:    python3-devel
-BuildRequires:    python3-setuptools
-BuildRequires:    python3-pbr
+BuildRequires:    pyproject-rpm-macros
 BuildRequires:    git-core
 BuildRequires:    /usr/bin/pathfix.py
 
 BuildRequires:    systemd
 Obsoletes:        openstack-swift-auth  <= 1.4.0
-
-# Required to compile translation files
-BuildRequires:    python3-babel
-# Required to build docs: doxygen invokes actual code and its imports
-BuildRequires:    python3-keystoneclient
 
 Requires:         python3-swift = %{version}-%{release}
 
@@ -106,27 +106,9 @@ Summary:          Python libraries for the OpenStack Object Storage (Swift)
 
 Provides:         openstack-swift = %{version}-%{release}
 Obsoletes:        openstack-swift < %{version}-%{release}
-%{?python_provide:%python_provide python3-swift}
 
-Requires:         python3-eventlet >= 0.25.0
-Requires:         python3-greenlet >= 0.3.2
-Requires:         python3-pyeclib >= 1.3.1
-Requires:         python3-cryptography >= 2.0.2
-Requires:         python3-oslo-config >= 2:5.1.0
-Requires:         python3-castellan >= 0.7.0
-Requires:         python3-requests >= 2.14.2
-Requires:         python3-six >= 1.10.0
+%{?systemd_ordering}
 
-Requires:         python3-paste-deploy >= 2.0.0
-Requires:         python3-pyxattr >= 0.4
-Requires:         python3-netifaces >= 0.8
-Requires:         python3-lxml >= 3.4.1
-
-%if 0%{?rhel} && 0%{?rhel} < 8
-%{?systemd_requires}
-%else
-%{?systemd_ordering} # does not exist on EL7
-%endif
 Requires(pre):    shadow-utils
 
 %description -n   python3-swift
@@ -183,8 +165,6 @@ This package contains the %{name} proxy server.
 %package -n python3-swift-tests
 Summary:          Swift tests
 Requires:         python3-swift = %{version}-%{release}
-%{?python_provide:%python_provide python3-swift-tests}
-Provides:         python-swift-tests = %{version}-%{release}
 
 %description -n python3-swift-tests
 %{common_desc}
@@ -195,17 +175,7 @@ This package contains the %{name} test files.
 %package doc
 Summary:          Documentation for %{name}
 
-BuildRequires:    python3-sphinx >= 1.0
-BuildRequires:    python3-openstackdocstheme
 BuildRequires:    python3-sphinxcontrib-rsvgconverter
-# Required for generating docs (otherwise py-modindex.html is missing)
-BuildRequires:    python3-eventlet
-BuildRequires:    python3-pyeclib
-
-BuildRequires:    python3-netifaces
-BuildRequires:    python3-paste-deploy
-BuildRequires:    python3-pyxattr
-BuildRequires:    python3-lxml
 
 %description      doc
 %{common_desc}
@@ -220,30 +190,46 @@ This package contains documentation files for %{name}.
 %endif
 %autosetup -n swift-%{upstream_version} -S git
 
-# Let RPM handle the dependencies
-%py_req_cleanup
+
+sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
+sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
+sed -i /^minversion.*/d tox.ini
+sed -i /^requires.*virtualenv.*/d tox.ini
+sed -i "s/^xattr\(.*\)/pyxattr\1/" requirements.txt
+
+# Exclude some bad-known BRs
+for pkg in %{excluded_brs}; do
+  for reqfile in doc/requirements.txt test-requirements.txt; do
+    if [ -f $reqfile ]; then
+      sed -i /^${pkg}.*/d $reqfile
+    fi
+  done
+done
+
+# Automatic BR generation
+%generate_buildrequires
+%if 0%{?with_doc}
+  %pyproject_buildrequires -t -e %{default_toxenv},docs
+%else
+  %pyproject_buildrequires -t -e %{default_toxenv}
+%endif
 
 %build
-%{py3_build}
-# Generate i18n files
-%{__python3} setup.py compile_catalog -d build/lib/swift/locale --domain swift
+%pyproject_wheel
+
+%install
+%pyproject_install
 
 %if 0%{?with_doc}
-# Fails unless we create the build directory
-mkdir -p doc/build
-# Build docs
-export PYTHONPATH=.
-# NOTE(ykarel) Re-add -W option once following bz is fixed.
-# bug: https://bugzilla.redhat.com/show_bug.cgi?id=1479804
-# This requires sphinx that can deal with lxml and **kwargs. The one in
-# CentOS 7 throws "Inline strong start-string without end-string."
-sphinx-build -b html doc/source doc/build/html
+%tox -e docs
 # Fix hidden-file-or-dir warning
 rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
 
-%install
-%{py3_install}
+
+# Generate i18n files
+%{__python3} setup.py compile_catalog -d %{buildroot}%{python3_sitelib}/swift/locale --domain swift
+
 # systemd units
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
@@ -480,7 +466,7 @@ exit 0
 %{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-ring-composer
 %{python3_sitelib}/swift
-%{python3_sitelib}/swift-%{upstream_version}-py?.*.egg-info
+%{python3_sitelib}/swift-*.dist-info
 %exclude %{python3_sitelib}/swift/test
 
 %files -n python3-swift-tests
