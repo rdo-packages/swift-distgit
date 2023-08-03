@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3745b9_ff483112",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2023-08-03T13:22:13Z",
+      "side": 1,
+      "message": "we are losing default support for kms_keymaster by removing python3-castellan requirement. I\u0027d add it back for backwards compatibility.\n\nhttps://github.com/openstack/swift/blob/55cd675f8b7b7f1d46d463141f86e242f8e5f7a6/setup.cfg#L80",
+      "revId": "abdacc356a96c1befca1bb4d95a7b5e59d89201a",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
