@@ -91,7 +91,6 @@ BuildRequires:    openstack-macros
 BuildRequires:    python3-devel
 BuildRequires:    pyproject-rpm-macros
 BuildRequires:    git-core
-BuildRequires:    /usr/bin/pathfix.py
 
 BuildRequires:    systemd
 Obsoletes:        openstack-swift-auth  <= 1.4.0
@@ -324,7 +323,7 @@ rm -f %{buildroot}%{python3_sitelib}/swift/locale/*pot
 mv %{buildroot}%{python3_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
 
 # Fix shebangs for Python 3-only distros
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{python3_sitelib}/swift/test
+%py3_shebang_fix %{buildroot}%{python3_sitelib}/swift/test
 
 # Find language files
 %find_lang swift --all-name
