@@ -577,3 +577,4 @@ exit 0
 %endif
 
 %changelog
+# REMOVEME: error caused by commit https://opendev.org/openstack/swift/commit/195f54ecb5c7520b7ae19157be77047a0f4e68ea
