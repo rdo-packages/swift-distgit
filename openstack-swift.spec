@@ -465,6 +465,7 @@ exit 0
 %{_bindir}/swift-recon
 %{_bindir}/swift-recon-cron
 %{_bindir}/swift-reconciler-enqueue
+%{_bindir}/swift-reload
 %{_bindir}/swift-ring-builder
 %{_bindir}/swift-ring-builder-analyzer
 %{_bindir}/swift-ring-composer
