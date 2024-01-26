@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae0a52af_cf240d74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2024-01-26T08:38:36Z",
+      "side": 1,
+      "message": "needs boto3 update in progress in https://review.rdoproject.org/r/c/deps/python-boto3/+/51328",
+      "revId": "b3788f60e626db49641865683fc91980e13c5be3",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    }
+  ]
+}
