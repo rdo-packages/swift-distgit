@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x815AFEC729392386480E076DCC0DFE2D21C023C9
+%global sources_gpg_sign 0x815afec729392386480e076dcc0dfe2d21c023c9
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 # we are excluding some BRs from automatic generator
 %global excluded_brs doc8 bandit pre-commit hacking flake8-import-order bashate os-api-ref
@@ -580,3 +580,4 @@ exit 0
 * Tue Sep 19 2023 RDO <dev@lists.rdoproject.org> 2.32.0-1
 - Update to 2.32.0
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/swift/commit/ce1e641e32a8ae77aa30f90c7ece27c7ada4ffd5
