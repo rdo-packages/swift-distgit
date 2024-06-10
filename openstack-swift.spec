@@ -265,20 +265,20 @@ install -p -D -m 644 %{SOURCE74} %{buildroot}%{_unitdir}/%{name}-object-reconstr
 install -p -D -m 644 %{SOURCE75} %{buildroot}%{_unitdir}/%{name}-container-sync.service
 install -p -D -m 644 %{SOURCE76} %{buildroot}%{_unitdir}/%{name}-container-sync@.service
 # Misc other
-install -d -m 755 %{buildroot}%{_sysconfdir}/swift
-install -d -m 755 %{buildroot}%{_sysconfdir}/swift/account-server
-install -d -m 755 %{buildroot}%{_sysconfdir}/swift/container-server
-install -d -m 755 %{buildroot}%{_sysconfdir}/swift/object-server
-install -d -m 755 %{buildroot}%{_sysconfdir}/swift/proxy-server
+install -d -m 750 %{buildroot}%{_sysconfdir}/swift
+install -d -m 750 %{buildroot}%{_sysconfdir}/swift/account-server
+install -d -m 750 %{buildroot}%{_sysconfdir}/swift/container-server
+install -d -m 750 %{buildroot}%{_sysconfdir}/swift/object-server
+install -d -m 750 %{buildroot}%{_sysconfdir}/swift/proxy-server
 # Config files
-install -p -D -m 660 %{SOURCE22} %{buildroot}%{_sysconfdir}/swift/account-server.conf
-install -p -D -m 660 %{SOURCE42} %{buildroot}%{_sysconfdir}/swift/container-server.conf
-install -p -D -m 660 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.conf
-install -p -D -m 660 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
-install -p -D -m 660 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
-install -p -D -m 660 %{SOURCE64} %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
-install -p -D -m 660 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
-install -p -D -m 660 %{SOURCE77} %{buildroot}%{_sysconfdir}/swift/internal-client.conf
+install -p -D -m 640 %{SOURCE22} %{buildroot}%{_sysconfdir}/swift/account-server.conf
+install -p -D -m 640 %{SOURCE42} %{buildroot}%{_sysconfdir}/swift/container-server.conf
+install -p -D -m 640 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.conf
+install -p -D -m 640 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
+install -p -D -m 640 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
+install -p -D -m 640 %{SOURCE64} %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
+install -p -D -m 640 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
+install -p -D -m 640 %{SOURCE77} %{buildroot}%{_sysconfdir}/swift/internal-client.conf
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
@@ -487,7 +487,7 @@ exit 0
 %{_mandir}/man1/swift-account-server.1*
 %{_unitdir}/%{name}-account*.service
 %dir %{_sysconfdir}/swift/account-server
-%config(noreplace) %attr(640, swift, swift) %{_sysconfdir}/swift/account-server.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/account-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/account-server
 %{_bindir}/swift-account-auditor
 %{_bindir}/swift-account-info
@@ -506,8 +506,8 @@ exit 0
 %{_mandir}/man1/swift-container-updater.1*
 %{_unitdir}/%{name}-container*.service
 %dir %{_sysconfdir}/swift/container-server
-%config(noreplace) %attr(640, swift, swift) %{_sysconfdir}/swift/container-server.conf
-%config(noreplace) %attr(640, swift, swift) %{_sysconfdir}/swift/internal-client.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-server.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/internal-client.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
 %{_bindir}/swift-container-auditor
 %{_bindir}/swift-container-deleter
@@ -538,7 +538,7 @@ exit 0
 %{_unitdir}/%{name}-object-updater.service
 %{_unitdir}/%{name}-object-updater@.service
 %dir %{_sysconfdir}/swift/object-server
-%config(noreplace) %attr(640, swift, swift) %{_sysconfdir}/swift/object-server.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
 %{_bindir}/swift-object-auditor
 %{_bindir}/swift-object-info
