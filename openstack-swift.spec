@@ -33,7 +33,6 @@ Source0:          https://tarballs.openstack.org/swift/swift-%{upstream_version}
 
 Source2:          %{name}-account.service
 Source21:         %{name}-account@.service
-Source22:         account-server.conf
 Source23:         %{name}-account-replicator.service
 Source24:         %{name}-account-replicator@.service
 Source25:         %{name}-account-auditor.service
@@ -42,7 +41,6 @@ Source27:         %{name}-account-reaper.service
 Source28:         %{name}-account-reaper@.service
 Source4:          %{name}-container.service
 Source41:         %{name}-container@.service
-Source42:         container-server.conf
 Source43:         %{name}-container-replicator.service
 Source44:         %{name}-container-replicator@.service
 Source45:         %{name}-container-auditor.service
@@ -53,7 +51,6 @@ Source49:         %{name}-container-sharder.service
 # we seriously need to think about dropping the enumerated units - no sharder@
 Source5:          %{name}-object.service
 Source51:         %{name}-object@.service
-Source52:         object-server.conf
 Source53:         %{name}-object-replicator.service
 Source54:         %{name}-object-replicator@.service
 Source55:         %{name}-object-auditor.service
@@ -63,18 +60,13 @@ Source58:         %{name}-object-updater@.service
 Source59:         %{name}-object-expirer.service
 Source63:         %{name}-container-reconciler.service
 Source6:          %{name}-proxy.service
-Source61:         proxy-server.conf
-Source62:         object-expirer.conf
-Source64:         container-reconciler.conf
 Source20:         %{name}.tmpfs
-Source7:          swift.conf
 Source71:         %{name}.rsyslog
 Source72:         %{name}.logrotate
 Source73:         %{name}-object-reconstructor.service
 Source74:         %{name}-object-reconstructor@.service
 Source75:         %{name}-container-sync.service
 Source76:         %{name}-container-sync@.service
-Source77:         internal-client.conf
 # Required for tarball sources verification
 %if 0%{?sources_gpg} == 1
 Source101:        https://tarballs.openstack.org/swift/swift-%{upstream_version}.tar.gz.asc
@@ -271,14 +263,14 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/swift/container-server
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/object-server
 install -d -m 755 %{buildroot}%{_sysconfdir}/swift/proxy-server
 # Config files
-install -p -D -m 640 %{SOURCE22} %{buildroot}%{_sysconfdir}/swift/account-server.conf
-install -p -D -m 640 %{SOURCE42} %{buildroot}%{_sysconfdir}/swift/container-server.conf
-install -p -D -m 640 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.conf
-install -p -D -m 640 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
-install -p -D -m 640 %{SOURCE62} %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
-install -p -D -m 640 %{SOURCE64} %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
-install -p -D -m 640 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
-install -p -D -m 640 %{SOURCE77} %{buildroot}%{_sysconfdir}/swift/internal-client.conf
+install -p -D -m 640 etc/account-server.conf-sample %{buildroot}%{_sysconfdir}/swift/account-server.conf
+install -p -D -m 640 etc/container-server.conf-sample %{buildroot}%{_sysconfdir}/swift/container-server.conf
+install -p -D -m 640 etc/object-server.conf-sample %{buildroot}%{_sysconfdir}/swift/object-server.conf
+install -p -D -m 640 etc/proxy-server.conf-sample %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
+install -p -D -m 640 etc/object-expirer.conf-sample %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
+install -p -D -m 640 etc/container-reconciler.conf-sample %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
+install -p -D -m 640 etc/swift.conf-sample %{buildroot}%{_sysconfdir}/swift/swift.conf
+install -p -D -m 640 etc/internal-client.conf-sample %{buildroot}%{_sysconfdir}/swift/internal-client.conf
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
