@@ -1,0 +1,9 @@
+Code-Review+2: Joel Capitao <jcapitao@redhat.com>
+Workflow+1: Christian Schwede <cschwede@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Code-Review+2: Christian Schwede <cschwede@redhat.com>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Wed, 18 Sep 2024 10:55:55 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/swift-distgit/+/53419
+Project: openstack/swift-distgit
+Branch: refs/heads/rpm-master
