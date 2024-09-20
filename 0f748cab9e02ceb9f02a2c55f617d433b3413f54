@@ -33,6 +33,23 @@
       "message": "I should add that the values are managed by TripleO (in puppet-swift) as well as the openstack-swift-operator, and \"%SWIFT_HASH_PATH_SUFFIX%\" is ignored by both.",
       "revId": "0f748cab9e02ceb9f02a2c55f617d433b3413f54",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b4922f2_e18e0c31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 682
+      },
+      "writtenOn": "2024-09-20T12:54:00Z",
+      "side": 1,
+      "message": "My main concern was effectively adding the swift_has_path_prefix option, which was not configured previously and there might be any deployment tooling which does not purge the option. However it seems the major deployment tools such as puppet, openstack-ansible, and kolla-ansible has the mechanism to configure both. So the problem may not very likely happen.\n\nFor usual package-based installation the change should be detected during package update, assuming that swift.conf is already modified to update swift_hash_path_suffix.\n\nSo probably we can just keep the current value and revisit this again only when we hear any user is actually affected by this change.",
+      "revId": "0f748cab9e02ceb9f02a2c55f617d433b3413f54",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
