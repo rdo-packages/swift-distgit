@@ -16,6 +16,23 @@
       "message": "I think (and hope) that no productive cluster runs with the default \"%SWIFT_HASH_PATH_SUFFIX%\" value. That would be a major issue for that cluster, and in fact a few tools aren\u0027t even working with that default.\n\nI get the point for this change, however the default should have been changed immediately after installation (eiter manually or by the deployment tooling), and any custom value should not be affected and instead the config file should be saved as .rpmsave.\n\nI prefer the \"changeme\" value much more, as this hopefully makes admins aware of the need to really change the values.",
       "revId": "0f748cab9e02ceb9f02a2c55f617d433b3413f54",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aca77882_90f795b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2024-09-20T11:30:48Z",
+      "side": 1,
+      "message": "I should add that the values are managed by TripleO (in puppet-swift) as well as the openstack-swift-operator, and \"%SWIFT_HASH_PATH_SUFFIX%\" is ignored by both.",
+      "revId": "0f748cab9e02ceb9f02a2c55f617d433b3413f54",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7"
     }
   ]
 }
