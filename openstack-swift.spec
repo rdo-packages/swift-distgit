@@ -307,6 +307,10 @@ sed -i '1{/^#!/d}' %{buildroot}%{python3_sitelib}/swift/test/functional/test_sym
 # Remove executable bit to avoid rpmlint failures
 chmod -x %{buildroot}%{python3_sitelib}/swift/test/probe/test_object_partpower_increase.py
 chmod -x %{buildroot}%{python3_sitelib}/swift/test/functional/test_symlink.py
+# Restore the previous hard-coded value for swift_hash_path_*
+sed -i 's/^swift_hash_path_suffix = .*$/swift_hash_path_suffix = %SWIFT_HASH_PATH_SUFFIX%/' %{buildroot}%{_sysconfdir}/swift/swift.conf
+sed -i 's/^swift_hash_path_prefix = .*$/#swift_hash_path_suffix =/' %{buildroot}%{_sysconfdir}/swift/swift.conf
+
 
 # Install i18n files
 install -d -m 755 %{buildroot}%{_datadir}
