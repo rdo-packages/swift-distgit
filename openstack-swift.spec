@@ -220,9 +220,6 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
 
 
-# Generate i18n files
-%{__python3} setup.py compile_catalog -d %{buildroot}%{python3_sitelib}/swift/locale --domain swift
-
 # systemd units
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 644 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
@@ -308,17 +305,8 @@ sed -i '1{/^#!/d}' %{buildroot}%{python3_sitelib}/swift/test/functional/test_sym
 chmod -x %{buildroot}%{python3_sitelib}/swift/test/probe/test_object_partpower_increase.py
 chmod -x %{buildroot}%{python3_sitelib}/swift/test/functional/test_symlink.py
 
-# Install i18n files
-install -d -m 755 %{buildroot}%{_datadir}
-rm -f %{buildroot}%{python3_sitelib}/swift/locale/*/LC_*/swift*po
-rm -f %{buildroot}%{python3_sitelib}/swift/locale/*pot
-mv %{buildroot}%{python3_sitelib}/swift/locale %{buildroot}%{_datadir}/locale
-
 # Fix shebangs for Python 3-only distros
 %py3_shebang_fix %{buildroot}%{python3_sitelib}/swift/test
-
-# Find language files
-%find_lang swift --all-name
 
 %clean
 rm -rf %{buildroot}
@@ -410,7 +398,7 @@ exit 0
 
 %pyproject_extras_subpkg -n python3-swift kms_keymaster
 
-%files -n python3-swift -f swift.lang
+%files -n python3-swift
 %defattr(-,root,root,-)
 %license LICENSE
 %doc README.rst
