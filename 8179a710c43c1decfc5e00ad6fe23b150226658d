@@ -1,0 +1,8 @@
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Code-Review+2: Joel Capitao <jcapitao@redhat.com>
+Workflow+1: Joel Capitao <jcapitao@redhat.com>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Tue, 25 Feb 2025 08:43:47 +0000
+Reviewed-on: https://review.rdoproject.org/r/c/openstack/swift-distgit/+/56540
+Project: openstack/swift-distgit
+Branch: refs/heads/bobcat-rdo
