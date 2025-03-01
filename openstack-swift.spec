@@ -424,6 +424,7 @@ exit 0
 %{_tmpfilesdir}/openstack-swift.conf
 %dir %attr(0755, swift, swift)%{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/internal-client.conf
 %config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-swift
 %dir %{_localstatedir}/log/swift
@@ -487,7 +488,6 @@ exit 0
 %{_unitdir}/%{name}-container*.service
 %dir %{_sysconfdir}/swift/container-server
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-server.conf
-%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/internal-client.conf
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
 %{_bindir}/swift-container-auditor
 %{_bindir}/swift-container-deleter
