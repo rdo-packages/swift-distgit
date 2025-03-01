@@ -266,8 +266,14 @@ install -p -D -m 640 etc/object-server.conf-sample %{buildroot}%{_sysconfdir}/sw
 install -p -D -m 640 etc/proxy-server.conf-sample %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
 install -p -D -m 640 etc/object-expirer.conf-sample %{buildroot}%{_sysconfdir}/swift/object-expirer.conf
 install -p -D -m 640 etc/container-reconciler.conf-sample %{buildroot}%{_sysconfdir}/swift/container-reconciler.conf
+install -p -D -m 640 etc/container-sync-realms.conf-sample %{buildroot}%{_sysconfdir}/container-sync-realms.conf-sample
 install -p -D -m 640 etc/swift.conf-sample %{buildroot}%{_sysconfdir}/swift/swift.conf
 install -p -D -m 640 etc/internal-client.conf-sample %{buildroot}%{_sysconfdir}/swift/internal-client.conf
+install -p -D -m 640 etc/memcache.conf-sample %{buildroot}%{_sysconfdir}/swift/memcache.conf
+install -p -D -m 640 etc/drive-audit.conf-sample %{buildroot}%{_sysconfdir}/swift/drive-audit.conf
+install -p -D -m 640 etc/keymaster.conf-sample %{buildroot}%{_sysconfdir}/swift/keymaster.conf
+install -p -D -m 640 etc/mime.types-sample %{buildroot}%{_sysconfdir}/swift/mime.types
+
 # Install pid directory
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
 install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
@@ -425,6 +431,9 @@ exit 0
 %dir %attr(0755, swift, swift)%{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/internal-client.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-sync-realms.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/memcache.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/drive-audit.conf
 %config(noreplace) %{_sysconfdir}/rsyslog.d/openstack-swift.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-swift
 %dir %{_localstatedir}/log/swift
@@ -545,6 +554,8 @@ exit 0
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/container-reconciler.conf
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/proxy-server.conf
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/object-expirer.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/keymaster.conf
+%config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/mime.types
 %dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
 %{_bindir}/swift-container-reconciler
 %{_bindir}/swift-object-expirer
