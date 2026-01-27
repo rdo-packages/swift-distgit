@@ -561,3 +561,4 @@ exit 0
 * Tue Mar 18 2025 RDO <dev@lists.rdoproject.org> 2.35.0-1
 - Update to 2.35.0
 
+# REMOVEME: error caused by commit https://opendev.org/openstack/swift/commit/103c5004e0968ba44bdddedaa04d690ec8816a41
