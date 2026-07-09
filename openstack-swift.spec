@@ -23,7 +23,7 @@ inexpensive commodity hard drives and servers can be used in lieu of more \
 expensive equipment.
 
 Name:             openstack-swift
-Version:          2.35.0
+Version:          2.35.3
 Release:          1%{?dist}
 Summary:          OpenStack Object Storage (Swift)
 
@@ -558,6 +558,9 @@ exit 0
 %endif
 
 %changelog
+* Thu Jul 09 2026 RDO <dev@lists.rdoproject.org> 2.35.3-1
+- Update to 2.35.3
+
 * Tue Mar 18 2025 RDO <dev@lists.rdoproject.org> 2.35.0-1
 - Update to 2.35.0
 
